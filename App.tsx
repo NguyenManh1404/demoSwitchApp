@@ -12,6 +12,7 @@ import {
 } from '@react-navigation/native-stack';
 import React from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 
 type RootStackParamList = {
   Home: undefined;
@@ -42,9 +43,12 @@ function HomeScreen() {
 
 function DetailsScreen() {
   return (
-    <View style={styles.home}>
-      <Text>Details Screen</Text>
-    </View>
+    <MapView
+      provider={PROVIDER_GOOGLE}
+      showsUserLocation
+      showsMyLocationButton
+      style={styles.map}
+    />
   );
 }
 
@@ -64,6 +68,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  map: {
+    flex: 1,
   },
 });
 

@@ -5,6 +5,7 @@ declare module 'react-native-config' {
     ANDROID_STORE_PASSWORD: string;
     ANDROID_KEY_ALIAS: string;
     ANDROID_KEY_PASSWORD: string;
+    GOOGLE_API_KEY: string;
   }
 
   export const Config: NativeConfig;
