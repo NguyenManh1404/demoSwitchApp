@@ -33,6 +33,7 @@ local.properties
 .cxx/
 *.keystore
 !debug.keystore
+!my-release-key.keystore
 
 # node.js
 #
@@ -64,3 +65,6 @@ yarn-error.log
 
 # testing
 /coverage
+
+# react-native-config codegen
+ios/tmp.xcconfig
