@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "702142301100",
+    "project_id": "beautysalon-ca012",
+    "storage_bucket": "beautysalon-ca012.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702142301100:android:98cc4ba42e7a8ce88ab009",
+        "android_client_info": {
+          "package_name": "com.beautysalon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC22wWnj9s36I7Mzn9AKielYmA2RnKQdyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
