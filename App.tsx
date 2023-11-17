@@ -5,73 +5,103 @@
  * @format
  */
 
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
-import {
-  NativeStackNavigationProp,
-  createNativeStackNavigator,
-} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
-
-type RootStackParamList = {
-  Home: undefined;
-  Details: undefined;
-};
-
-type HomeScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  'Home'
->;
+import {Platform} from 'react-native';
+import HeaderBackButton from './src/components/HeaderBackButton';
+import {RootStackParamList} from './src/navigation/type';
+import DocumentScreen from './src/screens/DocumentScreen';
+import MapViewScreen from './src/screens/MapViewScreen';
+import SalonCentreScreen from './src/screens/SalonCentreScreen';
+import SalonDetailScreen from './src/screens/SalonDetailScreen';
+import {APP_COLORS} from './src/themes/colors';
+import {FONT_TYPES} from './src/themes/fonts';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-function HomeScreen() {
-  const {navigate} = useNavigation<HomeScreenNavigationProp>();
-
-  const moveToDetail = () => {
-    navigate('Details');
-  };
-
-  return (
-    <View style={styles.home}>
-      <Text>Home Screen</Text>
-      <Button title="Go to detail" onPress={moveToDetail} />
-    </View>
-  );
-}
-
-function DetailsScreen() {
-  return (
-    <MapView
-      provider={PROVIDER_GOOGLE}
-      showsUserLocation
-      showsMyLocationButton
-      style={styles.map}
-    />
-  );
-}
+const SCREEN_OPTION = {
+  headerBackTitleVisible: false,
+  orientation: 'portrait',
+  headerBackButtonMenuEnabled: false,
+  headerBackVisible: false,
+  headerLeft: props => {
+    return <HeaderBackButton {...props} />;
+  },
+  headerTitleStyle: {
+    fontFamily: FONT_TYPES.bold,
+    fontSize: 18,
+  },
+  headerShadowVisible: true,
+  headerTitleAlign: 'center',
+  gestureEnabled: true,
+  animation: Platform.select({
+    android: 'fade_from_bottom',
+    ios: 'default',
+  }),
+};
 
 function App(): JSX.Element {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
+      <Stack.Navigator initialRouteName="MapView" screenOptions={SCREEN_OPTION}>
+        <Stack.Screen
+          name="MapView"
+          component={MapViewScreen}
+          options={{
+            title: 'Bản đồ',
+            headerTitleStyle: {
+              color: 'white', // Set the color you want
+            },
+            headerStyle: {
+              backgroundColor: APP_COLORS.primary,
+            },
+          }}
+        />
+        <Stack.Screen
+          name="SalonCentre"
+          component={SalonCentreScreen}
+          options={{
+            title: 'Cơ sở thẩm mỹ',
+            headerTitleStyle: {
+              color: 'white', // Set the color you want
+            },
+            headerStyle: {
+              backgroundColor: APP_COLORS.primary,
+            },
+          }}
+        />
+
+        <Stack.Screen
+          name="Document"
+          component={DocumentScreen}
+          options={{
+            title: 'Văn bản quy định',
+            headerTitleStyle: {
+              color: 'white', // Set the color you want
+            },
+            headerStyle: {
+              backgroundColor: APP_COLORS.primary,
+            },
+          }}
+        />
+
+        <Stack.Screen
+          name="SalonDetail"
+          component={SalonDetailScreen}
+          options={{
+            title: 'Văn bản quy định',
+            headerTitleStyle: {
+              color: 'white', // Set the color you want
+            },
+            headerStyle: {
+              backgroundColor: APP_COLORS.primary,
+            },
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  home: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  map: {
-    flex: 1,
-  },
-});
 
 export default App;
