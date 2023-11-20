@@ -80,9 +80,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.beautysalon"
+    namespace "com.enouvo.beautysalon"
     defaultConfig {
-        applicationId "com.beautysalon"
+        applicationId "com.enouvo.beautysalon"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

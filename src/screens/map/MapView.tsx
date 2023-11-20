@@ -116,6 +116,9 @@ const MapViewCarousel: React.FC<MapViewProps> = ({}) => {
         <View style={styles.cardContent}>
           <Carousel
             initialNumToRender={150}
+            horizontal
+            directionalLockEnabled
+            enableSnap
             ref={carouselRef}
             data={centres || []}
             renderItem={renderItem}

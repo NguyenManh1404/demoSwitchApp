@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.beautysalon</string>
+	<string>com.enouvo.beautysalon</string>
 	<key>PROJECT_ID</key>
 	<string>beautysalon-ca012</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:702142301100:ios:b981e47fb0496bc68ab009</string>
+	<string>1:702142301100:ios:bd9ab5592a281fb08ab009</string>
 </dict>
 </plist>
