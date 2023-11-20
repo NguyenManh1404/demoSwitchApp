@@ -13,7 +13,8 @@
     "podNewClear": "cd ios && rm -rf Pods/* && rm -rf Podfile.lock && cd ..",
     "android:clean": "cd android && ./gradlew clean",
     "podInstall": "cd ios && pod install && cd ..",
-    "newclear": "yarn removeCachedFiles && yarn removeCachedMetro && yarn podNewClear && yarn && yarn android:clean && yarn podInstall"
+    "newclear": "yarn removeCachedFiles && yarn removeCachedMetro && yarn podNewClear && yarn && yarn android:clean && yarn podInstall",
+    "postinstall": "npx patch-package"
   },
   "dependencies": {
     "@react-native-firebase/app": "^18.6.1",
