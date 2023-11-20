@@ -1,13 +1,13 @@
 import React, {useMemo} from 'react';
 import {Text as RNText, StyleProp, TextProps, TextStyle} from 'react-native';
+import {APP_COLORS} from '../themes/colors';
 import {FONT_TYPES} from '../themes/fonts';
-import {EMPTY_STRING} from '../utils/constants';
 
-const styleByType = (type = EMPTY_STRING) => {
+const styleByType = (type: string = 'regular-14') => {
   const detectValue = type.split('-');
 
   return {
-    fontFamily: FONT_TYPES[detectValue[0] || 'regular'],
+    fontFamily: FONT_TYPES[(detectValue[0] || 'regular') as FontTypes],
     fontSize: +detectValue[1] || 14,
   };
 };
@@ -31,7 +31,7 @@ const Text = ({
   type,
   textAlign,
   textDecorationLine,
-  color = 'black',
+  color = APP_COLORS.black,
   ...props
 }: IText) => {
   const textStyle = useMemo(() => {

@@ -1,45 +1,47 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {Image, StyleSheet} from 'react-native';
-import {Marker, MarkerPressEvent} from 'react-native-maps';
+import {Marker} from 'react-native-maps';
 import {APP_IMAGES} from '../../themes/images';
 
-interface IMakerItem {
-  coordinate: {
-    latitude: number;
-    longitude: number;
-  };
-  isLocationSelected: boolean;
-  isClinic: boolean;
-  onPress: (event: MarkerPressEvent) => void;
-}
-
 const MakerItem: React.FC<IMakerItem> = ({
-  coordinate,
-  isLocationSelected,
-  isClinic,
+  index,
+  item,
+  isSelected,
   onPress,
 }) => {
+  const {IsClinic} = item || {};
+
+  const coordinate = useMemo(() => {
+    if (!item.Lat || !item.Long) {
+      return null;
+    }
+    return {
+      latitude: Number(item.Lat),
+      longitude: Number(item.Long),
+    };
+  }, [item.Lat, item.Long]);
+
+  const onPressItem = () => {
+    onPress?.(item, index);
+  };
+
+  if (!coordinate) {
+    return null;
+  }
+
   return (
-    <Marker coordinate={coordinate} onPress={onPress}>
-      {isClinic ? (
+    <Marker coordinate={coordinate} onPress={onPressItem}>
+      {IsClinic ? (
         <Image
           source={
-            isLocationSelected
-              ? APP_IMAGES.icHaiChau
-              : APP_IMAGES.icHaiChauActive
+            isSelected ? APP_IMAGES.icHaiChau : APP_IMAGES.icHaiChauActive
           }
-          style={
-            isLocationSelected
-              ? styles.markerHaiChau
-              : styles.markerHaiChauActive
-          }
+          style={isSelected ? styles.markerHaiChau : styles.markerHaiChauActive}
         />
       ) : (
         <Image
-          source={
-            isLocationSelected ? APP_IMAGES.icMaker : APP_IMAGES.icMakerActive
-          }
-          style={isLocationSelected ? styles.marker : styles.markerActive}
+          source={isSelected ? APP_IMAGES.icMaker : APP_IMAGES.icMakerActive}
+          style={isSelected ? styles.marker : styles.markerActive}
         />
       )}
     </Marker>

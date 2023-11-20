@@ -11,9 +11,15 @@ import {APP_IMAGES} from '../themes/images';
 import {IS_ANDROID, SCREEN_WIDTH} from '../utils/constants';
 import Text from './Text';
 
-const SalonCard = ({item, index, onPress}: any) => {
+const SalonCard = ({item, index, onPress}: ISalonCard) => {
+  const onPressItem = () => {
+    onPress?.(item);
+  };
   return (
-    <TouchableOpacity key={index} style={styles.salonCard} onPress={onPress}>
+    <TouchableOpacity
+      key={index}
+      style={styles.salonCard}
+      onPress={onPressItem}>
       <Image source={APP_IMAGES.icAvatar} style={styles.avatar} />
       <View style={styles.nameAddressView}>
         <Text numberOfLines={3} type="bold-16" style={styles.nameText}>

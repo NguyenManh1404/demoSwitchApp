@@ -7,6 +7,7 @@ const APP_COLORS = {
   greyL6: '#EBECF0',
   grayBtnReview: '#F5F5F5',
   titleCard: '#757575',
+  black: '#000000',
 };
 
 export {APP_COLORS};

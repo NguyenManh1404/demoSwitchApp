@@ -1,25 +1,11 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {
-  Image,
-  ImageSourcePropType,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
-import {HomeScreenNavigationProp} from '../navigation/type';
+import {Image, SafeAreaView, StyleSheet, TouchableOpacity} from 'react-native';
 import {APP_COLORS} from '../themes/colors';
 import {APP_IMAGES} from '../themes/images';
 import Text from './Text';
 
-interface ITabBarItem {
-  title: string;
-  logo: ImageSourcePropType;
-  color: string;
-  onPress: () => void;
-}
-
-const TabBarItem = ({title, logo, color, onPress}: ITabBarItem) => {
+const TabBarItem: React.FC<ITabBarItem> = ({title, logo, color, onPress}) => {
   return (
     <TouchableOpacity style={styles.tabBarItem} onPress={onPress}>
       <Image source={logo} style={styles.icon} />
@@ -30,11 +16,11 @@ const TabBarItem = ({title, logo, color, onPress}: ITabBarItem) => {
   );
 };
 
-const BottomTab = () => {
+const BottomTab = (): JSX.Element => {
   const {navigate} = useNavigation<HomeScreenNavigationProp>();
 
   const navigateToSalonCenter = () => {
-    navigate('SalonCentre');
+    navigate('BeautySalons');
   };
 
   const navigateToDocument = () => {
@@ -47,7 +33,6 @@ const BottomTab = () => {
         title="Bản đồ"
         logo={APP_IMAGES.icLocation}
         color={APP_COLORS.primary}
-        onPress={() => {}}
       />
       <TabBarItem
         title="Cở sở thẩm mỹ"
@@ -69,7 +54,7 @@ export default BottomTab;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: APP_COLORS.white,
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingHorizontal: 18,

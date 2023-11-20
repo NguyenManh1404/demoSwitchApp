@@ -1,19 +1,18 @@
-import React from 'react';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import React, {PropsWithChildren} from 'react';
+import {
+  KeyboardAwareScrollView,
+  KeyboardAwareScrollViewProps,
+} from 'react-native-keyboard-aware-scroll-view';
 
-const KeyboardContainer = ({
-  children,
-  ...props
-}: {
-  children: any;
-  props: any;
-}) => {
+type KeyboardContainerProps = PropsWithChildren<KeyboardAwareScrollViewProps>;
+
+const KeyboardContainer = (props: KeyboardContainerProps) => {
   return (
     <KeyboardAwareScrollView
       {...props}
       enableResetScrollToCoords={false}
       keyboardShouldPersistTaps={'handled'}>
-      {children}
+      {props.children}
     </KeyboardAwareScrollView>
   );
 };

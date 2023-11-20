@@ -8,6 +8,5 @@
     "source.organizeImports": true,
     "source.sortMembers": true
   },
-  "editor.tabCompletion": "on",
-  "window.zoomLevel": -1
+  "editor.tabCompletion": "on"
 }
