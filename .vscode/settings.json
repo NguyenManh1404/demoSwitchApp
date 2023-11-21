@@ -8,5 +8,6 @@
     "source.organizeImports": true,
     "source.sortMembers": true
   },
-  "editor.tabCompletion": "on"
+  "editor.tabCompletion": "on",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

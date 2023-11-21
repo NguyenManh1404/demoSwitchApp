@@ -22,6 +22,7 @@ interface ISalonCenter {
   Street: string;
   Ward: string;
   IsClinic: boolean;
+  LogoURL: string;
 }
 
 interface IMakerItem {
@@ -51,6 +52,7 @@ type RootStackParamList = {
     item: ISalonCenter;
   };
   BeautySalons: undefined;
+  BeautySalonReview: undefined;
 };
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
@@ -59,3 +61,19 @@ type HomeScreenNavigationProp = NativeStackNavigationProp<
 >;
 
 type FontTypes = 'semiBold' | 'bold' | 'regular';
+
+interface IInfoDetailSalonItem {
+  title: string;
+  content: string;
+}
+
+interface IRatingItem {
+  id: string;
+  images?: string[];
+  time: string;
+  content: string;
+}
+
+interface IBeautySalonReview {
+  item: ISalonCenter;
+}
