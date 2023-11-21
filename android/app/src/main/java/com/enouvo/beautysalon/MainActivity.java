@@ -1,4 +1,4 @@
-package com.beautysalon;
+package com.enouvo.beautysalon;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

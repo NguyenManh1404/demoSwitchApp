@@ -1,4 +1,4 @@
-package com.beautysalon;
+package com.enouvo.beautysalon;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

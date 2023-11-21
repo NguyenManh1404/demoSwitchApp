@@ -1,5 +1,5 @@
 {
-  "name": "BeautySalon",
+  "name": "beautysalon",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -8,12 +8,14 @@
     "lint": "eslint .",
     "start": "react-native start --reset-cache",
     "test": "jest",
+    "fix-xcode": " ",
+    "createIconFont": " ",
     "removeCachedMetro": "npm cache clean --force && rm -rf ~/Library/Caches/com.facebook.ReactNativeBuild && yarn cache clean --verbose && rm -rf $TMPDIR/metro-bundler-cache-*",
     "removeCachedFiles": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build/ModuleCache/* && rm -rf ios/build/* && rm -rf node_modules/* && rm -rf yarn.lock",
     "podNewClear": "cd ios && rm -rf Pods/* && rm -rf Podfile.lock && cd ..",
     "android:clean": "cd android && ./gradlew clean",
     "podInstall": "cd ios && pod install && cd ..",
-    "newclear": "yarn removeCachedFiles && yarn removeCachedMetro && yarn podNewClear && yarn && yarn android:clean && yarn podInstall",
+    "newclear": "yarn removeCachedFiles && yarn removeCachedMetro && yarn podNewClear && yarn && yarn android:clean && yarn createIconFont && yarn podInstall",
     "postinstall": "npx patch-package"
   },
   "dependencies": {
