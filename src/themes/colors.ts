@@ -8,6 +8,11 @@ const APP_COLORS = {
   grayBtnReview: '#F5F5F5',
   titleCard: '#757575',
   black: '#000000',
+  neutral2: '#4B4E6E',
+  errorDefault: '#D53A3A',
+  borderInput: '#E2E2E9',
+  placeholderText: '#6C6F93',
+  borderInputSearch: '#D6D6D6',
 };
 
 export {APP_COLORS};

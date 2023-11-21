@@ -66,6 +66,13 @@ export const MainNavigator: React.FC<MainNavigatorProps> = ({}) => {
           title: 'Cơ sở thẩm mỹ',
         },
       },
+      {
+        name: ROUTE_NAMES.BeautySalonReview,
+        component: ROUTES.BeautySalonReview,
+        options: {
+          title: 'Gửi góp ý, đánh giá',
+        },
+      },
     ];
   }, []);
 

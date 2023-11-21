@@ -20,7 +20,10 @@ const SalonCard = ({item, index, onPress}: ISalonCard) => {
       key={index}
       style={styles.salonCard}
       onPress={onPressItem}>
-      <Image source={APP_IMAGES.icAvatar} style={styles.avatar} />
+      <Image
+        source={item?.LogoURL ? item?.LogoURL : APP_IMAGES.icAvatar}
+        style={styles.avatar}
+      />
       <View style={styles.nameAddressView}>
         <Text numberOfLines={3} type="bold-16" style={styles.nameText}>
           {item?.BusinessName}
@@ -45,6 +48,7 @@ export default SalonCard;
 const styles = StyleSheet.create({
   salonCard: {
     flexDirection: 'row',
+    flex: 1,
     padding: 12,
     backgroundColor: APP_COLORS.white,
     borderRadius: 12,
