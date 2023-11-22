@@ -35,7 +35,26 @@ const DEFAULT_PICKER_OPTION = {
   }),
 };
 
+const ACTION_ITEM: IActionSheetItem[] = [
+  {
+    id: 1,
+    name: 'Tất cả',
+  },
+  {
+    id: 2,
+    name: 'Phòng khám chuyên khoa thẩm mỹ, da liễu',
+  },
+  {
+    id: 3,
+    name: 'Cơ sở dịch vụ thẩm mỹ đủ điều kiện',
+  },
+  {
+    id: 4,
+    name: 'Cơ sở dịch vụ thẩm mỹ không đủ điều kiện',
+  },
+];
 export {
+  ACTION_ITEM,
   CAMERA_PERMISSION_STRING,
   DEFAULT_PICKER_OPTION,
   EMPTY_STRING,

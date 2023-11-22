@@ -16,11 +16,13 @@ const TabBarItem: React.FC<ITabBarItem> = ({title, logo, color, onPress}) => {
   );
 };
 
-const BottomTab = (): JSX.Element => {
+const BottomTab = ({data}: {data: ISalonCenter[]}) => {
   const {navigate} = useNavigation<HomeScreenNavigationProp>();
 
   const navigateToSalonCenter = () => {
-    navigate('BeautySalons');
+    navigate('BeautySalons', {
+      centers: data,
+    });
   };
 
   const navigateToDocument = () => {

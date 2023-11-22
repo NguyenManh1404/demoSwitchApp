@@ -1,5 +1,6 @@
 import {Alert} from 'react-native';
 import Config from 'react-native-config';
+import unidecode from 'unidecode';
 
 const roundByteToMB = (bytes: number) => {
   return Math.round((bytes / 1000000 + Number.EPSILON) * 100) / 100;
@@ -42,4 +43,9 @@ const showSystemAlert = ({
   return Alert.alert(title || Config.APP_NAME, message, actions);
 };
 
-export {getMaxSize, roundByteToMB, showSystemAlert};
+const normalizeString = (text: string) => {
+  // Loại bỏ dấu và chuyển chữ hoa thành chữ thường
+  return unidecode(text).toLowerCase();
+};
+
+export {getMaxSize, normalizeString, roundByteToMB, showSystemAlert};

@@ -13,6 +13,7 @@ const APP_COLORS = {
   borderInput: '#E2E2E9',
   placeholderText: '#6C6F93',
   borderInputSearch: '#D6D6D6',
+  actionSheetModal: 'rgba(30, 30, 30, 0.80)',
 };
 
 export {APP_COLORS};

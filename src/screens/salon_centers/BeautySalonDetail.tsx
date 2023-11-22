@@ -1,7 +1,6 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
 import React from 'react';
 import {
-  Image,
   Platform,
   SafeAreaView,
   StyleSheet,
@@ -10,6 +9,7 @@ import {
 } from 'react-native';
 import ButtonAwareKeyboard from '../../components/ButtonAwareKeyboard';
 import KeyboardContainer from '../../components/KeyboardContainer';
+import SalonCard from '../../components/SalonCard';
 import InfoDetailSalonItem from '../../components/SalonDetail/InfoDetailSalonItem';
 import RatingItem from '../../components/SalonDetail/RatingItem';
 import Text from '../../components/Text';
@@ -53,10 +53,10 @@ const DATA_REVIEW = [
 ];
 
 const BeautySalonDetail: React.FC<BeautySalonDetailProps> = () => {
-  const route = useRoute();
+  const route = useRoute<BeautySalonDetailRouteProp>();
   const {item} = route?.params;
-  const {navigate} = useNavigation<HomeScreenNavigationProp>();
 
+  const {navigate} = useNavigation<HomeScreenNavigationProp>();
   useHeaderOptions({
     options: {
       headerTitle: item.BusinessName,
@@ -70,30 +70,12 @@ const BeautySalonDetail: React.FC<BeautySalonDetailProps> = () => {
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardContainer style={styles.keyboardContainer}>
-        <View style={styles.cardDetailSalon}>
-          <Image
-            source={item?.LogoURL ? item?.LogoURL : APP_IMAGES.icAvatar}
-            style={styles.avatar}
-          />
-          <View style={styles.nameAddressView}>
-            <Text numberOfLines={3} type="bold-16" style={styles.nameText}>
-              {item?.BusinessName}
-            </Text>
-            <View style={styles.reviewView}>
-              <Image source={APP_IMAGES.icCheck} style={styles.icCheck} />
-              <Text numberOfLines={2} type="regular-13">
-                Đã đủ điều kiện
-              </Text>
-            </View>
-          </View>
-        </View>
-
+        <SalonCard item={item} isShowAddress={false} isShowValuation={true} />
         <View style={styles.titleCard}>
           <Text color={APP_COLORS.titleCard} type="bold-14">
             Thông tin cơ sở
           </Text>
         </View>
-
         <View style={styles.infoSalonView}>
           {item?.FormattedAddress && (
             <InfoDetailSalonItem
@@ -130,13 +112,11 @@ const BeautySalonDetail: React.FC<BeautySalonDetailProps> = () => {
             <Text type="semiBold-16">Xem giấy chứng nhận</Text>
           </TouchableOpacity>
         </View>
-
         <View style={styles.titleCard}>
           <Text color={APP_COLORS.titleCard} type="bold-14">
             Đánh giá
           </Text>
         </View>
-
         <View style={styles.infoSalonView}>
           {DATA_REVIEW?.map((itemReview, indexItem) => {
             return (
@@ -162,25 +142,7 @@ const styles = StyleSheet.create({
   keyboardContainer: {
     padding: 12,
   },
-  cardDetailSalon: {
-    flexDirection: 'row',
-    padding: 12,
-    backgroundColor: APP_COLORS.white,
-    borderRadius: 12,
-    overflow: IS_ANDROID ? 'hidden' : undefined,
-    borderWidth: 1,
-    borderColor: APP_COLORS.greyL6,
-    shadowColor: APP_COLORS.shadowColor,
-    shadowOffset: {width: 1, height: 2},
-    shadowOpacity: 1,
-    shadowRadius: 5,
-    width: SCREEN_WIDTH - 36,
-    ...Platform.select({
-      android: {
-        elevation: 3,
-      },
-    }),
-  },
+
   avatar: {
     width: 56,
     height: 56,

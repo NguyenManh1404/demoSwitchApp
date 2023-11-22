@@ -25,7 +25,7 @@ const RatingItem = ({item, index}: {item: IRatingItem; index: number}) => {
   };
 
   return (
-    <View style={styles.ratingItem}>
+    <View>
       <View style={styles.headerItem}>
         <Text type="bold-14">Mã góp ý: {item?.id}</Text>
         <Text color={APP_COLORS.gray2} type="regular-13">
@@ -66,7 +66,6 @@ const RatingItem = ({item, index}: {item: IRatingItem; index: number}) => {
 export default RatingItem;
 
 const styles = StyleSheet.create({
-  ratingItem: {},
   headerItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',

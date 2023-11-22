@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import ButtonAwareKeyboard from '../../components/ButtonAwareKeyboard';
 import KeyboardContainer from '../../components/KeyboardContainer';
+import SalonCard from '../../components/SalonCard';
 import Text from '../../components/Text';
 import {APP_COLORS} from '../../themes/colors';
 import {APP_IMAGES} from '../../themes/images';
@@ -20,7 +21,7 @@ import {HIT_SLOP, IS_ANDROID, SCREEN_WIDTH} from '../../utils/constants';
 const IMAGES = [APP_IMAGES.icAvatar, APP_IMAGES.icAvatar, APP_IMAGES.icAvatar];
 
 const BeautySalonReview: React.FC<IBeautySalonReview> = () => {
-  const route = useRoute();
+  const route = useRoute<any>();
   const {item} = route?.params;
   const [reviewValue, setReviewValue] = useState('');
   const [images, setImages] = useState(IMAGES || []);
@@ -47,23 +48,7 @@ const BeautySalonReview: React.FC<IBeautySalonReview> = () => {
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardContainer style={styles.keyboardContainer}>
-        <View style={styles.cardDetailSalon}>
-          <Image
-            source={item?.LogoURL ? item?.LogoURL : APP_IMAGES.icAvatar}
-            style={styles.avatar}
-          />
-          <View style={styles.nameAddressView}>
-            <Text numberOfLines={3} type="bold-16" style={styles.nameText}>
-              {item?.BusinessName}
-            </Text>
-            <View style={styles.addressView}>
-              <Image source={APP_IMAGES.icLocation} style={styles.icLocation} />
-              <Text numberOfLines={2} style={styles.FormattedAddressTxt}>
-                {item?.FormattedAddress}
-              </Text>
-            </View>
-          </View>
-        </View>
+        <SalonCard item={item} />
 
         <View style={styles.inputReview}>
           <Text type={'bold-16'}>
@@ -143,25 +128,6 @@ const styles = StyleSheet.create({
   keyboardContainer: {
     padding: 12,
   },
-  cardDetailSalon: {
-    flexDirection: 'row',
-    padding: 12,
-    backgroundColor: APP_COLORS.white,
-    borderRadius: 12,
-    overflow: IS_ANDROID ? 'hidden' : undefined,
-    borderWidth: 1,
-    borderColor: APP_COLORS.greyL6,
-    shadowColor: APP_COLORS.shadowColor,
-    shadowOffset: {width: 1, height: 2},
-    shadowOpacity: 1,
-    shadowRadius: 5,
-    width: SCREEN_WIDTH - 36,
-    ...Platform.select({
-      android: {
-        elevation: 3,
-      },
-    }),
-  },
   avatar: {
     width: 56,
     height: 56,
@@ -224,6 +190,7 @@ const styles = StyleSheet.create({
     bottom: 8,
     right: 8,
     marginTop: 10,
+    color: APP_COLORS.placeholderText,
   },
   input: {
     marginBottom: 30,

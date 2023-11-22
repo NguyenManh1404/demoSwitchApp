@@ -11,14 +11,23 @@ import {APP_IMAGES} from '../themes/images';
 import {IS_ANDROID, SCREEN_WIDTH} from '../utils/constants';
 import Text from './Text';
 
-const SalonCard = ({item, index, onPress}: ISalonCard) => {
+const SalonCard = ({
+  item,
+  index,
+  isShowValuation = false,
+  isShowAddress = true,
+  isFromMapView = false,
+  onPress,
+  ...props
+}: ISalonCard) => {
   const onPressItem = () => {
     onPress?.(item);
   };
   return (
     <TouchableOpacity
+      {...props}
       key={index}
-      style={styles.salonCard}
+      style={[styles.salonCard, isFromMapView ? styles.styleFromMapView : {}]}
       onPress={onPressItem}>
       <Image
         source={item?.LogoURL ? item?.LogoURL : APP_IMAGES.icAvatar}
@@ -28,16 +37,38 @@ const SalonCard = ({item, index, onPress}: ISalonCard) => {
         <Text numberOfLines={3} type="bold-16" style={styles.nameText}>
           {item?.BusinessName}
         </Text>
-        <View style={styles.addressView}>
-          <Image
-            source={APP_IMAGES.icLocation}
-            tintColor={APP_COLORS.primary}
-            style={styles.icLocationStyle}
-          />
-          <Text numberOfLines={2} type="regular-13" style={styles.addressTxt}>
-            {item?.FormattedAddress}
-          </Text>
-        </View>
+        {isShowValuation && (
+          <View>
+            {item?.BusinessType === 'Đã đủ điều kiện' ? (
+              <View style={styles.valuationView}>
+                <Image source={APP_IMAGES.icCheck} style={styles.icCheck} />
+                <Text numberOfLines={2} type="regular-13">
+                  Đã đủ điều kiện
+                </Text>
+              </View>
+            ) : (
+              <View style={styles.valuationView}>
+                <Image source={APP_IMAGES.icAlert} style={styles.icCheck} />
+                <Text numberOfLines={2} type="regular-13">
+                  Chưa đủ điều kiện
+                </Text>
+              </View>
+            )}
+          </View>
+        )}
+
+        {isShowAddress && (
+          <View style={styles.addressView}>
+            <Image
+              source={APP_IMAGES.icLocation}
+              tintColor={APP_COLORS.primary}
+              style={styles.icLocationStyle}
+            />
+            <Text numberOfLines={2} type="regular-13" style={styles.addressTxt}>
+              {item?.FormattedAddress}
+            </Text>
+          </View>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -52,19 +83,25 @@ const styles = StyleSheet.create({
     padding: 12,
     backgroundColor: APP_COLORS.white,
     borderRadius: 12,
-    width: SCREEN_WIDTH - 55,
     overflow: IS_ANDROID ? 'hidden' : undefined,
     borderWidth: 1,
+    width: SCREEN_WIDTH - 36,
     borderColor: APP_COLORS.greyL6,
     shadowColor: APP_COLORS.shadowColor,
     shadowOffset: {width: 1, height: 2},
     shadowOpacity: 1,
     shadowRadius: 5,
+    marginBottom: 12,
     ...Platform.select({
       android: {
         elevation: 3,
       },
     }),
+  },
+
+  styleFromMapView: {
+    marginBottom: 0,
+    width: SCREEN_WIDTH - 55,
   },
 
   avatar: {
@@ -79,7 +116,6 @@ const styles = StyleSheet.create({
   addressView: {
     flexDirection: 'row',
     marginTop: 5,
-    flex: 1,
   },
 
   nameText: {
@@ -90,4 +126,9 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     flex: 1,
   },
+  valuationView: {
+    flexDirection: 'row',
+    marginVertical: 8,
+  },
+  icCheck: {width: 18, height: 18, marginRight: 5},
 });

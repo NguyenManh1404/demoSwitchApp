@@ -3,7 +3,10 @@ import icAvatar from '../assets/images/icAvatar.png';
 import icBuilding from '../assets/images/icBuilding.png';
 import icCheck from '../assets/images/icCheck.png';
 import icChevronLeft from '../assets/images/icChevronLeft.png';
+import icChevronRight from '../assets/images/icChevronRight.png';
 import icClose from '../assets/images/icClose.png';
+import icCloseModal from '../assets/images/icCloseModal.png';
+import icCloseText from '../assets/images/icCloseText.png';
 import icDocument from '../assets/images/icDocument.png';
 import icDown from '../assets/images/icDown.png';
 import icFails from '../assets/images/icFails.png';
@@ -34,6 +37,9 @@ const APP_IMAGES = {
   icModalCheck,
   icSearch,
   icDown,
+  icChevronRight,
+  icCloseModal,
+  icCloseText,
 };
 
 export {APP_IMAGES};

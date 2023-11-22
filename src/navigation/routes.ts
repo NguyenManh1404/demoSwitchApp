@@ -3,6 +3,8 @@ import MapView from '../screens/map/MapView';
 import BeautySalonDetail from '../screens/salon_centers/BeautySalonDetail';
 import BeautySalonReview from '../screens/salon_centers/BeautySalonReview';
 import BeautySalons from '../screens/salon_centers/BeautySalons';
+import EvaluateAnotherSalon from '../screens/salon_centers/EvaluateAnotherSalon';
+import EvaluateAnotherSalonForm from '../screens/salon_centers/EvaluateAnotherSalonForm';
 
 const ROUTES = {
   Document,
@@ -10,6 +12,8 @@ const ROUTES = {
   BeautySalonDetail,
   BeautySalons,
   BeautySalonReview,
+  EvaluateAnotherSalon,
+  EvaluateAnotherSalonForm,
 };
 
 const ROUTE_NAMES = {
@@ -18,6 +22,8 @@ const ROUTE_NAMES = {
   BeautySalonDetail: 'BeautySalonDetail',
   BeautySalons: 'BeautySalons',
   BeautySalonReview: 'BeautySalonReview',
+  EvaluateAnotherSalon: 'EvaluateAnotherSalon',
+  EvaluateAnotherSalonForm: 'EvaluateAnotherSalonForm',
 };
 
 export {ROUTES, ROUTE_NAMES};

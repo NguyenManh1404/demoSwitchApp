@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {ReactNode, useMemo} from 'react';
 import {Text as RNText, StyleProp, TextProps, TextStyle} from 'react-native';
 import {APP_COLORS} from '../themes/colors';
 import {FONT_TYPES} from '../themes/fonts';
@@ -13,7 +13,7 @@ const styleByType = (type: string = 'regular-14') => {
 };
 
 interface IText extends TextProps {
-  children?: string;
+  children?: ReactNode;
   style?: StyleProp<TextStyle>;
   type?: string;
   textAlign?: 'auto' | 'center' | 'justify' | 'left' | 'right';

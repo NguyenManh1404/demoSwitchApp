@@ -81,6 +81,7 @@ const MapViewCarousel: React.FC<MapViewProps> = ({}) => {
         item={item}
         index={index}
         onPress={navigateToSalonDetail}
+        isFromMapView={true}
       />
     );
   };
@@ -134,7 +135,7 @@ const MapViewCarousel: React.FC<MapViewProps> = ({}) => {
           />
         </View>
       </View>
-      <BottomTab />
+      <BottomTab data={centres} />
     </SafeAreaView>
   );
 };

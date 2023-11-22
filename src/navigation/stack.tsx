@@ -73,6 +73,20 @@ export const MainNavigator: React.FC<MainNavigatorProps> = ({}) => {
           title: 'Gửi góp ý, đánh giá',
         },
       },
+      {
+        name: ROUTE_NAMES.EvaluateAnotherSalon,
+        component: ROUTES.EvaluateAnotherSalon,
+        options: {
+          title: 'Đánh giá về cơ sở khác',
+        },
+      },
+      {
+        name: ROUTE_NAMES.EvaluateAnotherSalonForm,
+        component: ROUTES.EvaluateAnotherSalonForm,
+        options: {
+          title: 'Gửi góp ý, đánh giá',
+        },
+      },
     ];
   }, []);
 

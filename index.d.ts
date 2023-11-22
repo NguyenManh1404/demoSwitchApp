@@ -5,6 +5,8 @@ type MapViewProps = {};
 type BeautySalonDetailProps = {};
 type BeautySalonsProps = {};
 type MainNavigatorProps = {};
+type EvaluateAnotherSalonProps = {};
+type EvaluateAnotherSalonFormProps = {};
 
 interface ISalonCenter {
   id: string;
@@ -41,8 +43,11 @@ interface ITabBarItem {
 
 interface ISalonCard {
   item: ISalonCenter;
-  index: number;
-  onPress: (item: ISalonCenter) => void;
+  index?: number;
+  isShowValuation?: boolean;
+  isShowAddress?: boolean;
+  isFromMapView?: boolean;
+  onPress?: (item: ISalonCenter) => void;
 }
 
 type RootStackParamList = {
@@ -51,13 +56,23 @@ type RootStackParamList = {
   BeautySalonDetail: {
     item: ISalonCenter;
   };
-  BeautySalons: undefined;
+  BeautySalons: ISalonCenter[];
   BeautySalonReview: undefined;
+  EvaluateAnotherSalon: undefined;
+  EvaluateAnotherSalonForm: undefined;
 };
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'MapView'
+>;
+
+type ScreenNavigationProp<T> = NativeStackNavigationProp<RootStackParamList, T>;
+type ScreenRouteProp<T> = RouteProp<RootStackParamList, T>;
+
+type BeautySalonDetailRouteProp = RouteProp<
+  RootStackParamList,
+  'BeautySalonDetail'
 >;
 
 type FontTypes = 'semiBold' | 'bold' | 'regular';
@@ -76,4 +91,22 @@ interface IRatingItem {
 
 interface IBeautySalonReview {
   item: ISalonCenter;
+}
+
+interface IBottomActionSheetProp {
+  isVisible: boolean;
+  filterSelected: IActionSheetItem;
+  onClose: () => void;
+  onActionPress: (e: IActionSheetItem) => void;
+}
+
+interface IInputEvaluate {
+  placeholder: string;
+  onChangeText: (e: string) => void;
+  value: string;
+}
+
+interface IActionSheetItem {
+  id: number;
+  name: string;
 }
