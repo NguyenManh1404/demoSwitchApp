@@ -1,4 +1,3 @@
-import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Image, SafeAreaView, StyleSheet, TouchableOpacity} from 'react-native';
 import {APP_COLORS} from '../themes/colors';
@@ -16,17 +15,12 @@ const TabBarItem: React.FC<ITabBarItem> = ({title, logo, color, onPress}) => {
   );
 };
 
-const BottomTab = () => {
-  const {navigate} = useNavigation<HomeScreenNavigationProp>();
+type BottomTabProps = {
+  onMoveToSalon?: () => void;
+  onMoveToDocument?: () => void;
+};
 
-  const navigateToSalonCenter = () => {
-    navigate('BeautySalons');
-  };
-
-  const navigateToDocument = () => {
-    navigate('Document');
-  };
-
+const BottomTab = ({onMoveToDocument, onMoveToSalon}: BottomTabProps) => {
   return (
     <SafeAreaView style={styles.container}>
       <TabBarItem
@@ -38,13 +32,13 @@ const BottomTab = () => {
         title="Cở sở thẩm mỹ"
         logo={APP_IMAGES.icBuilding}
         color={APP_COLORS.gray2}
-        onPress={navigateToSalonCenter}
+        onPress={onMoveToSalon}
       />
       <TabBarItem
         title="Văn bản quy định"
         logo={APP_IMAGES.icDocument}
         color={APP_COLORS.gray2}
-        onPress={navigateToDocument}
+        onPress={onMoveToDocument}
       />
     </SafeAreaView>
   );

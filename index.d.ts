@@ -1,12 +1,4 @@
 declare module '*.png';
-// screen props
-type DocumentProps = {};
-type MapViewProps = {};
-type BeautySalonDetailProps = {};
-type BeautySalonsProps = {};
-type MainNavigatorProps = {};
-type EvaluateAnotherSalonProps = {};
-type EvaluateAnotherSalonFormProps = {};
 
 interface ISalonCenter {
   id: string;
@@ -25,6 +17,9 @@ interface ISalonCenter {
   Ward: string;
   IsClinic: boolean;
   LogoURL: string;
+  Industry?: string;
+  LicensetoOperate?: string;
+  IssueDate?: string;
 }
 
 interface IMakerItem {
@@ -50,30 +45,22 @@ interface ISalonCard {
   onPress?: (item: ISalonCenter) => void;
 }
 
+type OptionalTitle = {
+  title?: string;
+};
 type RootStackParamList = {
-  Document: undefined;
-  MapView: undefined;
-  BeautySalonDetail: {
+  Document: OptionalTitle;
+  MapView: OptionalTitle;
+  BeautySalonDetail: OptionalTitle & {
     item: ISalonCenter;
   };
-  BeautySalons: ISalonCenter[];
-  BeautySalonReview: undefined;
-  EvaluateAnotherSalon: undefined;
-  EvaluateAnotherSalonForm: undefined;
+  BeautySalons: OptionalTitle;
+  BeautySalonReview: OptionalTitle & {
+    item: ISalonCenter;
+  };
+  EvaluateAnotherSalon: OptionalTitle;
+  EvaluateAnotherSalonForm: OptionalTitle;
 };
-
-type HomeScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  'MapView'
->;
-
-type ScreenNavigationProp<T> = NativeStackNavigationProp<RootStackParamList, T>;
-type ScreenRouteProp<T> = RouteProp<RootStackParamList, T>;
-
-type BeautySalonDetailRouteProp = RouteProp<
-  RootStackParamList,
-  'BeautySalonDetail'
->;
 
 type FontTypes = 'semiBold' | 'bold' | 'regular';
 

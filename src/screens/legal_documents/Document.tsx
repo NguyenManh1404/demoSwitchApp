@@ -1,7 +1,10 @@
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
-const Document: React.FC<DocumentProps> = ({}) => {
+type DocumentProps = NativeStackScreenProps<RootStackParamList, 'Document'>;
+
+const Document = ({}: DocumentProps) => {
   return <View style={styles.container} />;
 };
 

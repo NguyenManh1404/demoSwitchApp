@@ -1,4 +1,4 @@
-import {useRoute} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {
   Image,
@@ -20,8 +20,12 @@ import {HIT_SLOP, IS_ANDROID, SCREEN_WIDTH} from '../../utils/constants';
 
 const IMAGES = [APP_IMAGES.icAvatar, APP_IMAGES.icAvatar, APP_IMAGES.icAvatar];
 
-const BeautySalonReview: React.FC<IBeautySalonReview> = () => {
-  const route = useRoute<any>();
+type BeautySalonReviewProps = NativeStackScreenProps<
+  RootStackParamList,
+  'BeautySalonReview'
+>;
+
+const BeautySalonReview = ({route}: BeautySalonReviewProps) => {
   const {item} = route?.params;
   const [reviewValue, setReviewValue] = useState('');
   const [images, setImages] = useState(IMAGES || []);
@@ -35,7 +39,6 @@ const BeautySalonReview: React.FC<IBeautySalonReview> = () => {
     let currentImages = [...images];
     currentImages.splice(index, 1);
     setImages([...currentImages]);
-    // formik.setFieldValue('images', images);
   };
 
   const toggleModal = () => {

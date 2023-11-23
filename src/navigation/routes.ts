@@ -16,14 +16,4 @@ const ROUTES = {
   EvaluateAnotherSalonForm,
 };
 
-const ROUTE_NAMES = {
-  Document: 'Document',
-  MapView: 'MapView',
-  BeautySalonDetail: 'BeautySalonDetail',
-  BeautySalons: 'BeautySalons',
-  BeautySalonReview: 'BeautySalonReview',
-  EvaluateAnotherSalon: 'EvaluateAnotherSalon',
-  EvaluateAnotherSalonForm: 'EvaluateAnotherSalonForm',
-};
-
-export {ROUTES, ROUTE_NAMES};
+export {ROUTES};

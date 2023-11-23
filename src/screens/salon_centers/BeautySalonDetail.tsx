@@ -1,4 +1,4 @@
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 import {
   Platform,
@@ -52,11 +52,14 @@ const DATA_REVIEW = [
   },
 ];
 
-const BeautySalonDetail: React.FC<BeautySalonDetailProps> = () => {
-  const route = useRoute<BeautySalonDetailRouteProp>();
+type BeautySalonDetailProps = NativeStackScreenProps<
+  RootStackParamList,
+  'BeautySalonDetail'
+>;
+
+const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
   const {item} = route?.params;
 
-  const {navigate} = useNavigation<HomeScreenNavigationProp>();
   useHeaderOptions({
     options: {
       headerTitle: item.BusinessName,
@@ -64,7 +67,7 @@ const BeautySalonDetail: React.FC<BeautySalonDetailProps> = () => {
   });
 
   const moveToBeautySalonReview = () => {
-    navigate('BeautySalonReview', {item: item});
+    navigation.navigate('BeautySalonReview', {item: item});
   };
 
   return (
@@ -101,12 +104,6 @@ const BeautySalonDetail: React.FC<BeautySalonDetailProps> = () => {
               content={item?.IssueDate}
             />
           )}
-
-          {/* <InfoDetailSalonItem
-          title={'Ngày kiểm tra'}
-          content={'Chăm sóc sức khoẻ'}
-        /> */}
-          {/* <InfoDetailSalonItem title={'Ghi chú'} content={'Chăm sóc sức khoẻ'} /> */}
 
           <TouchableOpacity>
             <Text type="semiBold-16">Xem giấy chứng nhận</Text>

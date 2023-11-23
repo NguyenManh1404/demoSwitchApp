@@ -1,3 +1,4 @@
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {
   Image,
@@ -17,9 +18,12 @@ import {HIT_SLOP, IS_ANDROID, SCREEN_WIDTH} from '../../utils/constants';
 
 const IMAGES = [APP_IMAGES.icAvatar, APP_IMAGES.icAvatar, APP_IMAGES.icAvatar];
 
-const EvaluateAnotherSalonForm: React.FC<
-  EvaluateAnotherSalonFormProps
-> = () => {
+type EvaluateAnotherSalonFormProps = NativeStackScreenProps<
+  RootStackParamList,
+  'EvaluateAnotherSalonForm'
+>;
+
+const EvaluateAnotherSalonForm = ({}: EvaluateAnotherSalonFormProps) => {
   const [content, setContent] = useState('');
   const [images, setImages] = useState(IMAGES || []);
 
@@ -31,7 +35,6 @@ const EvaluateAnotherSalonForm: React.FC<
     let currentImages = [...images];
     currentImages.splice(index, 1);
     setImages([...currentImages]);
-    // formik.setFieldValue('images', images);
   };
 
   return (

@@ -1,20 +1,23 @@
-import {useNavigation} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import ButtonAwareKeyboard from '../../components/ButtonAwareKeyboard';
 import KeyboardContainer from '../../components/KeyboardContainer';
-import EvaluateAnotherSalonCard from '../../components/SalonCentre/EvaluateAnotherSalonCard';
 
-const EvaluateAnotherSalon: React.FC<EvaluateAnotherSalonProps> = ({}) => {
-  const {navigate} = useNavigation<HomeScreenNavigationProp>();
+type EvaluateAnotherSalonProps = NativeStackScreenProps<
+  RootStackParamList,
+  'EvaluateAnotherSalon'
+>;
+
+const EvaluateAnotherSalon = ({navigation}: EvaluateAnotherSalonProps) => {
   const EvaluateAnotherSalonForm = () => {
-    navigate('EvaluateAnotherSalonForm', {});
+    navigation.navigate('EvaluateAnotherSalonForm', {});
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardContainer style={styles.keyboardContainer}>
-        <EvaluateAnotherSalonCard />
+        {/* <EvaluateAnotherSalonCard /> */}
       </KeyboardContainer>
       <ButtonAwareKeyboard
         label={'Gửi đánh giá'}

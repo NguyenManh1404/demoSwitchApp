@@ -1,5 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
-import {useNavigation} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
@@ -17,10 +17,11 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 const salonCentreRef = firestore().collection('BeautySalons');
 
-const MapViewCarousel: React.FC<MapViewProps> = ({}) => {
+type MapViewProps = NativeStackScreenProps<RootStackParamList, 'MapView'>;
+
+const MapViewCarousel = ({navigation}: MapViewProps) => {
   const mapRef = useRef<MapView>(null);
   const carouselRef = useRef<Carousel<ISalonCenter>>(null);
-  const {navigate} = useNavigation<HomeScreenNavigationProp>();
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
@@ -51,7 +52,17 @@ const MapViewCarousel: React.FC<MapViewProps> = ({}) => {
   };
 
   const navigateToSalonDetail = (item: ISalonCenter) => {
-    navigate('BeautySalonDetail', {item: item});
+    navigation.navigate('BeautySalonDetail', {item});
+  };
+
+  const moveToSalon = () => {
+    navigation.navigate('BeautySalons', {});
+  };
+
+  const moveToDocument = () => {
+    navigation.navigate('Document', {
+      title: 'Văn bản quy định',
+    });
   };
 
   useEffect(() => {
@@ -135,7 +146,10 @@ const MapViewCarousel: React.FC<MapViewProps> = ({}) => {
           />
         </View>
       </View>
-      <BottomTab data={centres} />
+      <BottomTab
+        onMoveToDocument={moveToDocument}
+        onMoveToSalon={moveToSalon}
+      />
     </SafeAreaView>
   );
 };

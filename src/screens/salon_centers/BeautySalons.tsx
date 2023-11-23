@@ -1,8 +1,8 @@
 import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
-import {useNavigation} from '@react-navigation/native';
 
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
@@ -28,8 +28,12 @@ import {
   SCREEN_WIDTH,
 } from '../../utils/constants';
 
-const BeautySalons: React.FC<BeautySalonsProps> = ({}) => {
-  const {navigate} = useNavigation<HomeScreenNavigationProp>();
+type BeautySalonsProps = NativeStackScreenProps<
+  RootStackParamList,
+  'BeautySalons'
+>;
+
+const BeautySalons = ({navigation}: BeautySalonsProps) => {
   const [filterSelected, setFilterSelected] = useState(ACTION_ITEM[0]);
 
   const [centres, setCenters] = useState<ISalonCenter[]>([]);
@@ -94,10 +98,10 @@ const BeautySalons: React.FC<BeautySalonsProps> = ({}) => {
   });
 
   const navigateToEvaluateAnotherSalon = () => {
-    navigate('EvaluateAnotherSalon');
+    navigation.navigate('EvaluateAnotherSalon', {});
   };
   const navigateToSalonDetail = (item: ISalonCenter) => {
-    navigate('BeautySalonDetail', {item: item});
+    navigation.navigate('BeautySalonDetail', {item: item});
   };
 
   const renderItem = ({item, index}: {item: ISalonCenter; index: number}) => {
