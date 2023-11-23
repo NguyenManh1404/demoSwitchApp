@@ -78,7 +78,6 @@ const BeautySalons: React.FC<BeautySalonsProps> = ({}) => {
           );
           setCenters(searchItems);
         } else {
-          console.log('vaoday aaaa');
           setCenters(salonCentreData);
         }
       } catch (error) {}
