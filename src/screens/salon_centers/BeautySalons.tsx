@@ -2,19 +2,18 @@ import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
 
+import {DefaultTheme} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
-  SafeAreaView,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import BottomActionSheet from '../../components/BottomActionSheet';
-import KeyboardContainer from '../../components/KeyboardContainer';
 import SalonCard from '../../components/SalonCard';
 import Text from '../../components/Text';
 import {useHeaderOptions} from '../../hooks/useHeaderOptions';
@@ -75,7 +74,7 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
         });
 
         if (searchText.length > 0) {
-          const searchItems = await salonCentreData.filter(e =>
+          const searchItems = salonCentreData.filter(e =>
             normalizeString(e.BusinessName.toLowerCase()).includes(
               normalizeString(searchText.toLowerCase()),
             ),
@@ -106,13 +105,14 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
 
   const renderItem = ({item, index}: {item: ISalonCenter; index: number}) => {
     return (
-      <SalonCard
-        key={index}
-        item={item}
-        index={index}
-        onPress={navigateToSalonDetail}
-        isShowValuation={true}
-      />
+      <View key={index} style={styles.salonItemContainer}>
+        <SalonCard
+          item={item}
+          index={index}
+          onPress={navigateToSalonDetail}
+          isShowValuation={true}
+        />
+      </View>
     );
   };
 
@@ -140,64 +140,72 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.searchAndFilter}>
-        <View style={styles.searchView}>
-          <Image source={APP_IMAGES.icSearch} style={styles.icSearch} />
-          <TextInput
-            onChangeText={text => onChangeText(text)}
-            placeholder="Tìm kiếm cơ sở thẩm mỹ"
-            placeholderTextColor={APP_COLORS.placeholderText}
-            style={styles.textInput}
-            value={searchText}
-          />
-          {searchText.length > 0 && (
-            <TouchableOpacity onPress={handleClear} hitSlop={HIT_SLOP}>
-              <Image source={APP_IMAGES.icCloseText} />
+    <View style={styles.flex}>
+      <FlatList
+        data={centres || []}
+        renderItem={renderItem}
+        stickyHeaderIndices={[0]}
+        ListHeaderComponent={
+          <View style={styles.headerContainer}>
+            <View style={styles.searchAndFilter}>
+              <View style={styles.searchView}>
+                <Image source={APP_IMAGES.icSearch} style={styles.icSearch} />
+                <TextInput
+                  onChangeText={text => onChangeText(text)}
+                  placeholder="Tìm kiếm cơ sở thẩm mỹ"
+                  placeholderTextColor={APP_COLORS.placeholderText}
+                  style={styles.textInput}
+                  value={searchText}
+                />
+                {searchText.length > 0 && (
+                  <TouchableOpacity onPress={handleClear} hitSlop={HIT_SLOP}>
+                    <Image source={APP_IMAGES.icCloseText} />
+                  </TouchableOpacity>
+                )}
+              </View>
+              <TouchableOpacity
+                style={styles.filterBtn}
+                onPress={showActionSheet}>
+                <Text
+                  type="bold-12"
+                  color={APP_COLORS.primary}
+                  numberOfLines={1}
+                  style={styles.filterTxt}>
+                  {filterSelected?.name}
+                </Text>
+                <Image source={APP_IMAGES.icDown} />
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              style={styles.anotherSalonBtn}
+              onPress={navigateToEvaluateAnotherSalon}>
+              <Text type="bold-16">Đánh giá về cơ sở khác</Text>
+              <Image source={APP_IMAGES.icChevronRight} />
             </TouchableOpacity>
-          )}
-        </View>
-        <TouchableOpacity style={styles.filterBtn} onPress={showActionSheet}>
-          <Text
-            type="bold-12"
-            color={APP_COLORS.primary}
-            numberOfLines={1}
-            style={styles.filterTxt}>
-            {filterSelected?.name}
-          </Text>
-          <Image source={APP_IMAGES.icDown} />
-        </TouchableOpacity>
-      </View>
-      <KeyboardContainer style={styles.keyboardContainer}>
-        <TouchableOpacity
-          style={styles.anotherSalonBtn}
-          onPress={navigateToEvaluateAnotherSalon}>
-          <Text type="bold-16">Đánh giá về cơ sở khác</Text>
-          <Image source={APP_IMAGES.icChevronRight} />
-        </TouchableOpacity>
+          </View>
+        }
+      />
 
-        <FlatList
-          data={centres || []}
-          renderItem={renderItem}
-          scrollEnabled={false}
-        />
-        <BottomActionSheet
-          isVisible={isActionSheetVisible}
-          onClose={hideActionSheet}
-          onActionPress={handleActionPress}
-          filterSelected={filterSelected}
-        />
-      </KeyboardContainer>
-    </SafeAreaView>
+      <BottomActionSheet
+        isVisible={isActionSheetVisible}
+        onClose={hideActionSheet}
+        onActionPress={handleActionPress}
+        filterSelected={filterSelected}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
   SalonCard: {
     marginBottom: 12,
   },
   container: {
     flex: 1,
+    alignItems: 'center',
   },
   keyboardContainer: {
     paddingHorizontal: 18,
@@ -209,11 +217,10 @@ const styles = StyleSheet.create({
     backgroundColor: APP_COLORS.white,
     padding: 12,
     borderRadius: 12,
-    marginBottom: 18,
+    marginTop: 18,
   },
   searchAndFilter: {
     flexDirection: 'row',
-    margin: 18,
   },
   searchView: {
     width: SCREEN_WIDTH / 2 + 20,
@@ -242,6 +249,13 @@ const styles = StyleSheet.create({
   },
   filterTxt: {
     flex: 1,
+  },
+  headerContainer: {
+    padding: 18,
+    backgroundColor: DefaultTheme.colors.background,
+  },
+  salonItemContainer: {
+    alignItems: 'center',
   },
 });
 

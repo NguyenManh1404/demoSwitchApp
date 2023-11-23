@@ -67,7 +67,10 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
   });
 
   const moveToBeautySalonReview = () => {
-    navigation.navigate('BeautySalonReview', {item: item});
+    navigation.navigate('BeautySalonReview', {
+      item: item,
+      title: 'Gửi góp ý, đánh giá',
+    });
   };
 
   return (
