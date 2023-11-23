@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     backgroundColor: APP_COLORS.actionSheetModal,
   },
   actionSheetContainer: {
-    backgroundColor: 'white',
+    backgroundColor: APP_COLORS.white,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 16,
@@ -73,12 +73,7 @@ const styles = StyleSheet.create({
   actionSheetItem: {
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#CCCCCC',
-  },
-  cancelText: {
-    padding: 15,
-    textAlign: 'center',
-    color: 'blue',
+    borderBottomColor: APP_COLORS.border,
   },
   actionSheetHeader: {
     flexDirection: 'row',

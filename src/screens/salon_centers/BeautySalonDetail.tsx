@@ -142,37 +142,9 @@ const styles = StyleSheet.create({
   keyboardContainer: {
     padding: 12,
   },
-
-  avatar: {
-    width: 56,
-    height: 56,
-    marginRight: 12,
-  },
-  nameAddressView: {
-    flex: 1,
-  },
-  reviewView: {
-    flexDirection: 'row',
-    marginVertical: 8,
-  },
-  nameText: {
-    lineHeight: 24,
-  },
-  icCheck: {width: 18, height: 18, marginRight: 5},
-  btnReview: {
-    backgroundColor: APP_COLORS.grayBtnReview,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    width: SCREEN_WIDTH / 3.5,
-    borderRadius: 8,
-  },
   titleCard: {
     marginTop: 18,
     marginBottom: 8,
-  },
-  infoOffice: {},
-  detailItemTxt: {
-    lineHeight: 22,
   },
   infoSalonView: {
     padding: 12,

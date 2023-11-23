@@ -14,6 +14,8 @@ const APP_COLORS = {
   placeholderText: '#6C6F93',
   borderInputSearch: '#D6D6D6',
   actionSheetModal: 'rgba(30, 30, 30, 0.80)',
+  modalBackground: 'rgba(36, 31, 31, 0.78)',
+  border: '#CCCCCC',
 };
 
 export {APP_COLORS};

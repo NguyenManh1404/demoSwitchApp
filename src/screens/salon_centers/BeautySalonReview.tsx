@@ -131,34 +131,6 @@ const styles = StyleSheet.create({
   keyboardContainer: {
     padding: 12,
   },
-  avatar: {
-    width: 56,
-    height: 56,
-    marginRight: 12,
-  },
-  nameAddressView: {
-    flex: 1,
-  },
-  reviewView: {
-    flexDirection: 'row',
-    marginVertical: 8,
-  },
-  nameText: {
-    lineHeight: 24,
-  },
-  icLocation: {
-    width: 18,
-    height: 18,
-    marginRight: 7,
-  },
-  addressView: {
-    flexDirection: 'row',
-    marginTop: 8,
-  },
-  FormattedAddressTxt: {
-    flex: 1,
-  },
-
   inputReview: {
     marginTop: 18,
     padding: 12,
@@ -198,7 +170,6 @@ const styles = StyleSheet.create({
   input: {
     marginBottom: 30,
   },
-  textInputView: {},
   uploadImageBtn: {
     flexDirection: 'row',
     padding: 8,
@@ -238,7 +209,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalView: {
-    backgroundColor: 'rgba(36, 31, 31, 0.78)',
+    backgroundColor: APP_COLORS.modalBackground,
     padding: 12,
     borderRadius: 10,
     width: SCREEN_WIDTH - 100,

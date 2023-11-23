@@ -108,10 +108,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 8,
   },
-  contentItem: {
-    marginTop: 8,
-    marginBottom: 12,
-  },
   moreLessBtn: {
     alignSelf: 'flex-end',
     marginBottom: 12,

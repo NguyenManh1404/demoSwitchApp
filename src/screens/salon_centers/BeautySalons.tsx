@@ -200,16 +200,6 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
-  SalonCard: {
-    marginBottom: 12,
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  keyboardContainer: {
-    paddingHorizontal: 18,
-  },
   anotherSalonBtn: {
     flexDirection: 'row',
     justifyContent: 'space-between',

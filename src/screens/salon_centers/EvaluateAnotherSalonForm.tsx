@@ -148,13 +148,6 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  textInputStyle: {
-    padding: 8,
-    borderColor: APP_COLORS.borderInput,
-    borderWidth: 1,
-    borderRadius: 8,
-    marginBottom: 12,
-  },
   titleView: {
     marginBottom: 12,
   },

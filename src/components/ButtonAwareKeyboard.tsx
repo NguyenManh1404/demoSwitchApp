@@ -1,7 +1,11 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
-import {ActivityIndicator} from 'react-native';
 import {APP_COLORS} from '../themes/colors';
 import FooterAwareKeyboard from './FooterAwareKeyboard';
 import Text from './Text';
