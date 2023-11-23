@@ -108,10 +108,10 @@ const MapViewCarousel = ({navigation}: MapViewProps) => {
           showsUserLocation
           style={styles.container}
           initialRegion={{
-            latitude: 16.07688, // Replace with the actual latitude for Hải Châu, Đà Nẵng, Việt Nam
-            longitude: 108.22415, // Replace with the actual longitude for Hải Châu, Đà Nẵng, Việt Nam
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
+            latitude: 16.070977, // Replace with the actual latitude for Hải Châu, Đà Nẵng, Việt Nam
+            longitude: 108.2210014, // Replace with the actual longitude for Hải Châu, Đà Nẵng, Việt Nam
+            latitudeDelta: LATITUDE_DELTA * 3,
+            longitudeDelta: LONGITUDE_DELTA * 5,
           }}>
           {centres?.map((item, index) => {
             return (
