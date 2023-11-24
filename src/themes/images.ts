@@ -17,6 +17,7 @@ import icMaker from '../assets/images/icMaker.png';
 import icMakerActive from '../assets/images/icMakerActive.png';
 import icModalCheck from '../assets/images/icModalCheck.png';
 import icSearch from '../assets/images/icSearch.png';
+import icSearchNoResult from '../assets/images/icSearchNoResult.png';
 import icUpload from '../assets/images/icUpload.png';
 
 const APP_IMAGES = {
@@ -40,6 +41,7 @@ const APP_IMAGES = {
   icChevronRight,
   icCloseModal,
   icCloseText,
+  icSearchNoResult,
 };
 
 export {APP_IMAGES};

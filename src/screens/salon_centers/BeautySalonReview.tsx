@@ -77,8 +77,8 @@ const BeautySalonReview = ({route}: BeautySalonReviewProps) => {
             <View style={styles.imageReviewView}>
               {images.map((image, i) => {
                 return (
-                  <View style={styles.imageView}>
-                    <Image source={image} style={styles.imageReview} key={i} />
+                  <View style={styles.imageView} key={i}>
+                    <Image source={image} style={styles.imageReview} />
                     <TouchableOpacity
                       hitSlop={HIT_SLOP}
                       style={styles.icCloseBtn}

@@ -42,6 +42,7 @@ interface ISalonCard {
   isShowValuation?: boolean;
   isShowAddress?: boolean;
   isFromMapView?: boolean;
+  isFromDetail?: boolean;
   onPress?: (item: ISalonCenter) => void;
 }
 
@@ -96,4 +97,32 @@ interface IInputEvaluate {
 interface IActionSheetItem {
   id: number;
   name: string;
+}
+
+interface IDocumentCardProps {
+  item: IDocumentItem;
+}
+
+interface IDocumentItem {
+  id?: string;
+  Link: string;
+  STT: string;
+  content: string;
+  name: string;
+}
+
+interface IEvaluateAnotherSalonCardProps {}
+
+interface IEvaluateAnotherItem {
+  idReview: string;
+  timeCreated: string;
+  centerName: string;
+  address: string;
+  reviewContent: string;
+  images: ImageSourcePropType[];
+}
+
+interface IListEmptyComponentProps {
+  image: ImageSourcePropType;
+  title: string;
 }

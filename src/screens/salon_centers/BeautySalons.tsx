@@ -8,12 +8,14 @@ import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
+  SafeAreaView,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import BottomActionSheet from '../../components/BottomActionSheet';
+import ListEmptyComponent from '../../components/ListEmptyComponent';
 import SalonCard from '../../components/SalonCard';
 import Text from '../../components/Text';
 import {useHeaderOptions} from '../../hooks/useHeaderOptions';
@@ -97,7 +99,9 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
   });
 
   const navigateToEvaluateAnotherSalon = () => {
-    navigation.navigate('EvaluateAnotherSalon', {});
+    navigation.navigate('EvaluateAnotherSalon', {
+      title: 'Đánh giá về cơ sở khác',
+    });
   };
   const navigateToSalonDetail = (item: ISalonCenter) => {
     navigation.navigate('BeautySalonDetail', {item: item});
@@ -135,7 +139,6 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
   };
 
   const handleClear = () => {
-    // Clear the input value
     setSearchText(EMPTY_STRING);
   };
 
@@ -145,6 +148,12 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
         data={centres || []}
         renderItem={renderItem}
         stickyHeaderIndices={[0]}
+        ListEmptyComponent={
+          <ListEmptyComponent
+            image={APP_IMAGES.icSearchNoResult}
+            title={'Rất tiếc, không có dữ liệu hiển thị'}
+          />
+        }
         ListHeaderComponent={
           <View style={styles.headerContainer}>
             <View style={styles.searchAndFilter}>
@@ -186,6 +195,7 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
         }
       />
 
+      <SafeAreaView />
       <BottomActionSheet
         isVisible={isActionSheetVisible}
         onClose={hideActionSheet}
@@ -200,6 +210,7 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
+
   anotherSalonBtn: {
     flexDirection: 'row',
     justifyContent: 'space-between',

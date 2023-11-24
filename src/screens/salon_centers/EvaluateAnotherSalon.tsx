@@ -1,8 +1,63 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import ButtonAwareKeyboard from '../../components/ButtonAwareKeyboard';
-import KeyboardContainer from '../../components/KeyboardContainer';
+import ListEmptyComponent from '../../components/ListEmptyComponent';
+import EvaluateAnotherSalonCard from '../../components/SalonCentre/EvaluateAnotherSalonCard';
+import {APP_IMAGES} from '../../themes/images';
+
+const ReviewData = [
+  {
+    idReview: '1',
+    timeCreated: '25/04/2005',
+    centerName: 'Thẩm mỹ viện Molina',
+    address:
+      '291 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê, TP Đà Nẵng',
+    reviewContent:
+      'Tôi đã trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trảiqua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này.',
+    images: [APP_IMAGES.icAvatar, APP_IMAGES.icAvatar, APP_IMAGES.icAvatar],
+  },
+  {
+    idReview: '2',
+    timeCreated: '25/04/2005',
+    centerName: 'Thẩm mỹ viện Molina',
+    address:
+      '291 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê, TP Đà Nẵng',
+    reviewContent:
+      'Tôi đã trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trảiqua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này.',
+    images: [APP_IMAGES.icAvatar, APP_IMAGES.icAvatar, APP_IMAGES.icAvatar],
+  },
+  {
+    idReview: '3',
+    timeCreated: '25/04/2005',
+    centerName: 'Thẩm mỹ viện Molina',
+    address:
+      '291 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê, TP Đà Nẵng',
+    reviewContent:
+      'Tôi đã trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trảiqua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này.',
+    images: [APP_IMAGES.icAvatar, APP_IMAGES.icAvatar, APP_IMAGES.icAvatar],
+  },
+  {
+    idReview: '4',
+    timeCreated: '25/04/2005',
+    centerName: 'Thẩm mỹ viện Molina',
+    address:
+      '291 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê, TP Đà Nẵng',
+    reviewContent:
+      'Tôi đã trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trảiqua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này.',
+    images: [APP_IMAGES.icAvatar, APP_IMAGES.icAvatar, APP_IMAGES.icAvatar],
+  },
+  {
+    idReview: '5',
+    timeCreated: '25/04/2005',
+    centerName: 'Thẩm mỹ viện Molina',
+    address:
+      '291 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê, TP Đà Nẵng',
+    reviewContent:
+      'Tôi đã trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trảiqua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này.',
+    images: [APP_IMAGES.icAvatar, APP_IMAGES.icAvatar, APP_IMAGES.icAvatar],
+  },
+];
 
 type EvaluateAnotherSalonProps = NativeStackScreenProps<
   RootStackParamList,
@@ -14,16 +69,39 @@ const EvaluateAnotherSalon = ({navigation}: EvaluateAnotherSalonProps) => {
     navigation.navigate('EvaluateAnotherSalonForm', {});
   };
 
+  const renderReviewItem = ({
+    item,
+    index,
+  }: {
+    item: IEvaluateAnotherItem;
+    index: number;
+  }) => {
+    return (
+      <View style={styles.itemView} key={index}>
+        <EvaluateAnotherSalonCard item={item} index={index} />
+      </View>
+    );
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardContainer style={styles.keyboardContainer}>
-        {/* <EvaluateAnotherSalonCard /> */}
-      </KeyboardContainer>
+    <View style={styles.container}>
+      <FlatList
+        data={ReviewData || []}
+        renderItem={renderReviewItem}
+        keyExtractor={(__, index) => `${index}`}
+        ListEmptyComponent={
+          <ListEmptyComponent
+            image={APP_IMAGES.icSearchNoResult}
+            title={'Rất tiếc, không có dữ liệu hiển thị'}
+          />
+        }
+      />
+
       <ButtonAwareKeyboard
         label={'Gửi đánh giá'}
         onPress={EvaluateAnotherSalonForm}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -32,8 +110,9 @@ export default EvaluateAnotherSalon;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingVertical: 18,
   },
-  keyboardContainer: {
-    padding: 12,
+  itemView: {
+    alignItems: 'center',
   },
 });

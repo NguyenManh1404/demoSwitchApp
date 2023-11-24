@@ -1,12 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
-import {
-  Platform,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
 import ButtonAwareKeyboard from '../../components/ButtonAwareKeyboard';
 import KeyboardContainer from '../../components/KeyboardContainer';
 import SalonCard from '../../components/SalonCard';
@@ -74,9 +68,9 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <KeyboardContainer style={styles.keyboardContainer}>
-        <SalonCard item={item} isShowAddress={false} isShowValuation={true} />
+        <SalonCard item={item} isShowValuation={true} isFromDetail={true} />
         <View style={styles.titleCard}>
           <Text color={APP_COLORS.titleCard} type="bold-14">
             Thông tin cơ sở
@@ -129,7 +123,7 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
         label={'Gửi đánh giá'}
         onPress={moveToBeautySalonReview}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

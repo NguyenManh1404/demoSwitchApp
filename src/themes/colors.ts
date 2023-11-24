@@ -16,6 +16,7 @@ const APP_COLORS = {
   actionSheetModal: 'rgba(30, 30, 30, 0.80)',
   modalBackground: 'rgba(36, 31, 31, 0.78)',
   border: '#CCCCCC',
+  neutral3: '#A0A3BD',
 };
 
 export {APP_COLORS};

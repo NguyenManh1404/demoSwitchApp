@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {Image} from 'react-native';
 import {Marker} from 'react-native-maps';
 import {APP_IMAGES} from '../../themes/images';
 
@@ -34,37 +34,16 @@ const MakerItem: React.FC<IMakerItem> = ({
       {IsClinic ? (
         <Image
           source={
-            isSelected ? APP_IMAGES.icHaiChau : APP_IMAGES.icHaiChauActive
+            isSelected ? APP_IMAGES.icHaiChauActive : APP_IMAGES.icHaiChau
           }
-          style={isSelected ? styles.markerHaiChau : styles.markerHaiChauActive}
         />
       ) : (
         <Image
-          source={isSelected ? APP_IMAGES.icMaker : APP_IMAGES.icMakerActive}
-          style={isSelected ? styles.marker : styles.markerActive}
+          source={isSelected ? APP_IMAGES.icMakerActive : APP_IMAGES.icMaker}
         />
       )}
     </Marker>
   );
 };
-
-const styles = StyleSheet.create({
-  marker: {
-    width: 21,
-    height: 25,
-  },
-  markerActive: {
-    width: 21,
-    height: 30,
-  },
-  markerHaiChau: {
-    width: 20,
-    height: 25,
-  },
-  markerHaiChauActive: {
-    width: 24,
-    height: 30,
-  },
-});
 
 export default MakerItem;

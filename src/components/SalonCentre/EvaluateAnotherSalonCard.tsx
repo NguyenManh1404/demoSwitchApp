@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import {APP_COLORS} from '../../themes/colors';
+
 import {HIT_SLOP, IS_ANDROID, SCREEN_WIDTH} from '../../utils/constants';
 import Text from '../Text';
 
@@ -16,7 +17,7 @@ const EvaluateAnotherSalonCard = ({
   item,
   index,
 }: {
-  item: any;
+  item: IEvaluateAnotherItem;
   index: number;
 }) => {
   const [textShown, setTextShown] = useState(-1);
@@ -34,20 +35,18 @@ const EvaluateAnotherSalonCard = ({
   return (
     <View style={styles.evaluateAnotherCard}>
       <View style={styles.headerItem}>
-        <Text type="bold-14">Mã góp ý: 100</Text>
+        <Text type="bold-14">Mã góp ý: {item?.idReview}</Text>
         <Text color={APP_COLORS.gray2} type="regular-13">
-          25/04/2005
+          {item?.timeCreated}
         </Text>
       </View>
       <View style={styles.field}>
         <Text type="bold-14">Tên cơ sở</Text>
-        <Text style={styles.infoField}>Thẩm mỹ viện Molina</Text>
+        <Text style={styles.infoField}>{item?.centerName}</Text>
       </View>
       <View style={styles.field}>
         <Text type="bold-14">Địa chỉ cơ sở</Text>
-        <Text style={styles.infoField}>
-          291 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê, TP Đà Nẵng
-        </Text>
+        <Text style={styles.infoField}>{item?.address}</Text>
       </View>
       <View style={styles.field}>
         <Text type="bold-14">Nội dung góp ý, đánh giá</Text>
@@ -55,10 +54,7 @@ const EvaluateAnotherSalonCard = ({
           style={styles.infoField}
           numberOfLines={textShown === index ? undefined : 3}
           onTextLayout={onTextLayOut}>
-          Tôi đã trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã
-          trải qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trải
-          qua trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này. ôi đã trải qua
-          trải nghiệm không dễ dàng tại cơ sở thẩm mỹ này.
+          {item?.reviewContent}
         </Text>
       </View>
 
@@ -89,6 +85,7 @@ const styles = StyleSheet.create({
     padding: 12,
     backgroundColor: APP_COLORS.white,
     borderRadius: 12,
+    marginBottom: 12,
     overflow: IS_ANDROID ? 'hidden' : undefined,
     borderWidth: 1,
     borderColor: APP_COLORS.greyL6,

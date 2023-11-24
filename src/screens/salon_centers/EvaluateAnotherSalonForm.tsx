@@ -3,12 +3,12 @@ import React, {useState} from 'react';
 import {
   Image,
   Platform,
-  SafeAreaView,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
+import ButtonAwareKeyboard from '../../components/ButtonAwareKeyboard';
 import KeyboardContainer from '../../components/KeyboardContainer';
 import InputEvaluate from '../../components/SalonCentre/InputEvaluate';
 import Text from '../../components/Text';
@@ -38,7 +38,7 @@ const EvaluateAnotherSalonForm = ({}: EvaluateAnotherSalonFormProps) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <KeyboardContainer style={styles.keyboardContainer}>
         <View style={styles.formCard}>
           <View style={styles.titleView}>
@@ -117,7 +117,8 @@ const EvaluateAnotherSalonForm = ({}: EvaluateAnotherSalonFormProps) => {
           </View>
         </View>
       </KeyboardContainer>
-    </SafeAreaView>
+      <ButtonAwareKeyboard label={'Gửi'} onPress={() => {}} />
+    </View>
   );
 };
 
