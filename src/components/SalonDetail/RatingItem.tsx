@@ -18,9 +18,9 @@ const RatingItem = ({item, index}: {item: IRatingItem; index: number}) => {
     setTextShown(prevIndex => (prevIndex === indexItem ? -1 : indexItem));
   };
 
-  const onTextLayOut = async (e: {nativeEvent: TextLayoutEventData}) => {
+  const onTextLayOut = (e: {nativeEvent: TextLayoutEventData}) => {
     if (e.nativeEvent.lines.length >= 3) {
-      await setShowBottom(true);
+      setShowBottom(true);
     }
   };
 
@@ -29,7 +29,7 @@ const RatingItem = ({item, index}: {item: IRatingItem; index: number}) => {
       <View style={styles.headerItem}>
         <Text type="bold-14">Mã góp ý: {item?.id}</Text>
         <Text color={APP_COLORS.gray2} type="regular-13">
-          {item?.time}
+          {item?.createdAt}
         </Text>
       </View>
 

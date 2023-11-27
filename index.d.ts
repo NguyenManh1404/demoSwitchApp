@@ -73,7 +73,7 @@ interface IInfoDetailSalonItem {
 interface IRatingItem {
   id: string;
   images?: ImageSourcePropType[];
-  time: string;
+  createdAt: string;
   content: string;
 }
 

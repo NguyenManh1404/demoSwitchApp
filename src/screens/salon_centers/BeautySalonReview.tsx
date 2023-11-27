@@ -1,5 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
+import {Controller, useForm} from 'react-hook-form';
 import {
   Image,
   Modal,
@@ -16,7 +17,12 @@ import SalonCard from '../../components/SalonCard';
 import Text from '../../components/Text';
 import {APP_COLORS} from '../../themes/colors';
 import {APP_IMAGES} from '../../themes/images';
-import {HIT_SLOP, IS_ANDROID, SCREEN_WIDTH} from '../../utils/constants';
+import {
+  EMPTY_STRING,
+  HIT_SLOP,
+  IS_ANDROID,
+  SCREEN_WIDTH,
+} from '../../utils/constants';
 
 const IMAGES = [APP_IMAGES.icAvatar, APP_IMAGES.icAvatar, APP_IMAGES.icAvatar];
 
@@ -25,20 +31,49 @@ type BeautySalonReviewProps = NativeStackScreenProps<
   'BeautySalonReview'
 >;
 
+// const FORM_FIELDS = {
+//   ID_SALON: 'idSalon',
+//   ID_REVIEW: 'idReview',
+//   TITLE: 'title',
+//   CONTENT: 'content',
+//   IMAGES: 'images',
+//   CREATED_AT: 'createdAt',
+// };
+
 const BeautySalonReview = ({route}: BeautySalonReviewProps) => {
   const {item} = route?.params;
-  const [reviewValue, setReviewValue] = useState('');
-  const [images, setImages] = useState(IMAGES || []);
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const handleTextChange = (text: string) => {
-    setReviewValue(text);
+  const {
+    control,
+    handleSubmit,
+    // formState: {errors},
+    setValue,
+    watch,
+  } = useForm({
+    defaultValues: {
+      idSalon: item?.id,
+      idReview: '1234',
+      title: EMPTY_STRING,
+      content: EMPTY_STRING,
+      images: IMAGES,
+      createdAt: new Date(),
+    },
+  });
+
+  const content = watch('content');
+  const images = watch('images');
+
+  const onSubmit = (data: any) => {
+    console.log('🚀 ~ file: BeautySalonReview.tsx:67 ~ onSubmit ~ data:', data);
+    // loginByEmail(values);
+    toggleModal();
   };
 
   const removeImage = (index: number) => {
     let currentImages = [...images];
     currentImages.splice(index, 1);
-    setImages([...currentImages]);
+    setValue('images', [...currentImages]);
   };
 
   const toggleModal = () => {
@@ -52,9 +87,8 @@ const BeautySalonReview = ({route}: BeautySalonReviewProps) => {
     <SafeAreaView style={styles.container}>
       <KeyboardContainer style={styles.keyboardContainer}>
         <SalonCard item={item} />
-
         <View style={styles.inputReview}>
-          <Text type={'bold-16'}>
+          <Text type={'bold-16'} style={styles.titleTxt}>
             Nội dung góp ý, đánh giá
             <Text type={'bold-16'} color={APP_COLORS.errorDefault}>
               {' '}
@@ -62,16 +96,54 @@ const BeautySalonReview = ({route}: BeautySalonReviewProps) => {
             </Text>
           </Text>
           <View style={styles.inputView}>
-            <TextInput
-              onChangeText={handleTextChange}
-              multiline
-              placeholder="Vui lòng nhập nội dung mà bạn muốn góp ý, đánh giá về cơ sở này"
-              placeholderTextColor={APP_COLORS.placeholderText}
-              style={styles.input}
+            <Controller
+              name="title"
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <TextInput
+                  placeholderTextColor={APP_COLORS.placeholderText}
+                  placeholder="Tiêu đề *"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
             />
-            <Text style={styles.numberCharacter}>
-              {reviewValue?.length}/255
-            </Text>
+          </View>
+          <View style={styles.inputView}>
+            <TextInput
+              editable={false}
+              placeholderTextColor={APP_COLORS.placeholderText}
+              defaultValue={item?.FormattedAddress}
+              multiline
+            />
+          </View>
+
+          <View style={styles.multilineInputView}>
+            <Controller
+              name="content"
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <TextInput
+                  multiline
+                  maxLength={255}
+                  placeholder="Vui lòng nhập nội dung mà bạn muốn góp ý, đánh giá về cơ sở này *"
+                  placeholderTextColor={APP_COLORS.placeholderText}
+                  style={styles.input}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+            />
+
+            <Text style={styles.numberCharacter}>{content?.length}/255</Text>
           </View>
           {images.length > 0 && (
             <View style={styles.imageReviewView}>
@@ -91,13 +163,13 @@ const BeautySalonReview = ({route}: BeautySalonReviewProps) => {
             </View>
           )}
 
-          <TouchableOpacity onPress={() => {}} style={styles.uploadImageBtn}>
+          <TouchableOpacity style={styles.uploadImageBtn}>
             <Image source={APP_IMAGES.icUpload} style={styles.icUpload} />
             <Text>Tải hình ảnh</Text>
           </TouchableOpacity>
         </View>
       </KeyboardContainer>
-      <ButtonAwareKeyboard label={'Gửi'} onPress={toggleModal} />
+      <ButtonAwareKeyboard label={'Gửi'} onPress={handleSubmit(onSubmit)} />
       <Modal
         animationType="fade"
         transparent={true}
@@ -151,11 +223,20 @@ const styles = StyleSheet.create({
       },
     }),
   },
+
   inputView: {
     borderWidth: 1,
     borderRadius: 8,
     padding: 8,
-    marginVertical: 18,
+    borderColor: APP_COLORS.borderInput,
+    lineHeight: 20,
+    marginBottom: 12,
+  },
+  multilineInputView: {
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 18,
     borderColor: APP_COLORS.borderInput,
     minHeight: 107,
     lineHeight: 20,
@@ -218,5 +299,8 @@ const styles = StyleSheet.create({
   modalMessage: {
     width: SCREEN_WIDTH / 2,
     lineHeight: 22,
+  },
+  titleTxt: {
+    marginBottom: 20,
   },
 });

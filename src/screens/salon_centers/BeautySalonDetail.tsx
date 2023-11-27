@@ -15,7 +15,7 @@ import {IS_ANDROID, SCREEN_WIDTH} from '../../utils/constants';
 const DATA_REVIEW = [
   {
     id: '1',
-    time: '25/04/2005',
+    createdAt: '25/04/2005',
     content:
       'Trách nhiệm trong việc bảo vệ tài sản và tuân thủ các quy trình bảo mật của Công ty đã được truyền đạt tới tất cả các đối tượng chưa? Nhân viên đã nắm được trách nhiệm, vai trò của mình trong việc bảo mật thông tin ở dự án hay chưa? Khi ký hợp đồng vớksjd',
 
@@ -23,14 +23,14 @@ const DATA_REVIEW = [
   },
   {
     id: '2',
-    time: '25/04/2005',
+    createdAt: '25/04/2005',
     content: 'Your long text goes here..',
 
     images: [APP_IMAGES.icAvatar, APP_IMAGES.icAvatar, APP_IMAGES.icAvatar],
   },
   {
     id: '3',
-    time: '25/04/2005',
+    createdAt: '25/04/2005',
     content:
       'Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here...',
 
@@ -38,7 +38,7 @@ const DATA_REVIEW = [
   },
   {
     id: '4',
-    time: '25/04/2005',
+    createdAt: '25/04/2005',
     content:
       'Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here... Your long text goes here...',
 
