@@ -11,7 +11,7 @@ import FooterAwareKeyboard from './FooterAwareKeyboard';
 import Text from './Text';
 
 interface ButtonAwareKeyboardProps {
-  onPress: () => void;
+  onPress?: () => void;
   label?: string;
   disabled?: boolean;
   containerStyle?: object;

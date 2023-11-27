@@ -117,7 +117,7 @@ const EvaluateAnotherSalonForm = ({}: EvaluateAnotherSalonFormProps) => {
           </View>
         </View>
       </KeyboardContainer>
-      <ButtonAwareKeyboard label="Gửi" onPress={() => {}} />
+      <ButtonAwareKeyboard label="Gửi" />
     </View>
   );
 };
