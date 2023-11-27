@@ -90,9 +90,11 @@ const Document: React.FC<DocumentProps> = ({}) => {
           <ListEmptyComponent
             image={APP_IMAGES.icSearchNoResult}
             title={'Rất tiếc, không có dữ liệu hiển thị'}
+            containerStyle={styles.listEmptyComponentStyle}
           />
         }
         stickyHeaderIndices={[0]}
+        contentContainerStyle={styles.contentContainerStyle}
         ListHeaderComponent={
           <View style={styles.listHeaderComponent}>
             <View style={styles.searchView}>
@@ -130,7 +132,12 @@ const styles = StyleSheet.create({
   itemView: {
     alignItems: 'center',
   },
-
+  contentContainerStyle: {
+    flexGrow: 1,
+  },
+  listEmptyComponentStyle: {
+    marginBottom: 100,
+  },
   searchView: {
     alignSelf: 'center',
     width: SCREEN_WIDTH - 36,

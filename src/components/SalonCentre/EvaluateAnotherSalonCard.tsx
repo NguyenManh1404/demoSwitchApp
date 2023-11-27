@@ -13,12 +13,9 @@ import {APP_COLORS} from '../../themes/colors';
 import {HIT_SLOP, IS_ANDROID, SCREEN_WIDTH} from '../../utils/constants';
 import Text from '../Text';
 
-const EvaluateAnotherSalonCard = ({
+const EvaluateAnotherSalonCard: React.FC<IEvaluateAnotherSalonCard> = ({
   item,
   index,
-}: {
-  item: IEvaluateAnotherItem;
-  index: number;
 }) => {
   const [textShown, setTextShown] = useState(-1);
   const [showBottom, setShowBottom] = useState(false);
@@ -27,9 +24,9 @@ const EvaluateAnotherSalonCard = ({
     setTextShown(prevIndex => (prevIndex === indexItem ? -1 : indexItem));
   };
 
-  const onTextLayOut = async (e: {nativeEvent: TextLayoutEventData}) => {
+  const onTextLayOut = (e: {nativeEvent: TextLayoutEventData}) => {
     if (e.nativeEvent.lines.length > 3) {
-      await setShowBottom(true);
+      setShowBottom(true);
     }
   };
   return (
@@ -37,7 +34,7 @@ const EvaluateAnotherSalonCard = ({
       <View style={styles.headerItem}>
         <Text type="bold-14">Mã góp ý: {item?.idReview}</Text>
         <Text color={APP_COLORS.gray2} type="regular-13">
-          {item?.timeCreated}
+          {item?.createdAt}
         </Text>
       </View>
       <View style={styles.field}>

@@ -9,7 +9,7 @@ import {APP_IMAGES} from '../../themes/images';
 const ReviewData = [
   {
     idReview: '1',
-    timeCreated: '25/04/2005',
+    createdAt: '25/04/2005',
     centerName: 'Thẩm mỹ viện Molina',
     address:
       '291 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê, TP Đà Nẵng',
@@ -19,7 +19,7 @@ const ReviewData = [
   },
   {
     idReview: '2',
-    timeCreated: '25/04/2005',
+    createdAt: '25/04/2005',
     centerName: 'Thẩm mỹ viện Molina',
     address:
       '291 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê, TP Đà Nẵng',
@@ -29,7 +29,7 @@ const ReviewData = [
   },
   {
     idReview: '3',
-    timeCreated: '25/04/2005',
+    createdAt: '25/04/2005',
     centerName: 'Thẩm mỹ viện Molina',
     address:
       '291 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê, TP Đà Nẵng',
@@ -39,7 +39,7 @@ const ReviewData = [
   },
   {
     idReview: '4',
-    timeCreated: '25/04/2005',
+    createdAt: '25/04/2005',
     centerName: 'Thẩm mỹ viện Molina',
     address:
       '291 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê, TP Đà Nẵng',
@@ -49,7 +49,7 @@ const ReviewData = [
   },
   {
     idReview: '5',
-    timeCreated: '25/04/2005',
+    createdAt: '25/04/2005',
     centerName: 'Thẩm mỹ viện Molina',
     address:
       '291 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê, TP Đà Nẵng',
@@ -69,12 +69,9 @@ const EvaluateAnotherSalon = ({navigation}: EvaluateAnotherSalonProps) => {
     navigation.navigate('EvaluateAnotherSalonForm', {});
   };
 
-  const renderReviewItem = ({
+  const renderReviewItem: React.FC<IEvaluateAnotherSalonCard> = ({
     item,
     index,
-  }: {
-    item: IEvaluateAnotherItem;
-    index: number;
   }) => {
     return (
       <View style={styles.itemView} key={index}>
@@ -89,6 +86,7 @@ const EvaluateAnotherSalon = ({navigation}: EvaluateAnotherSalonProps) => {
         data={ReviewData || []}
         renderItem={renderReviewItem}
         keyExtractor={(__, index) => `${index}`}
+        contentContainerStyle={styles.contentContainerStyle}
         ListEmptyComponent={
           <ListEmptyComponent
             image={APP_IMAGES.icSearchNoResult}
@@ -111,6 +109,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingVertical: 18,
+  },
+  contentContainerStyle: {
+    flexGrow: 1,
   },
   itemView: {
     alignItems: 'center',

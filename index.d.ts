@@ -115,7 +115,7 @@ interface IEvaluateAnotherSalonCardProps {}
 
 interface IEvaluateAnotherItem {
   idReview: string;
-  timeCreated: string;
+  createdAt: string;
   centerName: string;
   address: string;
   reviewContent: string;
@@ -125,6 +125,7 @@ interface IEvaluateAnotherItem {
 interface IListEmptyComponentProps {
   image: ImageSourcePropType;
   title: string;
+  containerStyle?: ViewStyle;
 }
 
 interface IActionItem {
@@ -132,4 +133,9 @@ interface IActionItem {
   isSelected: boolean;
   index: number;
   onPress: (item: IActionSheetItem) => void;
+}
+
+interface IEvaluateAnotherSalonCard {
+  item: IEvaluateAnotherItem;
+  index: number;
 }

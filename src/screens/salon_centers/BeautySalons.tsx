@@ -148,10 +148,12 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
         data={centres || []}
         renderItem={renderItem}
         stickyHeaderIndices={[0]}
+        contentContainerStyle={styles.contentContainerStyle}
         ListEmptyComponent={
           <ListEmptyComponent
             image={APP_IMAGES.icSearchNoResult}
             title={'Rất tiếc, không có dữ liệu hiển thị'}
+            containerStyle={styles.listEmptyComponentStyle}
           />
         }
         ListHeaderComponent={
@@ -210,7 +212,13 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
+  contentContainerStyle: {
+    flexGrow: 1,
+  },
 
+  listEmptyComponentStyle: {
+    marginBottom: 150,
+  },
   anotherSalonBtn: {
     flexDirection: 'row',
     justifyContent: 'space-between',
