@@ -3,6 +3,7 @@ import {Image, Modal, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {APP_COLORS} from '../themes/colors';
 import {APP_IMAGES} from '../themes/images';
 import {ACTION_ITEM, HIT_SLOP} from '../utils/constants';
+import ActionItem from './SalonCentre/ActionItem';
 import Text from './Text';
 
 const BottomActionSheet: React.FC<IBottomActionSheetProp> = ({
@@ -15,7 +16,6 @@ const BottomActionSheet: React.FC<IBottomActionSheetProp> = ({
     onActionPress(item);
     onClose();
   };
-
   return (
     <Modal
       animationType="fade"
@@ -37,17 +37,13 @@ const BottomActionSheet: React.FC<IBottomActionSheetProp> = ({
           {ACTION_ITEM.map((item, index) => {
             const isSelected = filterSelected?.id === item?.id;
             return (
-              <TouchableOpacity
-                onPress={() => handlePress(item)}
+              <ActionItem
+                item={item}
+                isSelected={isSelected}
+                index={index}
+                onPress={handlePress}
                 key={index}
-                hitSlop={HIT_SLOP}>
-                <Text
-                  style={styles.actionSheetItem}
-                  type={isSelected ? 'bold-14' : 'regular-14'}
-                  color={isSelected ? APP_COLORS.primary : APP_COLORS.neutral2}>
-                  {item?.name}
-                </Text>
-              </TouchableOpacity>
+              />
             );
           })}
         </View>
@@ -70,11 +66,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 24,
     padding: 16,
   },
-  actionSheetItem: {
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: APP_COLORS.border,
-  },
+
   actionSheetHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',

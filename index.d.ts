@@ -72,7 +72,7 @@ interface IInfoDetailSalonItem {
 
 interface IRatingItem {
   id: string;
-  images?: string[];
+  images?: ImageSourcePropType[];
   time: string;
   content: string;
 }
@@ -125,4 +125,11 @@ interface IEvaluateAnotherItem {
 interface IListEmptyComponentProps {
   image: ImageSourcePropType;
   title: string;
+}
+
+interface IActionItem {
+  item: IActionSheetItem;
+  isSelected: boolean;
+  index: number;
+  onPress: (item: IActionSheetItem) => void;
 }
