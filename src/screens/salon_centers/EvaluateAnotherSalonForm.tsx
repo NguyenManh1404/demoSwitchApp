@@ -110,14 +110,14 @@ const EvaluateAnotherSalonForm = ({}: EvaluateAnotherSalonFormProps) => {
                 })}
               </View>
             )}
-            <TouchableOpacity onPress={() => {}} style={styles.uploadImageBtn}>
+            <TouchableOpacity style={styles.uploadImageBtn}>
               <Image source={APP_IMAGES.icUpload} style={styles.icUpload} />
               <Text>Tải hình ảnh</Text>
             </TouchableOpacity>
           </View>
         </View>
       </KeyboardContainer>
-      <ButtonAwareKeyboard label={'Gửi'} onPress={() => {}} />
+      <ButtonAwareKeyboard label="Gửi" onPress={() => {}} />
     </View>
   );
 };

@@ -9,7 +9,7 @@ const ListEmptyComponent: React.FC<IListEmptyComponentProps> = ({
   containerStyle,
 }) => {
   return (
-    <View style={[styles.container, containerStyle && containerStyle]}>
+    <View style={[styles.container, containerStyle]}>
       <Image source={image} style={styles.icSearchNoResult} />
       <Text color={APP_COLORS.neutral3}>{title}</Text>
     </View>
