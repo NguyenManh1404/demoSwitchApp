@@ -73,7 +73,7 @@ interface IInfoDetailSalonItem {
 interface IRatingItem {
   id: string;
   images?: ImageSourcePropType[];
-  createdAt: string;
+  createdAt: firebase.firestore.Timestamp;
   content: string;
 }
 
@@ -133,6 +133,10 @@ interface IReviewSalon {
   formattedTime?: firebase.firestore.Timestamp;
 }
 
+interface IRatingItemProps {
+  item: IReviewSalon;
+}
+
 interface IReviewAnotherItem {
   id?: string;
   idReview: string | number;
@@ -151,4 +155,8 @@ interface IReviewAnotherItem {
 interface IEvaluateAnotherSalonCard {
   item: IReviewAnotherItem;
   index: number;
+}
+
+interface HeaderRightButtonProps {
+  onPress?: () => void;
 }

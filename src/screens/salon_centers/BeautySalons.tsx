@@ -16,6 +16,8 @@ import {
   View,
 } from 'react-native';
 import BottomActionSheet from '../../components/BottomActionSheet';
+import HeaderRightButton from '../../components/HeaderRightButton';
+import InfoModal from '../../components/InfoModal';
 import ListEmptyComponent from '../../components/ListEmptyComponent';
 import SalonCard from '../../components/SalonCard';
 import Text from '../../components/Text';
@@ -40,6 +42,7 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
 
   const [centres, setCenters] = useState<ISalonCenter[]>([]);
   const [searchText, setSearchText] = useState<string>(EMPTY_STRING);
+  const [isModalVisible, setModalVisible] = useState<boolean>(false);
 
   const salonCentreRef = firestore().collection('BeautySalons');
 
@@ -96,6 +99,8 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
   useHeaderOptions({
     options: {
       headerTitle: `Cơ sở thẩm mỹ (${centres?.length})`,
+      // eslint-disable-next-line react/no-unstable-nested-components
+      headerRight: () => <HeaderRightButton onPress={toggleModal} />,
     },
   });
 
@@ -141,6 +146,14 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
 
   const handleClear = () => {
     setSearchText(EMPTY_STRING);
+  };
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
   return (
@@ -204,6 +217,11 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
         onClose={hideActionSheet}
         onActionPress={handleActionPress}
         filterSelected={filterSelected}
+      />
+      <InfoModal
+        isModalVisible={isModalVisible}
+        toggleModal={toggleModal}
+        closeModal={closeModal}
       />
     </View>
   );

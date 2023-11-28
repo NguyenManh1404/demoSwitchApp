@@ -14,7 +14,10 @@ import {
 } from 'react-native';
 
 import DocumentCard from '../../components/Document/DocumentCard';
+import HeaderRightButton from '../../components/HeaderRightButton';
+import InfoModal from '../../components/InfoModal';
 import ListEmptyComponent from '../../components/ListEmptyComponent';
+import {useHeaderOptions} from '../../hooks/useHeaderOptions';
 import {APP_COLORS} from '../../themes/colors';
 import {normalizeString} from '../../themes/helpers';
 import {APP_IMAGES} from '../../themes/images';
@@ -27,6 +30,15 @@ const Document: React.FC<DocumentProps> = ({}) => {
 
   const [documents, setDocuments] = useState<IDocumentItem[]>([]);
   const [searchText, setSearchText] = useState<string>(EMPTY_STRING);
+  const [isModalVisible, setModalVisible] = useState<boolean>(false);
+
+  useHeaderOptions({
+    options: {
+      headerShown: true,
+      // eslint-disable-next-line react/no-unstable-nested-components
+      headerRight: () => <HeaderRightButton onPress={toggleModal} />,
+    },
+  });
 
   useEffect(() => {
     const fetchCentres = async () => {
@@ -75,6 +87,14 @@ const Document: React.FC<DocumentProps> = ({}) => {
     setSearchText(EMPTY_STRING);
   };
 
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -111,6 +131,11 @@ const Document: React.FC<DocumentProps> = ({}) => {
         }
       />
       <SafeAreaView />
+      <InfoModal
+        isModalVisible={isModalVisible}
+        toggleModal={toggleModal}
+        closeModal={closeModal}
+      />
     </View>
   );
 };

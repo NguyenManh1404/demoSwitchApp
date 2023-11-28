@@ -12,6 +12,7 @@ import icDown from '../assets/images/icDown.png';
 import icFails from '../assets/images/icFails.png';
 import icHaiChau from '../assets/images/icHaiChau.png';
 import icHaiChauActive from '../assets/images/icHaiChauActive.png';
+import icInfo from '../assets/images/icInfo.png';
 import icLocation from '../assets/images/icLocation.png';
 import icMaker from '../assets/images/icMaker.png';
 import icMakerActive from '../assets/images/icMakerActive.png';
@@ -20,6 +21,7 @@ import icNoData from '../assets/images/icNoData.png';
 import icSearch from '../assets/images/icSearch.png';
 import icSearchNoResult from '../assets/images/icSearchNoResult.png';
 import icUpload from '../assets/images/icUpload.png';
+import logoHaiChau from '../assets/images/logoHaiChau.png';
 
 const APP_IMAGES = {
   icLocation,
@@ -44,6 +46,8 @@ const APP_IMAGES = {
   icCloseText,
   icSearchNoResult,
   icNoData,
+  icInfo,
+  logoHaiChau,
 };
 
 export {APP_IMAGES};

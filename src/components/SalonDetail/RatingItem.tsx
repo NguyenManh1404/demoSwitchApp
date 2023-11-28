@@ -7,7 +7,7 @@ import {convertIsoDateToFormattedString} from '../../themes/helpers';
 import {HIT_SLOP} from '../../utils/constants';
 import Text from '../Text';
 
-const RatingItem = ({item}: {item: IReviewSalon}) => {
+const RatingItem: React.FC<IRatingItemProps> = ({item}) => {
   const renderViewMore: (handlePress: () => void) => JSX.Element = onPress => (
     <TouchableOpacity
       style={styles.moreLessBtn}

@@ -5,8 +5,11 @@ import {SafeAreaView, StyleSheet, View} from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
 import BottomTab from '../../components/BottomTab';
+import HeaderRightButton from '../../components/HeaderRightButton';
+import InfoModal from '../../components/InfoModal';
 import MakerItem from '../../components/MapView/MakerItem';
 import SalonCard from '../../components/SalonCard';
+import {useHeaderOptions} from '../../hooks/useHeaderOptions';
 import {APP_COLORS} from '../../themes/colors';
 import {IS_ANDROID, SCREEN_HEIGHT, SCREEN_WIDTH} from '../../utils/constants';
 import mapStyle from '../../utils/mapStyle.json';
@@ -22,6 +25,7 @@ type MapViewProps = NativeStackScreenProps<RootStackParamList, 'MapView'>;
 const MapViewCarousel = ({navigation}: MapViewProps) => {
   const mapRef = useRef<MapView>(null);
   const carouselRef = useRef<Carousel<ISalonCenter>>(null);
+  const [isModalVisible, setModalVisible] = useState<boolean>(false);
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
@@ -30,6 +34,14 @@ const MapViewCarousel = ({navigation}: MapViewProps) => {
   const onCarouselSnapToIndex = (index = 0) => {
     carouselRef?.current?.snapToItem(index, true);
   };
+
+  useHeaderOptions({
+    options: {
+      headerShown: true,
+      // eslint-disable-next-line react/no-unstable-nested-components
+      headerRight: () => <HeaderRightButton onPress={toggleModal} />,
+    },
+  });
 
   const onMarkerPress = (_item: ISalonCenter, index: number) => {
     if (index !== selectedIndex) {
@@ -97,6 +109,14 @@ const MapViewCarousel = ({navigation}: MapViewProps) => {
     );
   };
 
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
@@ -149,6 +169,11 @@ const MapViewCarousel = ({navigation}: MapViewProps) => {
       <BottomTab
         onMoveToDocument={moveToDocument}
         onMoveToSalon={moveToSalon}
+      />
+      <InfoModal
+        isModalVisible={isModalVisible}
+        toggleModal={toggleModal}
+        closeModal={closeModal}
       />
     </SafeAreaView>
   );
