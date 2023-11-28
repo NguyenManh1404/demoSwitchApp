@@ -1,74 +1,77 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   Image,
-  ImageSourcePropType,
   Platform,
   StyleSheet,
-  TextLayoutEventData,
   TouchableOpacity,
   View,
 } from 'react-native';
 import {APP_COLORS} from '../../themes/colors';
+import {convertIsoDateToFormattedString} from '../../themes/helpers';
 
+import ViewMoreText from 'react-native-view-more-text';
 import {HIT_SLOP, IS_ANDROID, SCREEN_WIDTH} from '../../utils/constants';
 import Text from '../Text';
 
 const EvaluateAnotherSalonCard: React.FC<IEvaluateAnotherSalonCard> = ({
   item,
-  index,
 }) => {
-  const [textShown, setTextShown] = useState(-1);
-  const [showBottom, setShowBottom] = useState(false);
+  const renderViewMore: (handlePress: () => void) => JSX.Element = onPress => (
+    <TouchableOpacity
+      style={styles.moreLessBtn}
+      hitSlop={HIT_SLOP}
+      onPress={onPress}>
+      <Text type="bold-13">Xem thêm</Text>
+    </TouchableOpacity>
+  );
+  const renderViewLess: (handlePress: () => void) => JSX.Element = onPress => (
+    <TouchableOpacity
+      style={styles.moreLessBtn}
+      hitSlop={HIT_SLOP}
+      onPress={onPress}>
+      <Text type="bold-13">Thu gọn</Text>
+    </TouchableOpacity>
+  );
 
-  const toggleNumberOfLines = (indexItem: number) => {
-    setTextShown(prevIndex => (prevIndex === indexItem ? -1 : indexItem));
-  };
-
-  const onTextLayOut = (e: {nativeEvent: TextLayoutEventData}) => {
-    if (e.nativeEvent.lines.length > 3) {
-      setShowBottom(true);
-    }
-  };
   return (
     <View style={styles.evaluateAnotherCard}>
+      <View>
+        <Text type="bold-14" style={styles.titleTxt}>
+          {item?.title}
+        </Text>
+      </View>
       <View style={styles.headerItem}>
-        <Text type="bold-14">Mã góp ý: {item?.idReview}</Text>
+        <Text color={APP_COLORS.gray2}>Mã góp ý: {item?.idReview}</Text>
         <Text color={APP_COLORS.gray2} type="regular-13">
-          {item?.createdAt}
+          {convertIsoDateToFormattedString(item?.formattedTime)}
         </Text>
       </View>
       <View style={styles.field}>
         <Text type="bold-14">Tên cơ sở</Text>
-        <Text style={styles.infoField}>{item?.centerName}</Text>
+        <Text style={styles.infoField}>{item?.salonName}</Text>
       </View>
       <View style={styles.field}>
         <Text type="bold-14">Địa chỉ cơ sở</Text>
-        <Text style={styles.infoField}>{item?.address}</Text>
+        <Text style={styles.infoField}>{item?.salonAddress}</Text>
       </View>
       <View style={styles.field}>
-        <Text type="bold-14">Nội dung góp ý, đánh giá</Text>
-        <Text
-          style={styles.infoField}
-          numberOfLines={textShown === index ? undefined : 3}
-          onTextLayout={onTextLayOut}>
-          {item?.reviewContent}
+        <Text type="bold-14" style={styles.titleContent}>
+          Nội dung góp ý, đánh giá
         </Text>
+        <ViewMoreText
+          numberOfLines={3}
+          renderViewMore={renderViewMore}
+          renderViewLess={renderViewLess}
+          style={styles.contentItem}>
+          <Text style={styles.contextTxt}>{item?.content}</Text>
+        </ViewMoreText>
       </View>
 
-      {showBottom && (
-        <TouchableOpacity
-          style={styles.moreLessBtn}
-          hitSlop={HIT_SLOP}
-          onPress={() => toggleNumberOfLines(index)}>
-          <Text type="bold-13">
-            {textShown === index ? 'Thu gọn' : 'Xem thêm'}
-          </Text>
-        </TouchableOpacity>
-      )}
-
       <View style={styles.imageReviewView}>
-        {item?.images?.map((image: ImageSourcePropType, i: number) => {
-          return <Image source={image} style={styles.imageReview} key={i} />;
+        {item?.images?.map((image, i) => {
+          return (
+            <Image source={{uri: image}} style={styles.imageReview} key={i} />
+          );
         })}
       </View>
     </View>
@@ -100,7 +103,11 @@ const styles = StyleSheet.create({
   headerItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 8,
+  },
+  titleContent: {
+    lineHeight: 22,
   },
   moreLessBtn: {
     alignSelf: 'flex-end',
@@ -120,6 +127,16 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   infoField: {
+    lineHeight: 22,
+  },
+  titleTxt: {
+    lineHeight: 22,
+  },
+  contentItem: {
+    marginTop: 8,
+    marginBottom: 12,
+  },
+  contextTxt: {
     lineHeight: 22,
   },
 });

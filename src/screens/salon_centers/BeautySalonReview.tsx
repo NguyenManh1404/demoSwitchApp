@@ -1,16 +1,19 @@
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
   Image,
+  Linking,
   Modal,
   Platform,
-  SafeAreaView,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
+import ImagePicker, {PickerErrorCode} from 'react-native-image-crop-picker';
 import ButtonAwareKeyboard from '../../components/ButtonAwareKeyboard';
 import KeyboardContainer from '../../components/KeyboardContainer';
 import SalonCard from '../../components/SalonCard';
@@ -23,51 +26,91 @@ import {
   IS_ANDROID,
   SCREEN_WIDTH,
 } from '../../utils/constants';
-
-const IMAGES = [APP_IMAGES.icAvatar, APP_IMAGES.icAvatar, APP_IMAGES.icAvatar];
-
 type BeautySalonReviewProps = NativeStackScreenProps<
   RootStackParamList,
   'BeautySalonReview'
 >;
 
-// const FORM_FIELDS = {
-//   ID_SALON: 'idSalon',
-//   ID_REVIEW: 'idReview',
-//   TITLE: 'title',
-//   CONTENT: 'content',
-//   IMAGES: 'images',
-//   CREATED_AT: 'createdAt',
-// };
+type ImageError = {code: PickerErrorCode};
 
-const BeautySalonReview = ({route}: BeautySalonReviewProps) => {
+const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
   const {item} = route?.params;
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible, setModalVisible] = useState<boolean>(false);
+
+  const [uploadSuccess, setUploadSuccess] = useState<boolean>(true);
 
   const {
     control,
     handleSubmit,
-    // formState: {errors},
+    formState: {errors},
     setValue,
     watch,
-  } = useForm({
+  } = useForm<IReviewSalon>({
     defaultValues: {
       idSalon: item?.id,
-      idReview: '1234',
+      idReview: new Date().getTime(),
       title: EMPTY_STRING,
       content: EMPTY_STRING,
-      images: IMAGES,
-      createdAt: new Date(),
+      images: [],
+      createdAt: firestore.FieldValue.serverTimestamp(),
     },
   });
 
   const content = watch('content');
   const images = watch('images');
 
-  const onSubmit = (data: any) => {
-    console.log('🚀 ~ file: BeautySalonReview.tsx:67 ~ onSubmit ~ data:', data);
-    // loginByEmail(values);
-    toggleModal();
+  const isAddImage = images?.length >= 3;
+
+  const onSubmit = async (data: IReviewSalon) => {
+    const commentRef = firestore().collection('BeautySalonComments');
+
+    try {
+      await commentRef.add(data);
+      setUploadSuccess(true);
+      toggleModal();
+      setTimeout(() => {
+        navigation.goBack();
+      }, 2000);
+    } catch (error) {
+      setUploadSuccess(false);
+      toggleModal();
+    }
+  };
+
+  const pickImage = async () => {
+    try {
+      const image = await ImagePicker.openPicker({
+        width: 300,
+        height: 400,
+        cropping: true,
+      });
+
+      const imageRef = `reviews/${new Date().getTime()}`;
+
+      if (image.path) {
+        const response = await storage().ref(imageRef).putFile(image.path);
+        if (response) {
+          const url = await storage().ref(imageRef).getDownloadURL();
+
+          let currentImages = [...images];
+
+          currentImages.push(url);
+
+          setValue('images', [...currentImages]);
+        }
+      }
+      // Update the state with the selected image URI
+    } catch (error: unknown) {
+      const knownError = error as ImageError;
+      switch (knownError.code) {
+        case 'E_NO_LIBRARY_PERMISSION':
+          Linking.openSettings();
+          break;
+
+        default:
+          break;
+      }
+    }
   };
 
   const removeImage = (index: number) => {
@@ -77,15 +120,16 @@ const BeautySalonReview = ({route}: BeautySalonReviewProps) => {
   };
 
   const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+    setModalVisible(true);
   };
 
   const closeModal = () => {
     setModalVisible(false);
   };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardContainer style={styles.keyboardContainer}>
+    <View style={styles.container}>
+      <KeyboardContainer contentContainerStyle={styles.keyboardContainer}>
         <SalonCard item={item} />
         <View style={styles.inputReview}>
           <Text type={'bold-16'} style={styles.titleTxt}>
@@ -104,7 +148,11 @@ const BeautySalonReview = ({route}: BeautySalonReviewProps) => {
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
-                  placeholderTextColor={APP_COLORS.placeholderText}
+                  placeholderTextColor={
+                    errors?.title
+                      ? APP_COLORS.errorDefault
+                      : APP_COLORS.placeholderText
+                  }
                   placeholder="Tiêu đề *"
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -134,7 +182,11 @@ const BeautySalonReview = ({route}: BeautySalonReviewProps) => {
                   multiline
                   maxLength={255}
                   placeholder="Vui lòng nhập nội dung mà bạn muốn góp ý, đánh giá về cơ sở này *"
-                  placeholderTextColor={APP_COLORS.placeholderText}
+                  placeholderTextColor={
+                    errors?.content
+                      ? APP_COLORS.errorDefault
+                      : APP_COLORS.placeholderText
+                  }
                   style={styles.input}
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -150,7 +202,7 @@ const BeautySalonReview = ({route}: BeautySalonReviewProps) => {
               {images.map((image, i) => {
                 return (
                   <View style={styles.imageView} key={i}>
-                    <Image source={image} style={styles.imageReview} />
+                    <Image source={{uri: image}} style={styles.imageReview} />
                     <TouchableOpacity
                       hitSlop={HIT_SLOP}
                       style={styles.icCloseBtn}
@@ -163,9 +215,23 @@ const BeautySalonReview = ({route}: BeautySalonReviewProps) => {
             </View>
           )}
 
-          <TouchableOpacity style={styles.uploadImageBtn}>
-            <Image source={APP_IMAGES.icUpload} style={styles.icUpload} />
-            <Text>Tải hình ảnh</Text>
+          <TouchableOpacity
+            style={styles.uploadImageBtn}
+            onPress={pickImage}
+            disabled={isAddImage ? true : false}>
+            <Image
+              source={APP_IMAGES.icUpload}
+              style={styles.icUpload}
+              tintColor={
+                isAddImage ? APP_COLORS.borderInput : APP_COLORS.blackText
+              }
+            />
+            <Text
+              color={
+                isAddImage ? APP_COLORS.borderInput : APP_COLORS.blackText
+              }>
+              Tải hình ảnh
+            </Text>
           </TouchableOpacity>
         </View>
       </KeyboardContainer>
@@ -177,7 +243,11 @@ const BeautySalonReview = ({route}: BeautySalonReviewProps) => {
         onRequestClose={toggleModal}>
         <TouchableOpacity style={styles.modalContainer} onPress={closeModal}>
           <View style={styles.modalView}>
-            <Image source={APP_IMAGES.icFails} />
+            <Image
+              source={
+                uploadSuccess ? APP_IMAGES.icModalCheck : APP_IMAGES.icFails
+              }
+            />
             <Text color={APP_COLORS.white} type="bold-18">
               Thông báo
             </Text>
@@ -185,12 +255,14 @@ const BeautySalonReview = ({route}: BeautySalonReviewProps) => {
               color={APP_COLORS.white}
               textAlign="center"
               style={styles.modalMessage}>
-              Gửi góp ý, đánh giá không thành công. Vui lòng thử lại.
+              {uploadSuccess
+                ? ' Cảm ơn bạn đã góp ý, đánh giá'
+                : 'Gửi góp ý, đánh giá không thành công. Vui lòng thử lại.'}
             </Text>
           </View>
         </TouchableOpacity>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -202,6 +274,7 @@ const styles = StyleSheet.create({
   },
   keyboardContainer: {
     padding: 12,
+    alignItems: 'center',
   },
   inputReview: {
     marginTop: 18,
@@ -272,6 +345,7 @@ const styles = StyleSheet.create({
   imageReview: {
     width: 66,
     height: 66,
+    borderRadius: 4,
   },
   imageView: {
     marginRight: 12,
@@ -297,7 +371,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalMessage: {
-    width: SCREEN_WIDTH / 2,
+    width: SCREEN_WIDTH / 1.5,
     lineHeight: 22,
   },
   titleTxt: {

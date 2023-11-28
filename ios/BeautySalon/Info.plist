@@ -37,6 +37,8 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>$(APP_NAME) would like to use your location to show you all beautysalon in your area.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Testing purposes</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Inter-Bold.ttf</string>

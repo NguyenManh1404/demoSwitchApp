@@ -16,6 +16,7 @@ import icLocation from '../assets/images/icLocation.png';
 import icMaker from '../assets/images/icMaker.png';
 import icMakerActive from '../assets/images/icMakerActive.png';
 import icModalCheck from '../assets/images/icModalCheck.png';
+import icNoData from '../assets/images/icNoData.png';
 import icSearch from '../assets/images/icSearch.png';
 import icSearchNoResult from '../assets/images/icSearchNoResult.png';
 import icUpload from '../assets/images/icUpload.png';
@@ -42,6 +43,7 @@ const APP_IMAGES = {
   icCloseModal,
   icCloseText,
   icSearchNoResult,
+  icNoData,
 };
 
 export {APP_IMAGES};

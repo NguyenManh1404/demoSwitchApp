@@ -1,64 +1,59 @@
-import React, {useState} from 'react';
-import {
-  Image,
-  StyleSheet,
-  TextLayoutEventData,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React from 'react';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import ViewMoreText from 'react-native-view-more-text';
+
 import {APP_COLORS} from '../../themes/colors';
-import {HIT_SLOP, SCREEN_WIDTH} from '../../utils/constants';
+import {convertIsoDateToFormattedString} from '../../themes/helpers';
+import {HIT_SLOP} from '../../utils/constants';
 import Text from '../Text';
 
-const RatingItem = ({item, index}: {item: IRatingItem; index: number}) => {
-  const [textShown, setTextShown] = useState(-1);
-  const [showBottom, setShowBottom] = useState(false);
-
-  const toggleNumberOfLines = (indexItem: number) => {
-    setTextShown(prevIndex => (prevIndex === indexItem ? -1 : indexItem));
-  };
-
-  const onTextLayOut = (e: {nativeEvent: TextLayoutEventData}) => {
-    if (e.nativeEvent.lines.length >= 3) {
-      setShowBottom(true);
-    }
-  };
+const RatingItem = ({item}: {item: IReviewSalon}) => {
+  const renderViewMore: (handlePress: () => void) => JSX.Element = onPress => (
+    <TouchableOpacity
+      style={styles.moreLessBtn}
+      hitSlop={HIT_SLOP}
+      onPress={onPress}>
+      <Text type="bold-13">Xem thêm</Text>
+    </TouchableOpacity>
+  );
+  const renderViewLess: (handlePress: () => void) => JSX.Element = onPress => (
+    <TouchableOpacity
+      style={styles.moreLessBtn}
+      hitSlop={HIT_SLOP}
+      onPress={onPress}>
+      <Text type="bold-13">Thu gọn</Text>
+    </TouchableOpacity>
+  );
 
   return (
-    <View>
+    <View style={styles.container}>
+      <View>
+        <Text style={styles.titleTxt} type="bold-14">
+          {item?.title}
+        </Text>
+      </View>
       <View style={styles.headerItem}>
-        <Text type="bold-14">Mã góp ý: {item?.id}</Text>
+        <Text style={styles.idReviewTxt} color={APP_COLORS.gray2}>
+          Mã đánh giá: {item?.idReview}
+        </Text>
         <Text color={APP_COLORS.gray2} type="regular-13">
-          {item?.createdAt}
+          {convertIsoDateToFormattedString(item?.formattedTime)}
         </Text>
       </View>
-
-      <View style={styles.contentItem}>
-        <Text
-          color={APP_COLORS.neutral2}
-          numberOfLines={textShown === index ? undefined : 3}
-          onTextLayout={onTextLayOut}>
-          {item?.content}
-        </Text>
-      </View>
-
-      {showBottom && (
-        <TouchableOpacity
-          style={styles.moreLessBtn}
-          hitSlop={HIT_SLOP}
-          onPress={() => toggleNumberOfLines(index)}>
-          <Text type="bold-13">
-            {textShown === index ? 'Thu gọn' : 'Xem thêm'}
-          </Text>
-        </TouchableOpacity>
-      )}
-
+      <ViewMoreText
+        numberOfLines={3}
+        renderViewMore={renderViewMore}
+        renderViewLess={renderViewLess}
+        style={styles.contentItem}>
+        <Text style={styles.contextTxt}>{item?.content}</Text>
+      </ViewMoreText>
       <View style={styles.imageReviewView}>
         {item?.images?.map((image, i) => {
-          return <Image source={image} style={styles.imageReview} key={i} />;
+          return (
+            <Image source={{uri: image}} style={styles.imageReview} key={i} />
+          );
         })}
       </View>
-      <View style={styles.divder} />
     </View>
   );
 };
@@ -66,16 +61,26 @@ const RatingItem = ({item, index}: {item: IRatingItem; index: number}) => {
 export default RatingItem;
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: APP_COLORS.white,
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: APP_COLORS.borderInput,
+  },
   headerItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  titleTxt: {
+    lineHeight: 22,
+  },
+  idReviewTxt: {
+    flex: 1,
+    lineHeight: 22,
   },
   contentItem: {
     marginTop: 8,
-    marginBottom: 12,
-  },
-  moreLessBtn: {
-    alignSelf: 'flex-end',
     marginBottom: 12,
   },
   imageReviewView: {
@@ -88,10 +93,11 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginRight: 5,
   },
-  divder: {
-    height: 1,
-    width: SCREEN_WIDTH - 60,
-    backgroundColor: APP_COLORS.gray2,
-    marginVertical: 12,
+  moreLessBtn: {
+    alignSelf: 'flex-end',
+    marginBottom: 12,
+  },
+  contextTxt: {
+    lineHeight: 22,
   },
 });

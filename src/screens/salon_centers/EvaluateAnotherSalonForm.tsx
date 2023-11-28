@@ -1,7 +1,14 @@
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import ImagePicker, {PickerErrorCode} from 'react-native-image-crop-picker';
+
 import React, {useState} from 'react';
+import {Controller, useForm} from 'react-hook-form';
 import {
   Image,
+  Linking,
+  Modal,
   Platform,
   StyleSheet,
   TextInput,
@@ -14,55 +21,191 @@ import InputEvaluate from '../../components/SalonCentre/InputEvaluate';
 import Text from '../../components/Text';
 import {APP_COLORS} from '../../themes/colors';
 import {APP_IMAGES} from '../../themes/images';
-import {HIT_SLOP, IS_ANDROID, SCREEN_WIDTH} from '../../utils/constants';
-
-const IMAGES = [APP_IMAGES.icAvatar, APP_IMAGES.icAvatar, APP_IMAGES.icAvatar];
+import {
+  EMPTY_STRING,
+  HIT_SLOP,
+  IS_ANDROID,
+  SCREEN_WIDTH,
+} from '../../utils/constants';
 
 type EvaluateAnotherSalonFormProps = NativeStackScreenProps<
   RootStackParamList,
   'EvaluateAnotherSalonForm'
 >;
+type ImageError = {code: PickerErrorCode};
 
-const EvaluateAnotherSalonForm = ({}: EvaluateAnotherSalonFormProps) => {
-  const [content, setContent] = useState('');
-  const [images, setImages] = useState(IMAGES || []);
+const EvaluateAnotherSalonForm = ({
+  navigation,
+}: EvaluateAnotherSalonFormProps) => {
+  const [isModalVisible, setModalVisible] = useState<boolean>(false);
 
-  const handleTextChange = (text: string) => {
-    setContent(text);
+  const [uploadSuccess, setUploadSuccess] = useState<boolean>(true);
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+    setValue,
+    watch,
+  } = useForm<IReviewAnotherItem>({
+    defaultValues: {
+      idReview: new Date().getTime(),
+      reviewerName: EMPTY_STRING,
+      reviewerPhone: EMPTY_STRING,
+      reviewerAddress: EMPTY_STRING,
+      title: EMPTY_STRING,
+      salonName: EMPTY_STRING,
+      salonAddress: EMPTY_STRING,
+      content: EMPTY_STRING,
+      images: [],
+      createdAt: firestore.FieldValue.serverTimestamp(),
+    },
+  });
+
+  const content = watch('content');
+  const images = watch('images');
+
+  const isAddImage = images?.length >= 3;
+
+  const onSubmit = async (data: IReviewAnotherItem) => {
+    const commentRef = firestore().collection('AnotherSalonComments');
+
+    try {
+      await commentRef.add(data);
+      setUploadSuccess(true);
+      toggleModal();
+      setTimeout(() => {
+        navigation.goBack();
+      }, 2000);
+    } catch (error) {
+      setUploadSuccess(false);
+      toggleModal();
+    }
+  };
+
+  const pickImage = async () => {
+    try {
+      const image = await ImagePicker.openPicker({
+        width: 300,
+        height: 400,
+        cropping: true,
+      });
+
+      const imageRef = `anotherSalonReviews/${new Date().getTime()}`;
+
+      if (image.path) {
+        const response = await storage().ref(imageRef).putFile(image.path);
+        if (response) {
+          const url = await storage().ref(imageRef).getDownloadURL();
+
+          let currentImages = [...images];
+
+          currentImages.push(url);
+
+          setValue('images', [...currentImages]);
+        }
+      }
+      // Update the state with the selected image URI
+    } catch (error: unknown) {
+      const knownError = error as ImageError;
+      switch (knownError.code) {
+        case 'E_NO_LIBRARY_PERMISSION':
+          Linking.openSettings();
+          break;
+
+        default:
+          break;
+      }
+    }
   };
 
   const removeImage = (index: number) => {
     let currentImages = [...images];
     currentImages.splice(index, 1);
-    setImages([...currentImages]);
+    setValue('images', [...currentImages]);
+  };
+
+  const toggleModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
   return (
     <View style={styles.container}>
-      <KeyboardContainer style={styles.keyboardContainer}>
+      <KeyboardContainer contentContainerStyle={styles.keyboardContainer}>
         <View style={styles.formCard}>
           <View style={styles.titleView}>
             <Text type="bold-16" style={styles.titleTxt}>
               Thông tin người đánh giá
             </Text>
-            <Text type="regular-12"> Thông tin người đánh giá sẽ được ẩn</Text>
+            <Text type="regular-12" color={APP_COLORS.neutral2}>
+              Thông tin người đánh giá sẽ được bảo mật.
+            </Text>
           </View>
 
           <View>
-            <InputEvaluate
-              placeholder={'Tên người đánh giá *'}
-              onChangeText={() => {}}
-              value={''}
+            <Controller
+              name="reviewerName"
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <InputEvaluate
+                  placeholder={'Tên người đánh giá *'}
+                  onChangeText={onChange}
+                  value={value}
+                  onBlur={onBlur}
+                  placeholderTextColor={
+                    errors?.reviewerName
+                      ? APP_COLORS.errorDefault
+                      : APP_COLORS.placeholderText
+                  }
+                />
+              )}
             />
-            <InputEvaluate
-              placeholder={'Số điện thoại *'}
-              onChangeText={() => {}}
-              value={''}
+            <Controller
+              name="reviewerPhone"
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <InputEvaluate
+                  placeholder={'Số điện thoại *'}
+                  onChangeText={onChange}
+                  value={value}
+                  onBlur={onBlur}
+                  placeholderTextColor={
+                    errors?.reviewerPhone
+                      ? APP_COLORS.errorDefault
+                      : APP_COLORS.placeholderText
+                  }
+                />
+              )}
             />
-            <InputEvaluate
-              placeholder={'Địa chỉ người đánh giá *'}
-              onChangeText={() => {}}
-              value={''}
+
+            <Controller
+              name="reviewerAddress"
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <InputEvaluate
+                  placeholder={'Địa chỉ người đánh giá *'}
+                  onChangeText={onChange}
+                  value={value}
+                  onBlur={onBlur}
+                  placeholderTextColor={
+                    errors?.reviewerAddress
+                      ? APP_COLORS.errorDefault
+                      : APP_COLORS.placeholderText
+                  }
+                />
+              )}
             />
           </View>
           <View style={styles.titleView}>
@@ -71,25 +214,93 @@ const EvaluateAnotherSalonForm = ({}: EvaluateAnotherSalonFormProps) => {
             </Text>
           </View>
           <View>
-            <InputEvaluate
-              placeholder={'Tên cơ sở *'}
-              onChangeText={() => {}}
-              value={''}
+            <Controller
+              name="title"
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <InputEvaluate
+                  placeholder={'Tiêu đề *'}
+                  onChangeText={onChange}
+                  value={value}
+                  onBlur={onBlur}
+                  placeholderTextColor={
+                    errors?.title
+                      ? APP_COLORS.errorDefault
+                      : APP_COLORS.placeholderText
+                  }
+                />
+              )}
             />
-            <InputEvaluate
-              placeholder={'Địa chỉ cơ sở *'}
-              onChangeText={() => {}}
-              value={''}
+            <Controller
+              name="salonName"
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <InputEvaluate
+                  placeholder={'Tên cơ sở *'}
+                  onChangeText={onChange}
+                  value={value}
+                  onBlur={onBlur}
+                  placeholderTextColor={
+                    errors?.salonName
+                      ? APP_COLORS.errorDefault
+                      : APP_COLORS.placeholderText
+                  }
+                />
+              )}
+            />
+
+            <Controller
+              name="salonAddress"
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <InputEvaluate
+                  placeholder={'Địa chỉ cơ sở *'}
+                  onChangeText={onChange}
+                  value={value}
+                  placeholderTextColor={
+                    errors?.salonAddress
+                      ? APP_COLORS.errorDefault
+                      : APP_COLORS.placeholderText
+                  }
+                  onBlur={onBlur}
+                />
+              )}
             />
 
             <View style={styles.inputContent}>
-              <TextInput
-                onChangeText={handleTextChange}
-                multiline
-                placeholder="Vui lòng nhập nội dung mà bạn muốn góp ý, đánh giá về cơ sở này"
-                placeholderTextColor={APP_COLORS.placeholderText}
-                style={styles.inputMultiline}
+              <Controller
+                name="content"
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({field: {onChange, onBlur, value}}) => (
+                  <TextInput
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    multiline
+                    maxLength={255}
+                    placeholderTextColor={
+                      errors?.content
+                        ? APP_COLORS.errorDefault
+                        : APP_COLORS.placeholderText
+                    }
+                    placeholder="Vui lòng nhập nội dung mà bạn muốn góp ý, đánh giá về cơ sở này *"
+                    style={styles.inputMultiline}
+                  />
+                )}
               />
+
               <Text style={styles.numberCharacter}>{content?.length}/255</Text>
             </View>
 
@@ -98,7 +309,7 @@ const EvaluateAnotherSalonForm = ({}: EvaluateAnotherSalonFormProps) => {
                 {images.map((image, i) => {
                   return (
                     <View style={styles.imageView} key={i}>
-                      <Image source={image} style={styles.imageReview} />
+                      <Image source={{uri: image}} style={styles.imageReview} />
                       <TouchableOpacity
                         hitSlop={HIT_SLOP}
                         style={styles.icCloseBtn}
@@ -110,14 +321,54 @@ const EvaluateAnotherSalonForm = ({}: EvaluateAnotherSalonFormProps) => {
                 })}
               </View>
             )}
-            <TouchableOpacity style={styles.uploadImageBtn}>
-              <Image source={APP_IMAGES.icUpload} style={styles.icUpload} />
-              <Text>Tải hình ảnh</Text>
+            <TouchableOpacity
+              style={styles.uploadImageBtn}
+              onPress={pickImage}
+              disabled={isAddImage ? true : false}>
+              <Image
+                source={APP_IMAGES.icUpload}
+                style={styles.icUpload}
+                tintColor={
+                  isAddImage ? APP_COLORS.borderInput : APP_COLORS.blackText
+                }
+              />
+              <Text
+                color={
+                  isAddImage ? APP_COLORS.borderInput : APP_COLORS.blackText
+                }>
+                Tải hình ảnh
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
       </KeyboardContainer>
-      <ButtonAwareKeyboard label="Gửi" />
+      <ButtonAwareKeyboard label="Gửi" onPress={handleSubmit(onSubmit)} />
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={toggleModal}>
+        <TouchableOpacity style={styles.modalContainer} onPress={closeModal}>
+          <View style={styles.modalView}>
+            <Image
+              source={
+                uploadSuccess ? APP_IMAGES.icModalCheck : APP_IMAGES.icFails
+              }
+            />
+            <Text color={APP_COLORS.white} type="bold-18">
+              Thông báo
+            </Text>
+            <Text
+              color={APP_COLORS.white}
+              textAlign="center"
+              style={styles.modalMessage}>
+              {uploadSuccess
+                ? ' Cảm ơn bạn đã góp ý, đánh giá'
+                : 'Gửi góp ý, đánh giá không thành công. Vui lòng thử lại.'}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </Modal>
     </View>
   );
 };
@@ -130,6 +381,7 @@ const styles = StyleSheet.create({
   },
   keyboardContainer: {
     padding: 12,
+    alignItems: 'center',
   },
   formCard: {
     padding: 12,
@@ -159,7 +411,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     padding: 8,
-    marginVertical: 18,
+    marginBottom: 12,
     borderColor: APP_COLORS.borderInput,
     minHeight: 107,
     lineHeight: 20,
@@ -182,6 +434,7 @@ const styles = StyleSheet.create({
   imageReview: {
     width: 66,
     height: 66,
+    borderRadius: 4,
   },
   imageView: {
     marginRight: 12,
@@ -206,5 +459,22 @@ const styles = StyleSheet.create({
   },
   icUpload: {
     marginRight: 4,
+  },
+
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalView: {
+    backgroundColor: APP_COLORS.modalBackground,
+    padding: 12,
+    borderRadius: 10,
+    width: SCREEN_WIDTH - 100,
+    alignItems: 'center',
+  },
+  modalMessage: {
+    width: SCREEN_WIDTH / 1.5,
+    lineHeight: 22,
   },
 });

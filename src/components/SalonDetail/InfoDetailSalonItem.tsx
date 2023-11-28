@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   detailItemTxt: {
+    marginTop: 4,
     lineHeight: 22,
   },
 });

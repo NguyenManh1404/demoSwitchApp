@@ -8,6 +8,7 @@ import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
+  ListRenderItem,
   SafeAreaView,
   StyleSheet,
   TextInput,
@@ -107,7 +108,7 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
     navigation.navigate('BeautySalonDetail', {item: item});
   };
 
-  const renderItem = ({item, index}: {item: ISalonCenter; index: number}) => {
+  const renderItem: ListRenderItem<ISalonCenter> = ({item, index}) => {
     return (
       <View key={index} style={styles.salonItemContainer}>
         <SalonCard

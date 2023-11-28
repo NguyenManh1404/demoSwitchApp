@@ -5,6 +5,7 @@ import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
+  ListRenderItem,
   SafeAreaView,
   StyleSheet,
   TextInput,
@@ -57,13 +58,7 @@ const Document: React.FC<DocumentProps> = ({}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText]);
 
-  const renderDocumentItem = ({
-    item,
-    index,
-  }: {
-    item: IDocumentItem;
-    index: number;
-  }) => {
+  const renderDocumentItem: ListRenderItem<IDocumentItem> = ({item, index}) => {
     return (
       <View style={styles.itemView} key={index}>
         <DocumentCard item={item} />

@@ -77,10 +77,6 @@ interface IRatingItem {
   content: string;
 }
 
-interface IBeautySalonReview {
-  item: ISalonCenter;
-}
-
 interface IBottomActionSheetProp {
   isVisible: boolean;
   filterSelected: IActionSheetItem;
@@ -91,7 +87,9 @@ interface IBottomActionSheetProp {
 interface IInputEvaluate {
   placeholder: string;
   onChangeText: (e: string) => void;
+  onBlur: (e) => void;
   value: string;
+  placeholderTextColor: string;
 }
 
 interface IActionSheetItem {
@@ -111,17 +109,6 @@ interface IDocumentItem {
   name: string;
 }
 
-interface IEvaluateAnotherSalonCardProps {}
-
-interface IEvaluateAnotherItem {
-  idReview: string;
-  createdAt: string;
-  centerName: string;
-  address: string;
-  reviewContent: string;
-  images: ImageSourcePropType[];
-}
-
 interface IListEmptyComponentProps {
   image: ImageSourcePropType;
   title: string;
@@ -135,7 +122,33 @@ interface IActionItem {
   onPress: (item: IActionSheetItem) => void;
 }
 
+interface IReviewSalon {
+  id?: string;
+  idSalon: string;
+  idReview: number;
+  title: string;
+  content: string;
+  images: string[];
+  createdAt: firebase.firestore.Timestamp;
+  formattedTime?: firebase.firestore.Timestamp;
+}
+
+interface IReviewAnotherItem {
+  id?: string;
+  idReview: string | number;
+  reviewerName: string;
+  reviewerPhone: string;
+  reviewerAddress: string;
+  title: string;
+  salonName: string;
+  salonAddress: string;
+  content: string;
+  images: ImageSourcePropType[];
+  createdAt: firebase.firestore.Timestamp;
+  formattedTime?: firebase.firestore.Timestamp;
+}
+
 interface IEvaluateAnotherSalonCard {
-  item: IEvaluateAnotherItem;
+  item: IReviewAnotherItem;
   index: number;
 }

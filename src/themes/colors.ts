@@ -3,6 +3,7 @@ const APP_COLORS = {
   gray2: '#AEAEAE',
   blueParent: '#04A5FF',
   white: '#FFFFFF',
+  blackText: '#000',
   shadowColor: 'rgba(12, 26, 75, 0.1)',
   greyL6: '#EBECF0',
   grayBtnReview: '#F5F5F5',

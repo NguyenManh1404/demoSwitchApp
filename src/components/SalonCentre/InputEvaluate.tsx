@@ -6,14 +6,17 @@ const InputEvaluate: React.FC<IInputEvaluate> = ({
   placeholder,
   onChangeText,
   value,
+  onBlur,
+  ...props
 }) => {
   return (
     <TextInput
+      {...props}
       placeholder={placeholder}
       onChangeText={onChangeText}
+      onBlur={onBlur}
       value={value}
       style={styles.textInputStyle}
-      placeholderTextColor={APP_COLORS.placeholderText}
     />
   );
 };
