@@ -1,11 +1,9 @@
 import firestore from '@react-native-firebase/firestore';
-import storage from '@react-native-firebase/storage';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
   Image,
-  Linking,
   Modal,
   Platform,
   StyleSheet,
@@ -13,11 +11,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import ImagePicker, {PickerErrorCode} from 'react-native-image-crop-picker';
 import ButtonAwareKeyboard from '../../components/ButtonAwareKeyboard';
 import KeyboardContainer from '../../components/KeyboardContainer';
 import SalonCard from '../../components/SalonCard';
 import Text from '../../components/Text';
+import {useMediaPicker} from '../../hooks/useMediaPicker';
 import {APP_COLORS} from '../../themes/colors';
 import {APP_IMAGES} from '../../themes/images';
 import {
@@ -30,8 +28,6 @@ type BeautySalonReviewProps = NativeStackScreenProps<
   RootStackParamList,
   'BeautySalonReview'
 >;
-
-type ImageError = {code: PickerErrorCode};
 
 const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
   const {item} = route?.params;
@@ -59,6 +55,12 @@ const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
   const content = watch('content');
   const images = watch('images');
 
+  const {pickImage} = useMediaPicker({
+    setValue: setValue,
+    imageState: images,
+    imageFolderStorage: 'reviews',
+  });
+
   const isAddImage = images?.length >= 3;
 
   const onSubmit = async (data: IReviewSalon) => {
@@ -77,40 +79,8 @@ const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
     }
   };
 
-  const pickImage = async () => {
-    try {
-      const image = await ImagePicker.openPicker({
-        width: 300,
-        height: 400,
-        cropping: true,
-      });
-
-      const imageRef = `reviews/${new Date().getTime()}`;
-
-      if (image.path) {
-        const response = await storage().ref(imageRef).putFile(image.path);
-        if (response) {
-          const url = await storage().ref(imageRef).getDownloadURL();
-
-          let currentImages = [...images];
-
-          currentImages.push(url);
-
-          setValue('images', [...currentImages]);
-        }
-      }
-      // Update the state with the selected image URI
-    } catch (error: unknown) {
-      const knownError = error as ImageError;
-      switch (knownError.code) {
-        case 'E_NO_LIBRARY_PERMISSION':
-          Linking.openSettings();
-          break;
-
-        default:
-          break;
-      }
-    }
+  const onPickImage = () => {
+    pickImage();
   };
 
   const removeImage = (index: number) => {
@@ -217,8 +187,8 @@ const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
 
           <TouchableOpacity
             style={styles.uploadImageBtn}
-            onPress={pickImage}
-            disabled={isAddImage ? true : false}>
+            onPress={onPickImage}
+            disabled={isAddImage}>
             <Image
               source={APP_IMAGES.icUpload}
               style={styles.icUpload}

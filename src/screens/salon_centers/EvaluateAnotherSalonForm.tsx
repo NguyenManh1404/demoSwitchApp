@@ -1,13 +1,10 @@
 import firestore from '@react-native-firebase/firestore';
-import storage from '@react-native-firebase/storage';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import ImagePicker, {PickerErrorCode} from 'react-native-image-crop-picker';
 
 import React, {useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
   Image,
-  Linking,
   Modal,
   Platform,
   StyleSheet,
@@ -19,6 +16,7 @@ import ButtonAwareKeyboard from '../../components/ButtonAwareKeyboard';
 import KeyboardContainer from '../../components/KeyboardContainer';
 import InputEvaluate from '../../components/SalonCentre/InputEvaluate';
 import Text from '../../components/Text';
+import {useMediaPicker} from '../../hooks/useMediaPicker';
 import {APP_COLORS} from '../../themes/colors';
 import {APP_IMAGES} from '../../themes/images';
 import {
@@ -32,7 +30,6 @@ type EvaluateAnotherSalonFormProps = NativeStackScreenProps<
   RootStackParamList,
   'EvaluateAnotherSalonForm'
 >;
-type ImageError = {code: PickerErrorCode};
 
 const EvaluateAnotherSalonForm = ({
   navigation,
@@ -64,6 +61,12 @@ const EvaluateAnotherSalonForm = ({
   const content = watch('content');
   const images = watch('images');
 
+  const {pickImage} = useMediaPicker({
+    setValue: setValue,
+    imageState: images,
+    imageFolderStorage: 'anotherSalonReviews',
+  });
+
   const isAddImage = images?.length >= 3;
 
   const onSubmit = async (data: IReviewAnotherItem) => {
@@ -82,40 +85,8 @@ const EvaluateAnotherSalonForm = ({
     }
   };
 
-  const pickImage = async () => {
-    try {
-      const image = await ImagePicker.openPicker({
-        width: 300,
-        height: 400,
-        cropping: true,
-      });
-
-      const imageRef = `anotherSalonReviews/${new Date().getTime()}`;
-
-      if (image.path) {
-        const response = await storage().ref(imageRef).putFile(image.path);
-        if (response) {
-          const url = await storage().ref(imageRef).getDownloadURL();
-
-          let currentImages = [...images];
-
-          currentImages.push(url);
-
-          setValue('images', [...currentImages]);
-        }
-      }
-      // Update the state with the selected image URI
-    } catch (error: unknown) {
-      const knownError = error as ImageError;
-      switch (knownError.code) {
-        case 'E_NO_LIBRARY_PERMISSION':
-          Linking.openSettings();
-          break;
-
-        default:
-          break;
-      }
-    }
+  const onPickImage = async () => {
+    pickImage();
   };
 
   const removeImage = (index: number) => {
@@ -166,24 +137,28 @@ const EvaluateAnotherSalonForm = ({
                 />
               )}
             />
+
             <Controller
               name="reviewerPhone"
               control={control}
               rules={{
-                required: true,
+                required: 'Vui lòng nhập số điện thoại',
               }}
               render={({field: {onChange, onBlur, value}}) => (
-                <InputEvaluate
-                  placeholder={'Số điện thoại *'}
-                  onChangeText={onChange}
-                  value={value}
-                  onBlur={onBlur}
-                  placeholderTextColor={
-                    errors?.reviewerPhone
-                      ? APP_COLORS.errorDefault
-                      : APP_COLORS.placeholderText
-                  }
-                />
+                <>
+                  <InputEvaluate
+                    placeholder={'Số điện thoại *'}
+                    onChangeText={onChange}
+                    value={value}
+                    onBlur={onBlur}
+                    keyboardType="numeric"
+                    placeholderTextColor={
+                      errors?.reviewerPhone
+                        ? APP_COLORS.errorDefault
+                        : APP_COLORS.placeholderText
+                    }
+                  />
+                </>
               )}
             />
 
@@ -323,8 +298,8 @@ const EvaluateAnotherSalonForm = ({
             )}
             <TouchableOpacity
               style={styles.uploadImageBtn}
-              onPress={pickImage}
-              disabled={isAddImage ? true : false}>
+              onPress={onPickImage}
+              disabled={isAddImage}>
               <Image
                 source={APP_IMAGES.icUpload}
                 style={styles.icUpload}

@@ -5,12 +5,6 @@ import {APP_IMAGES} from '../themes/images';
 import {SCREEN_WIDTH} from '../utils/constants';
 import Text from './Text';
 
-interface IInfoModalProps {
-  isModalVisible: boolean;
-  toggleModal: () => void;
-  closeModal: () => void;
-}
-
 const InfoModal: React.FC<IInfoModalProps> = ({
   isModalVisible,
   toggleModal,

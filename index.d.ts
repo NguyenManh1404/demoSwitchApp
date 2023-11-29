@@ -90,6 +90,7 @@ interface IInputEvaluate {
   onBlur: (e) => void;
   value: string;
   placeholderTextColor: string;
+  keyboardType?: KeyboardTypeOptions;
 }
 
 interface IActionSheetItem {
@@ -159,4 +160,18 @@ interface IEvaluateAnotherSalonCard {
 
 interface HeaderRightButtonProps {
   onPress?: () => void;
+}
+
+interface IInfoModalProps {
+  isModalVisible: boolean;
+  toggleModal: () => void;
+  closeModal: () => void;
+}
+
+type ImageError = {code: PickerErrorCode};
+
+interface IUseMediaPickerProps {
+  setValue: any;
+  imageFolderStorage?: string;
+  imageState?: string[];
 }

@@ -258,6 +258,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: APP_COLORS.borderInputSearch,
     backgroundColor: APP_COLORS.white,
+    alignItems: 'center',
   },
   icSearch: {
     marginRight: 8,
