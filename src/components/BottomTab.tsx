@@ -35,7 +35,7 @@ const BottomTab = ({onMoveToDocument, onMoveToSalon}: BottomTabProps) => {
         onPress={onMoveToSalon}
       />
       <TabBarItem
-        title="Văn bản quy định"
+        title="Văn bản, quy định"
         logo={APP_IMAGES.icDocument}
         color={APP_COLORS.gray2}
         onPress={onMoveToDocument}

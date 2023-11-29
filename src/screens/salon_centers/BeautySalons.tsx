@@ -29,7 +29,9 @@ import {
   ACTION_ITEM,
   EMPTY_STRING,
   HIT_SLOP,
+  QUALIFIED,
   SCREEN_WIDTH,
+  UNQUALIFIED,
 } from '../../utils/constants';
 
 type BeautySalonsProps = NativeStackScreenProps<
@@ -58,12 +60,12 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
           case 3:
             query = query
               .where('IsClinic', '==', false)
-              .where('BusinessType', '==', 'Đã đủ điều kiện');
+              .where('BusinessType', '==', QUALIFIED);
             break;
           case 4:
             query = query
               .where('IsClinic', '==', false)
-              .where('BusinessType', '==', 'Chưa đủ điều kiện');
+              .where('BusinessType', '==', UNQUALIFIED);
             break;
           default:
             break;
@@ -79,8 +81,23 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
           } as ISalonCenter);
         });
 
-        if (searchText.length > 0) {
-          const searchItems = salonCentreData.filter(e =>
+        if (filterSelected?.id === 1) {
+          salonCentreData.sort((a, b) => {
+            if (a.BusinessType === QUALIFIED && b.BusinessType !== QUALIFIED) {
+              return -1; // a comes first
+            } else if (
+              a.BusinessType !== QUALIFIED &&
+              b.BusinessType === QUALIFIED
+            ) {
+              return 1; // b comes first
+            } else {
+              return 0; // no change in order
+            }
+          });
+        }
+
+        if (searchText?.length > 0) {
+          const searchItems = salonCentreData?.filter(e =>
             normalizeString(e.BusinessName.toLowerCase()).includes(
               normalizeString(searchText.toLowerCase()),
             ),

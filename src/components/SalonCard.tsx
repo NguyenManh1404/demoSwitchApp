@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {APP_COLORS} from '../themes/colors';
 import {APP_IMAGES} from '../themes/images';
-import {IS_ANDROID, SCREEN_WIDTH} from '../utils/constants';
+import {IS_ANDROID, QUALIFIED, SCREEN_WIDTH} from '../utils/constants';
 import Text from './Text';
 
 const SalonCard = ({
@@ -43,7 +43,7 @@ const SalonCard = ({
         </Text>
         {isShowValuation && (
           <View>
-            {item?.BusinessType === 'Đã đủ điều kiện' ? (
+            {item?.BusinessType === QUALIFIED ? (
               <View style={styles.valuationView}>
                 <Image source={APP_IMAGES.icCheck} style={styles.icCheck} />
                 <Text numberOfLines={2} type="regular-13">

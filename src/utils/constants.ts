@@ -29,6 +29,10 @@ const ACTION_ITEM: IActionSheetItem[] = [
   },
 ];
 
+const QUALIFIED = 'Đã đủ điều kiện';
+
+const UNQUALIFIED = 'Chưa đủ điều kiện';
+
 export {
   ACTION_ITEM,
   EMPTY_STRING,
@@ -37,4 +41,6 @@ export {
   IS_IOS,
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
+  QUALIFIED,
+  UNQUALIFIED,
 };

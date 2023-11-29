@@ -35,6 +35,7 @@ const Document: React.FC<DocumentProps> = ({}) => {
   useHeaderOptions({
     options: {
       headerShown: true,
+      headerTitle: `Văn bản, quy định (${documents?.length})`,
       // eslint-disable-next-line react/no-unstable-nested-components
       headerRight: () => <HeaderRightButton onPress={toggleModal} />,
     },
@@ -51,6 +52,10 @@ const Document: React.FC<DocumentProps> = ({}) => {
             id: documentSnapshot.id,
             ...documentSnapshot.data(),
           } as IDocumentItem);
+        });
+
+        documentData.sort((a, b) => {
+          return Number(a.STT) - Number(b.STT);
         });
 
         if (searchText.length > 0) {

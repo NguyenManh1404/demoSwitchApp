@@ -73,7 +73,7 @@ const MapViewCarousel = ({navigation}: MapViewProps) => {
 
   const moveToDocument = () => {
     navigation.navigate('Document', {
-      title: 'Văn bản quy định',
+      title: 'Văn bản, quy định',
     });
   };
 

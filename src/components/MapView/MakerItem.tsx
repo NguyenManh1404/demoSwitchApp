@@ -31,7 +31,7 @@ const MakerItem: React.FC<IMakerItem> = ({
 
   return (
     <Marker coordinate={coordinate} onPress={onPressItem}>
-      {IsClinic ? (
+      {item?.BusinessType === 'Đã đủ điều kiện' ? (
         <Image
           source={
             isSelected ? APP_IMAGES.icHaiChauActive : APP_IMAGES.icHaiChau
