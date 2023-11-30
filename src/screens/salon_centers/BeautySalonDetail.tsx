@@ -32,9 +32,14 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
 
   const [salonComments, setSalonComments] = useState<IReviewSalon[]>([]);
 
+  const headerTitle =
+    item.BusinessName.length > 25
+      ? '...' + item.BusinessName.slice(-25)
+      : item.BusinessName;
+
   useHeaderOptions({
     options: {
-      headerTitle: item.BusinessName,
+      headerTitle: headerTitle,
     },
   });
 

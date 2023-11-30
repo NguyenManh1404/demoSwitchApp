@@ -1,3 +1,4 @@
+import DisplayPDF from '../screens/legal_documents/DisplayPDF';
 import Document from '../screens/legal_documents/Document';
 import MapView from '../screens/map/MapView';
 import BeautySalonDetail from '../screens/salon_centers/BeautySalonDetail';
@@ -8,6 +9,7 @@ import EvaluateAnotherSalonForm from '../screens/salon_centers/EvaluateAnotherSa
 
 const ROUTES = {
   Document,
+  DisplayPDF,
   MapView,
   BeautySalonDetail,
   BeautySalons,

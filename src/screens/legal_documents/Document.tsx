@@ -25,7 +25,7 @@ import {EMPTY_STRING, HIT_SLOP, SCREEN_WIDTH} from '../../utils/constants';
 
 type DocumentProps = NativeStackScreenProps<RootStackParamList, 'Document'>;
 
-const Document: React.FC<DocumentProps> = ({}) => {
+const Document: React.FC<DocumentProps> = ({navigation}) => {
   const documentRef = firestore().collection('Documents');
 
   const [documents, setDocuments] = useState<IDocumentItem[]>([]);
@@ -40,6 +40,10 @@ const Document: React.FC<DocumentProps> = ({}) => {
       headerRight: () => <HeaderRightButton onPress={toggleModal} />,
     },
   });
+
+  const navigateToDisplayPDF = () => {
+    navigation.navigate('DisplayPDF', {});
+  };
 
   useEffect(() => {
     const fetchCentres = async () => {
@@ -78,7 +82,7 @@ const Document: React.FC<DocumentProps> = ({}) => {
   const renderDocumentItem: ListRenderItem<IDocumentItem> = ({item, index}) => {
     return (
       <View style={styles.itemView} key={index}>
-        <DocumentCard item={item} />
+        <DocumentCard item={item} onPress={navigateToDisplayPDF} />
       </View>
     );
   };

@@ -1,4 +1,5 @@
 declare module '*.png';
+declare module '*.pdf';
 
 interface ISalonCenter {
   id: string;
@@ -50,6 +51,7 @@ type OptionalTitle = {
   title?: string;
 };
 type RootStackParamList = {
+  DisplayPDF: OptionalTitle;
   Document: OptionalTitle;
   MapView: OptionalTitle;
   BeautySalonDetail: OptionalTitle & {
@@ -100,6 +102,7 @@ interface IActionSheetItem {
 
 interface IDocumentCardProps {
   item: IDocumentItem;
+  onPress?: () => void;
 }
 
 interface IDocumentItem {

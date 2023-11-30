@@ -4,13 +4,17 @@ import {APP_COLORS} from '../../themes/colors';
 import {IS_ANDROID, SCREEN_WIDTH} from '../../utils/constants';
 import Text from '../Text';
 
-const DocumentCard: React.FC<IDocumentCardProps> = ({item}) => {
+const DocumentCard: React.FC<IDocumentCardProps> = ({item, onPress}) => {
   const openUrl = (link: string) => {
     Linking.openURL(link);
   };
 
   const handlePress = () => {
-    openUrl(item?.Link);
+    if (!item?.Link) {
+      onPress?.();
+    } else {
+      openUrl(item?.Link);
+    }
   };
 
   return (

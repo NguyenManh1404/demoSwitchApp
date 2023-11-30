@@ -6,6 +6,7 @@ import icChevronLeft from '../assets/images/icChevronLeft.png';
 import icChevronRight from '../assets/images/icChevronRight.png';
 import icClose from '../assets/images/icClose.png';
 import icCloseModal from '../assets/images/icCloseModal.png';
+import icClosePdf from '../assets/images/icClosePdf.png';
 import icCloseText from '../assets/images/icCloseText.png';
 import icDocument from '../assets/images/icDocument.png';
 import icDown from '../assets/images/icDown.png';
@@ -48,6 +49,7 @@ const APP_IMAGES = {
   icNoData,
   icInfo,
   logoHaiChau,
+  icClosePdf,
 };
 
 export {APP_IMAGES};

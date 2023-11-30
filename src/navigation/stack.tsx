@@ -50,7 +50,21 @@ export const MainNavigator = () => {
           },
         } as NativeStackNavigationOptions;
       }}>
-      <Stack.Screen name={'Document'} component={ROUTES.Document} />
+      <Stack.Screen
+        name={'DisplayPDF'}
+        component={ROUTES.DisplayPDF}
+        options={{
+          presentation: 'modal',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name={'Document'}
+        component={ROUTES.Document}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name={'MapView'}
         component={ROUTES.MapView}
