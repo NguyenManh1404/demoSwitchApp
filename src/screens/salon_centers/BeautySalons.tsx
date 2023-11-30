@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   textInput: {
-    flex: 1,
+    paddingVertical: 0,
   },
   filterTxt: {
     flex: 1,

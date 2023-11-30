@@ -172,12 +172,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: APP_COLORS.borderInputSearch,
     marginVertical: 18,
+    alignItems: 'center',
   },
   icSearch: {
     marginRight: 8,
   },
   textInput: {
-    flex: 1,
+    paddingVertical: 0,
   },
 });
 

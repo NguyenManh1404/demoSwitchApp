@@ -1,7 +1,8 @@
 import React, {useMemo} from 'react';
-import {Image} from 'react-native';
+import {Animated, Image} from 'react-native';
 import {Marker} from 'react-native-maps';
 import {APP_IMAGES} from '../../themes/images';
+import {QUALIFIED} from '../../utils/constants';
 
 const MakerItem: React.FC<IMakerItem> = ({
   index,
@@ -9,8 +10,6 @@ const MakerItem: React.FC<IMakerItem> = ({
   isSelected,
   onPress,
 }) => {
-  const {IsClinic} = item || {};
-
   const coordinate = useMemo(() => {
     if (!item.Lat || !item.Long) {
       return null;
@@ -31,15 +30,24 @@ const MakerItem: React.FC<IMakerItem> = ({
 
   return (
     <Marker coordinate={coordinate} onPress={onPressItem}>
-      {item?.BusinessType === 'Đã đủ điều kiện' ? (
+      {item?.BusinessType === QUALIFIED ? (
         <Image
-          source={
-            isSelected ? APP_IMAGES.icHaiChauActive : APP_IMAGES.icHaiChau
-          }
+          source={APP_IMAGES.icHaiChauActive}
+          style={[
+            {
+              transform: [{scale: isSelected ? 1 : 0.75}],
+            },
+          ]}
         />
       ) : (
-        <Image
-          source={isSelected ? APP_IMAGES.icMakerActive : APP_IMAGES.icMaker}
+        <Animated.Image
+          source={APP_IMAGES.icMakerActive}
+          style={[
+            {
+              transform: [{scale: isSelected ? 1 : 0.75}],
+            },
+          ]}
+          resizeMode="contain"
         />
       )}
     </Marker>

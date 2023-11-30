@@ -118,6 +118,7 @@ const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
+                  style={styles.textInput}
                   placeholderTextColor={
                     errors?.title
                       ? APP_COLORS.errorDefault
@@ -133,8 +134,8 @@ const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
           </View>
           <View style={styles.inputView}>
             <TextInput
+              style={[styles.textInput, styles.addressInput]}
               editable={false}
-              placeholderTextColor={APP_COLORS.placeholderText}
               defaultValue={item?.FormattedAddress}
               multiline
             />
@@ -346,5 +347,11 @@ const styles = StyleSheet.create({
   },
   titleTxt: {
     marginBottom: 20,
+  },
+  textInput: {
+    paddingVertical: 0,
+  },
+  addressInput: {
+    color: APP_COLORS.blackText,
   },
 });

@@ -6,7 +6,6 @@ import {
   ListRenderItem,
   Platform,
   StyleSheet,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import ButtonAwareKeyboard from '../../components/ButtonAwareKeyboard';
@@ -19,7 +18,7 @@ import {useHeaderOptions} from '../../hooks/useHeaderOptions';
 import {useRefreshOnFocus} from '../../hooks/useRefreshOnFocus';
 import {APP_COLORS} from '../../themes/colors';
 import {APP_IMAGES} from '../../themes/images';
-import {IS_ANDROID, SCREEN_WIDTH} from '../../utils/constants';
+import {IS_ANDROID, QUALIFIED, SCREEN_WIDTH} from '../../utils/constants';
 
 type BeautySalonDetailProps = NativeStackScreenProps<
   RootStackParamList,
@@ -131,11 +130,7 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
                 />
               )}
 
-              <TouchableOpacity>
-                <Text type="semiBold-16">Xem giấy chứng nhận</Text>
-              </TouchableOpacity>
-
-              {item?.BusinessType === 'Đã đủ điều kiện' ? (
+              {item?.BusinessType === QUALIFIED && item?.IsClinic === false ? (
                 <View>
                   <View style={styles.divder} />
                   <Text color={APP_COLORS.neutral2}>
