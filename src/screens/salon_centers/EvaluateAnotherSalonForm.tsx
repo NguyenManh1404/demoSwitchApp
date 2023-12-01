@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {handleSyncReview} from '../../api/syncReview';
 import ButtonAwareKeyboard from '../../components/ButtonAwareKeyboard';
 import KeyboardContainer from '../../components/KeyboardContainer';
 import InputEvaluate from '../../components/SalonCentre/InputEvaluate';
@@ -72,8 +73,41 @@ const EvaluateAnotherSalonForm = ({
   const onSubmit = async (data: IReviewAnotherItem) => {
     const commentRef = firestore().collection('AnotherSalonComments');
 
+    const formatImages = data?.images?.map(url => ({
+      url: url,
+    }));
+
+    const syncReviewData = {
+      linhVucId: '22', // hard code
+      tenDayDu: data?.reviewerName,
+      email: 'EmailHardCode', // hard code
+      soDienThoai: data?.reviewerPhone,
+      tieuDe: data?.title,
+      noiDungYKien: data?.content,
+      noiDienRa: data?.salonAddress,
+      nguonGopY: 'SoKHDT', //hard code
+      hinhAnhs: formatImages,
+    };
+
+    // const syncReviewData = {
+    //   linhVucId: '22',
+    //   tenDayDu: 'NameHardCode',
+    //   email: 'EmailHardCode',
+    //   soDienThoai: 'PhoneNumberHardCode',
+    //   tieuDe: data?.title,
+    //   noiDungYKien: data?.content,
+    //   noiDienRa: data?.salonAddress,
+    //   nguonGopY: 'YTEHAICHAU',
+    //   hinhAnhs: formatImages,
+    // };
+
     try {
       await commentRef.add(data);
+
+      //syncReviewData with smart city
+
+      await handleSyncReview({postData: syncReviewData});
+
       setUploadSuccess(true);
       toggleModal();
       setTimeout(() => {

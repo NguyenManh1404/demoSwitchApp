@@ -1,6 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, ListRenderItem, StyleSheet, View} from 'react-native';
 import ButtonAwareKeyboard from '../../components/ButtonAwareKeyboard';
 import ListEmptyComponent from '../../components/ListEmptyComponent';
@@ -17,6 +17,8 @@ const commentSalonRef = firestore().collection('AnotherSalonComments');
 
 const EvaluateAnotherSalon = ({navigation}: EvaluateAnotherSalonProps) => {
   const [salonComments, setSalonComments] = useState<IReviewAnotherItem[]>([]);
+
+  const flatListRef = useRef<FlatList<IReviewAnotherItem> | null>(null);
 
   const EvaluateAnotherSalonForm = () => {
     navigation.navigate('EvaluateAnotherSalonForm', {
@@ -51,7 +53,12 @@ const EvaluateAnotherSalon = ({navigation}: EvaluateAnotherSalonProps) => {
     fetchReview();
   }, [fetchReview]);
 
-  useRefreshOnFocus({refetch: fetchReview});
+  useRefreshOnFocus({
+    refetch: () => {
+      fetchReview();
+      scrollToIndex();
+    },
+  });
 
   const renderReviewItem: ListRenderItem<IReviewAnotherItem> = ({
     item,
@@ -64,9 +71,14 @@ const EvaluateAnotherSalon = ({navigation}: EvaluateAnotherSalonProps) => {
     );
   };
 
+  const scrollToIndex = (offset = 0) => {
+    flatListRef.current?.scrollToOffset({offset, animated: true});
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
+        ref={flatListRef}
         data={salonComments || []}
         renderItem={renderReviewItem}
         keyExtractor={(item, index) => `${item.id}-${index}`}

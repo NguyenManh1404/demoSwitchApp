@@ -1,6 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   ListRenderItem,
@@ -31,6 +31,8 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
   const {item} = route?.params;
 
   const [salonComments, setSalonComments] = useState<IReviewSalon[]>([]);
+
+  const flatListRef = useRef<FlatList<IReviewSalon> | null>(null);
 
   const headerTitle =
     item?.BusinessName.length > 25
@@ -79,7 +81,12 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
     fetchReview();
   }, [fetchReview]);
 
-  useRefreshOnFocus({refetch: fetchReview});
+  useRefreshOnFocus({
+    refetch: () => {
+      fetchReview();
+      scrollToIndex();
+    },
+  });
 
   const renderItem: ListRenderItem<IReviewSalon> = ({
     item: ratingItem,
@@ -88,9 +95,14 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
     return <RatingItem item={ratingItem} key={index} />;
   };
 
+  const scrollToIndex = (offset = 0) => {
+    flatListRef.current?.scrollToOffset({offset, animated: true});
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
+        ref={flatListRef}
         data={salonComments || []}
         renderItem={renderItem}
         keyExtractor={(salon, index) => `${salon.id}-${index}`}

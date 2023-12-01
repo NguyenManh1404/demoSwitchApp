@@ -4,7 +4,7 @@ import firestore, {
 
 import {DefaultTheme} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -41,6 +41,8 @@ type BeautySalonsProps = NativeStackScreenProps<
 
 const BeautySalons = ({navigation}: BeautySalonsProps) => {
   const [filterSelected, setFilterSelected] = useState(ACTION_ITEM[0]);
+
+  const flatListRef = useRef<FlatList<ISalonCenter> | null>(null);
 
   const [centres, setCenters] = useState<ISalonCenter[]>([]);
   const [searchText, setSearchText] = useState<string>(EMPTY_STRING);
@@ -106,12 +108,18 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
         } else {
           setCenters(salonCentreData);
         }
+        scrollToIndex();
       } catch (error) {}
     };
 
     fetchCentres();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterSelected.id, searchText]);
+
+  const scrollToIndex = (offset = 0) => {
+    // flatListRef.current.scrollToIndex({index, animated: true});
+    flatListRef.current?.scrollToOffset({offset, animated: true});
+  };
 
   useHeaderOptions({
     options: {
@@ -176,6 +184,7 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
   return (
     <View style={styles.flex}>
       <FlatList
+        ref={flatListRef}
         data={centres || []}
         renderItem={renderItem}
         keyExtractor={(item, index) => `${item.id}-${index}`}

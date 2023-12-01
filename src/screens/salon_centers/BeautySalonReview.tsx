@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {handleSyncReview} from '../../api/syncReview';
 import ButtonAwareKeyboard from '../../components/ButtonAwareKeyboard';
 import KeyboardContainer from '../../components/KeyboardContainer';
 import SalonCard from '../../components/SalonCard';
@@ -67,8 +68,28 @@ const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
   const onSubmit = async (data: IReviewSalon) => {
     const commentRef = firestore().collection('BeautySalonComments');
 
+    const formatImages = data?.images?.map(url => ({
+      url: url,
+    }));
+
+    const syncReviewData = {
+      linhVucId: '22',
+      tenDayDu: 'NameHardCode', //hardcode
+      email: 'EmailHardCode', //hardcode
+      soDienThoai: 'PhoneNumberHardCode', //hardcode
+      tieuDe: data?.title,
+      noiDungYKien: data?.content,
+      noiDienRa: item?.FormattedAddress,
+      nguonGopY: 'SoKHDT', //hardcode
+      hinhAnhs: formatImages,
+    };
+
     try {
       await commentRef.add(data);
+      //syncReviewData with smart city
+
+      await handleSyncReview({postData: syncReviewData});
+
       setUploadSuccess(true);
       toggleModal();
       setTimeout(() => {

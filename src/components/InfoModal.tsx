@@ -12,11 +12,14 @@ const InfoModal: React.FC<IInfoModalProps> = ({
 }) => {
   return (
     <Modal
-      animationType="none"
+      animationType="fade"
       transparent={true}
       visible={isModalVisible}
       onRequestClose={toggleModal}>
-      <TouchableOpacity style={styles.modalContainer} onPress={closeModal}>
+      <TouchableOpacity
+        style={styles.modalContainer}
+        onPress={closeModal}
+        activeOpacity={1}>
         <View style={styles.modalView}>
           <Image source={APP_IMAGES.logoHaiChau} style={styles.logoHaiChau} />
 

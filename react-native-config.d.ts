@@ -6,6 +6,9 @@ declare module 'react-native-config' {
     ANDROID_KEY_ALIAS: string;
     ANDROID_KEY_PASSWORD: string;
     GOOGLE_API_KEY: string;
+    SYNC_REVIEW_END_POINT: string;
+    SYNC_REVIEW_USER_NAME: string;
+    SYNC_REVIEW_PASSWORD: string;
   }
 
   export const Config: NativeConfig;

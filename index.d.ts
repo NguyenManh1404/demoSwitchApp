@@ -179,3 +179,15 @@ interface IUseMediaPickerProps {
   imageFolderStorage?: string;
   imageState?: string[];
 }
+
+interface ISyncReviewData {
+  linhVucId: string;
+  tenDayDu: string; //hardcode
+  email: string; //hardcode
+  soDienThoai: string; //hardcode
+  tieuDe: string;
+  noiDungYKien: string;
+  noiDienRa: string;
+  nguonGopY: string; //hardcode
+  hinhAnhs: {url: string}[];
+}
