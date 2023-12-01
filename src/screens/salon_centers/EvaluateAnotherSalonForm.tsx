@@ -197,6 +197,7 @@ const EvaluateAnotherSalonForm = ({
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <InputEvaluate
+                  maxLength={55}
                   placeholder={'Tiêu đề *'}
                   onChangeText={onChange}
                   value={value}
@@ -212,12 +213,9 @@ const EvaluateAnotherSalonForm = ({
             <Controller
               name="salonName"
               control={control}
-              rules={{
-                required: true,
-              }}
               render={({field: {onChange, onBlur, value}}) => (
                 <InputEvaluate
-                  placeholder={'Tên cơ sở *'}
+                  placeholder={'Tên cơ sở'}
                   onChangeText={onChange}
                   value={value}
                   onBlur={onBlur}

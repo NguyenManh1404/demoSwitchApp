@@ -109,7 +109,7 @@ const Document: React.FC<DocumentProps> = ({navigation}) => {
       <FlatList
         data={documents || []}
         renderItem={renderDocumentItem}
-        keyExtractor={(__, index) => `${index}`}
+        keyExtractor={(item, index) => `${item.id}-${index}`}
         ListEmptyComponent={
           <ListEmptyComponent
             image={APP_IMAGES.icSearchNoResult}

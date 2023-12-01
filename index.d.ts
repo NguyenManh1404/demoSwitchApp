@@ -93,6 +93,7 @@ interface IInputEvaluate {
   value: string;
   placeholderTextColor: string;
   keyboardType?: KeyboardTypeOptions;
+  maxLength?: number;
 }
 
 interface IActionSheetItem {

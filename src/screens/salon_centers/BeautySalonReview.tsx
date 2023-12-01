@@ -14,6 +14,7 @@ import {
 import ButtonAwareKeyboard from '../../components/ButtonAwareKeyboard';
 import KeyboardContainer from '../../components/KeyboardContainer';
 import SalonCard from '../../components/SalonCard';
+import InputEvaluate from '../../components/SalonCentre/InputEvaluate';
 import Text from '../../components/Text';
 import {useMediaPicker} from '../../hooks/useMediaPicker';
 import {APP_COLORS} from '../../themes/colors';
@@ -109,29 +110,27 @@ const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
               *
             </Text>
           </Text>
-          <View style={styles.inputView}>
-            <Controller
-              name="title"
-              control={control}
-              rules={{
-                required: true,
-              }}
-              render={({field: {onChange, onBlur, value}}) => (
-                <TextInput
-                  style={styles.textInput}
-                  placeholderTextColor={
-                    errors?.title
-                      ? APP_COLORS.errorDefault
-                      : APP_COLORS.placeholderText
-                  }
-                  placeholder="Tiêu đề *"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
-            />
-          </View>
+          <Controller
+            name="title"
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({field: {onChange, onBlur, value}}) => (
+              <InputEvaluate
+                maxLength={55}
+                placeholder={'Tiêu đề *'}
+                onChangeText={onChange}
+                value={value}
+                onBlur={onBlur}
+                placeholderTextColor={
+                  errors?.title
+                    ? APP_COLORS.errorDefault
+                    : APP_COLORS.placeholderText
+                }
+              />
+            )}
+          />
           <View style={styles.inputView}>
             <TextInput
               style={[styles.textInput, styles.addressInput]}

@@ -69,7 +69,7 @@ const EvaluateAnotherSalon = ({navigation}: EvaluateAnotherSalonProps) => {
       <FlatList
         data={salonComments || []}
         renderItem={renderReviewItem}
-        keyExtractor={(__, index) => `${index}`}
+        keyExtractor={(item, index) => `${item.id}-${index}`}
         contentContainerStyle={styles.contentContainerStyle}
         ListEmptyComponent={
           <ListEmptyComponent

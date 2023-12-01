@@ -178,6 +178,7 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
       <FlatList
         data={centres || []}
         renderItem={renderItem}
+        keyExtractor={(item, index) => `${item.id}-${index}`}
         stickyHeaderIndices={[0]}
         contentContainerStyle={styles.contentContainerStyle}
         ListEmptyComponent={

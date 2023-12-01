@@ -17,7 +17,6 @@ const SalonCard = ({
   isShowValuation = false,
   isShowAddress = true,
   isFromMapView = false,
-  isFromDetail = false,
   onPress,
   ...props
 }: ISalonCard) => {
@@ -36,7 +35,7 @@ const SalonCard = ({
       />
       <View style={styles.nameAddressView}>
         <Text
-          numberOfLines={isFromDetail ? undefined : 3}
+          numberOfLines={isFromMapView ? 3 : undefined}
           type="bold-16"
           style={styles.nameText}>
           {item?.BusinessName}

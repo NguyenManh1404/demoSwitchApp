@@ -33,9 +33,9 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
   const [salonComments, setSalonComments] = useState<IReviewSalon[]>([]);
 
   const headerTitle =
-    item.BusinessName.length > 25
-      ? '...' + item.BusinessName.slice(-25)
-      : item.BusinessName;
+    item?.BusinessName.length > 25
+      ? item?.BusinessName.substring(0, 25) + '...'
+      : item?.BusinessName;
 
   useHeaderOptions({
     options: {
@@ -93,7 +93,7 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
       <FlatList
         data={salonComments || []}
         renderItem={renderItem}
-        keyExtractor={(__, index) => `${index}`}
+        keyExtractor={(salon, index) => `${salon.id}-${index}`}
         contentContainerStyle={styles.contentContainerStyle}
         ListEmptyComponent={
           <ListEmptyComponent
@@ -103,7 +103,7 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
         }
         ListHeaderComponent={
           <View>
-            <SalonCard item={item} isShowValuation={true} isFromDetail={true} />
+            <SalonCard item={item} isShowValuation={true} />
             <View style={styles.titleCard}>
               <Text color={APP_COLORS.titleCard} type="bold-14">
                 Thông tin cơ sở
