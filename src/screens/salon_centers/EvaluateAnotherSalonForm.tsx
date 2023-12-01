@@ -89,18 +89,6 @@ const EvaluateAnotherSalonForm = ({
       hinhAnhs: formatImages,
     };
 
-    // const syncReviewData = {
-    //   linhVucId: '22',
-    //   tenDayDu: 'NameHardCode',
-    //   email: 'EmailHardCode',
-    //   soDienThoai: 'PhoneNumberHardCode',
-    //   tieuDe: data?.title,
-    //   noiDungYKien: data?.content,
-    //   noiDienRa: data?.salonAddress,
-    //   nguonGopY: 'YTEHAICHAU',
-    //   hinhAnhs: formatImages,
-    // };
-
     try {
       await commentRef.add(data);
 
