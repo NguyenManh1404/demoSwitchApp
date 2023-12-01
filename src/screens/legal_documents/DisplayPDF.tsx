@@ -25,10 +25,19 @@ const DisplayPDF: React.FC<DisplayPDFProps> = () => {
         style={styles.closeModalBtn}
         hitSlop={HIT_SLOP}
         onPress={goBack}>
-        <Image source={APP_IMAGES.icClosePdf} tintColor={APP_COLORS.neutral2} />
+        <Image
+          source={APP_IMAGES.icClosePdf}
+          tintColor={APP_COLORS.neutral2}
+          style={styles.icClosePdf}
+        />
       </TouchableOpacity>
       <Pdf
-        source={congvan3501}
+        source={Platform.select({
+          ios: congvan3501,
+          android: {
+            uri: 'bundle-assets://congvan3501.pdf',
+          },
+        })}
         trustAllCerts={Platform.OS === 'ios'}
         style={styles.pdf}
       />
@@ -55,5 +64,9 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     marginRight: 30,
     marginVertical: 15,
+  },
+  icClosePdf: {
+    width: 15,
+    height: 15,
   },
 });
