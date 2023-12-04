@@ -65,7 +65,7 @@ const EvaluateAnotherSalon = ({navigation}: EvaluateAnotherSalonProps) => {
   const EvaluateAnotherSalonForm = () => {
     navigation.navigate('EvaluateAnotherSalonForm', {
       title: 'Gửi góp ý, đánh giá',
-      commentLength: actuallyComments,
+      commentLength: actuallyComments + 1,
     });
   };
 
