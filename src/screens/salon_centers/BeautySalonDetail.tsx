@@ -31,8 +31,11 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
   const {item} = route?.params;
 
   const [salonComments, setSalonComments] = useState<IReviewSalon[]>([]);
+  const [actuallyComments, setActuallyComments] = useState<number>(0);
 
   const flatListRef = useRef<FlatList<IReviewSalon> | null>(null);
+
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const headerTitle =
     item?.BusinessName.length > 25
@@ -45,15 +48,9 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
     },
   });
 
-  const moveToBeautySalonReview = () => {
-    navigation.navigate('BeautySalonReview', {
-      item: item,
-      title: 'Gửi góp ý, đánh giá',
-    });
-  };
-
   const fetchReview = useCallback(async () => {
     try {
+      setLoading(true);
       const querySnapshot = await commentSalonRef
         .where('idSalon', '==', item?.id)
         .get();
@@ -69,12 +66,17 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
         } as IReviewSalon);
       });
 
+      setActuallyComments(salonCentreData?.length);
+
       const sortData = salonCentreData.sort(
         (a, b) => b.createdAt.seconds - a.createdAt.seconds,
       );
 
       setSalonComments(sortData.slice(0, 10));
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
   }, [item?.id]);
 
   useEffect(() => {
@@ -87,6 +89,14 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
       scrollToIndex();
     },
   });
+
+  const moveToBeautySalonReview = () => {
+    navigation.navigate('BeautySalonReview', {
+      item: item,
+      title: 'Gửi góp ý, đánh giá',
+      commentLength: actuallyComments + 1,
+    });
+  };
 
   const renderItem: ListRenderItem<IReviewSalon> = ({
     item: ratingItem,
@@ -111,6 +121,7 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
           <ListEmptyComponent
             image={APP_IMAGES.icNoData}
             title={'Chưa có dữ liệu'}
+            loading={isLoading}
           />
         }
         ListHeaderComponent={
@@ -152,7 +163,7 @@ const BeautySalonDetail = ({route, navigation}: BeautySalonDetailProps) => {
                   <View style={styles.divder} />
                   <Text color={APP_COLORS.neutral2}>
                     Cơ sở đủ điều kiện tự công bố đáp ứng điều kiện cung cấp
-                    dịch vụ thẩm mỹ của Sở Y Tế
+                    dịch vụ thẩm mỹ của Sở Y Tế.
                   </Text>
                 </View>
               ) : null}

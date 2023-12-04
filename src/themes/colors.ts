@@ -18,6 +18,7 @@ const APP_COLORS = {
   modalBackground: 'rgba(36, 31, 31, 0.78)',
   border: '#CCCCCC',
   neutral3: '#A0A3BD',
+  textInputDisable: '#f7f6f2',
 };
 
 export {APP_COLORS};

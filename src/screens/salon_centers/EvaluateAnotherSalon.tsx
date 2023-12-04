@@ -17,17 +17,14 @@ const commentSalonRef = firestore().collection('AnotherSalonComments');
 
 const EvaluateAnotherSalon = ({navigation}: EvaluateAnotherSalonProps) => {
   const [salonComments, setSalonComments] = useState<IReviewAnotherItem[]>([]);
+  const [actuallyComments, setActuallyComments] = useState<number>(0);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const flatListRef = useRef<FlatList<IReviewAnotherItem> | null>(null);
 
-  const EvaluateAnotherSalonForm = () => {
-    navigation.navigate('EvaluateAnotherSalonForm', {
-      title: 'Gửi góp ý, đánh giá',
-    });
-  };
-
   const fetchReview = useCallback(async () => {
     try {
+      setLoading(true);
       const querySnapshot = await commentSalonRef.get();
       const salonCentreData: IReviewAnotherItem[] = [];
 
@@ -41,12 +38,17 @@ const EvaluateAnotherSalon = ({navigation}: EvaluateAnotherSalonProps) => {
         } as IReviewAnotherItem);
       });
 
+      setActuallyComments(salonCentreData?.length);
+
       const sortData = salonCentreData.sort(
         (a, b) => b.createdAt.seconds - a.createdAt.seconds,
       );
 
       setSalonComments(sortData.slice(0, 10));
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -59,6 +61,13 @@ const EvaluateAnotherSalon = ({navigation}: EvaluateAnotherSalonProps) => {
       scrollToIndex();
     },
   });
+
+  const EvaluateAnotherSalonForm = () => {
+    navigation.navigate('EvaluateAnotherSalonForm', {
+      title: 'Gửi góp ý, đánh giá',
+      commentLength: actuallyComments,
+    });
+  };
 
   const renderReviewItem: ListRenderItem<IReviewAnotherItem> = ({
     item,
@@ -87,6 +96,7 @@ const EvaluateAnotherSalon = ({navigation}: EvaluateAnotherSalonProps) => {
           <ListEmptyComponent
             image={APP_IMAGES.icNoData}
             title={'Chưa có dữ liệu'}
+            loading={isLoading}
           />
         }
       />

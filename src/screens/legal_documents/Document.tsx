@@ -31,6 +31,7 @@ const Document: React.FC<DocumentProps> = ({navigation}) => {
   const [documents, setDocuments] = useState<IDocumentItem[]>([]);
   const [searchText, setSearchText] = useState<string>(EMPTY_STRING);
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   useHeaderOptions({
     options: {
@@ -48,6 +49,7 @@ const Document: React.FC<DocumentProps> = ({navigation}) => {
   useEffect(() => {
     const fetchCentres = async () => {
       try {
+        setLoading(true);
         const querySnapshot = await documentRef.get();
         const documentData: IDocumentItem[] = [];
 
@@ -72,7 +74,10 @@ const Document: React.FC<DocumentProps> = ({navigation}) => {
         } else {
           setDocuments(documentData);
         }
-      } catch (error) {}
+      } catch (error) {
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchCentres();
@@ -115,6 +120,7 @@ const Document: React.FC<DocumentProps> = ({navigation}) => {
             image={APP_IMAGES.icSearchNoResult}
             title={'Rất tiếc, không có dữ liệu hiển thị'}
             containerStyle={styles.listEmptyComponentStyle}
+            loading={isLoading}
           />
         }
         stickyHeaderIndices={[0]}

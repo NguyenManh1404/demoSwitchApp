@@ -35,7 +35,7 @@ const SalonCard = ({
       />
       <View style={styles.nameAddressView}>
         <Text
-          numberOfLines={isFromMapView ? 3 : undefined}
+          numberOfLines={isFromMapView ? 2 : undefined}
           type="bold-16"
           style={styles.nameText}>
           {item?.BusinessName}

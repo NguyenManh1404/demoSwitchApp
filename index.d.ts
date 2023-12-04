@@ -60,9 +60,12 @@ type RootStackParamList = {
   BeautySalons: OptionalTitle;
   BeautySalonReview: OptionalTitle & {
     item: ISalonCenter;
+    commentLength: number;
   };
   EvaluateAnotherSalon: OptionalTitle;
-  EvaluateAnotherSalonForm: OptionalTitle;
+  EvaluateAnotherSalonForm: OptionalTitle & {
+    commentLength: number;
+  };
 };
 
 type FontTypes = 'semiBold' | 'bold' | 'regular';
@@ -118,6 +121,7 @@ interface IListEmptyComponentProps {
   image: ImageSourcePropType;
   title: string;
   containerStyle?: ViewStyle;
+  loading?: boolean;
 }
 
 interface IActionItem {
@@ -130,7 +134,7 @@ interface IActionItem {
 interface IReviewSalon {
   id?: string;
   idSalon: string;
-  idReview: number;
+  idReview: string;
   title: string;
   content: string;
   images: string[];

@@ -12,7 +12,6 @@ const useMediaPicker = ({
       const image = await ImagePicker.openPicker({
         width: 300,
         height: 400,
-        cropping: true,
       });
 
       const imageRef = `${imageFolderStorage}/${new Date().getTime()}`;

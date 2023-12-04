@@ -33,11 +33,16 @@ type EvaluateAnotherSalonFormProps = NativeStackScreenProps<
 >;
 
 const EvaluateAnotherSalonForm = ({
+  route,
   navigation,
 }: EvaluateAnotherSalonFormProps) => {
+  const {commentLength} = route?.params;
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
 
   const [uploadSuccess, setUploadSuccess] = useState<boolean>(true);
+
+  const formatNumberDisplay = `${commentLength}`.padStart(2, '0');
+
   const {
     control,
     handleSubmit,
@@ -46,7 +51,7 @@ const EvaluateAnotherSalonForm = ({
     watch,
   } = useForm<IReviewAnotherItem>({
     defaultValues: {
-      idReview: new Date().getTime(),
+      idReview: `CSK${formatNumberDisplay}`,
       reviewerName: EMPTY_STRING,
       reviewerPhone: EMPTY_STRING,
       reviewerAddress: EMPTY_STRING,

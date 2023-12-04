@@ -32,10 +32,12 @@ type BeautySalonReviewProps = NativeStackScreenProps<
 >;
 
 const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
-  const {item} = route?.params;
+  const {item, commentLength} = route?.params;
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
 
   const [uploadSuccess, setUploadSuccess] = useState<boolean>(true);
+
+  const formatNumberDisplay = `${commentLength}`.padStart(2, '0');
 
   const {
     control,
@@ -46,7 +48,7 @@ const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
   } = useForm<IReviewSalon>({
     defaultValues: {
       idSalon: item?.id,
-      idReview: new Date().getTime(),
+      idReview: `CS${formatNumberDisplay}`,
       title: EMPTY_STRING,
       content: EMPTY_STRING,
       images: [],
@@ -152,7 +154,7 @@ const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
               />
             )}
           />
-          <View style={styles.inputView}>
+          <View style={[styles.inputView, styles.addressView]}>
             <TextInput
               style={[styles.textInput, styles.addressInput]}
               editable={false}
@@ -373,5 +375,9 @@ const styles = StyleSheet.create({
   },
   addressInput: {
     color: APP_COLORS.blackText,
+    flex: 1,
+  },
+  addressView: {
+    backgroundColor: APP_COLORS.textInputDisable,
   },
 });

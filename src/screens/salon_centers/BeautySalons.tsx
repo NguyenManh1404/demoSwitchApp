@@ -47,12 +47,14 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
   const [centres, setCenters] = useState<ISalonCenter[]>([]);
   const [searchText, setSearchText] = useState<string>(EMPTY_STRING);
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const salonCentreRef = firestore().collection('BeautySalons');
 
   useEffect(() => {
     const fetchCentres = async () => {
       try {
+        setLoading(true);
         let query: FirebaseFirestoreTypes.Query = salonCentreRef;
 
         switch (filterSelected.id) {
@@ -109,7 +111,10 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
           setCenters(salonCentreData);
         }
         scrollToIndex();
-      } catch (error) {}
+      } catch (error) {
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchCentres();
@@ -195,6 +200,7 @@ const BeautySalons = ({navigation}: BeautySalonsProps) => {
             image={APP_IMAGES.icSearchNoResult}
             title={'Rất tiếc, không có dữ liệu hiển thị'}
             containerStyle={styles.listEmptyComponentStyle}
+            loading={isLoading}
           />
         }
         ListHeaderComponent={
