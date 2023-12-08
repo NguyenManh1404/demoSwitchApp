@@ -49,6 +49,9 @@ const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
     defaultValues: {
       idSalon: item?.id,
       idReview: `CS${formatNumberDisplay}`,
+      reviewerName: EMPTY_STRING,
+      reviewerPhone: EMPTY_STRING,
+      reviewerAddress: EMPTY_STRING,
       title: EMPTY_STRING,
       content: EMPTY_STRING,
       images: [],
@@ -76,9 +79,9 @@ const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
 
     const syncReviewData = {
       linhVucId: '22',
-      tenDayDu: 'NameHardCode', //hardcode
+      tenDayDu: data?.reviewerName,
       email: 'EmailHardCode', //hardcode
-      soDienThoai: 'PhoneNumberHardCode', //hardcode
+      soDienThoai: data?.reviewerPhone, //hardcode
       tieuDe: data?.title,
       noiDungYKien: data?.content,
       noiDienRa: item?.FormattedAddress,
@@ -126,12 +129,88 @@ const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
       <KeyboardContainer contentContainerStyle={styles.keyboardContainer}>
         <SalonCard item={item} />
         <View style={styles.inputReview}>
+          <View style={styles.infoReviewerView}>
+            <Text type="bold-16" style={styles.infoReviewerTitle}>
+              Thông tin người góp ý, đánh giá
+            </Text>
+            <Text
+              type="regular-12"
+              color={APP_COLORS.neutral2}
+              style={styles.infoSubTitle}>
+              Thông tin người đánh giá sẽ được bảo mật.
+            </Text>
+          </View>
+
+          <View>
+            <Controller
+              name="reviewerName"
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <InputEvaluate
+                  placeholder={'Tên *'}
+                  onChangeText={onChange}
+                  value={value}
+                  onBlur={onBlur}
+                  placeholderTextColor={
+                    errors?.reviewerName
+                      ? APP_COLORS.errorDefault
+                      : APP_COLORS.placeholderText
+                  }
+                />
+              )}
+            />
+
+            <Controller
+              name="reviewerPhone"
+              control={control}
+              rules={{
+                required: 'Vui lòng nhập số điện thoại',
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <>
+                  <InputEvaluate
+                    placeholder={'Số điện thoại *'}
+                    onChangeText={onChange}
+                    value={value}
+                    onBlur={onBlur}
+                    keyboardType="numeric"
+                    placeholderTextColor={
+                      errors?.reviewerPhone
+                        ? APP_COLORS.errorDefault
+                        : APP_COLORS.placeholderText
+                    }
+                  />
+                </>
+              )}
+            />
+
+            <Controller
+              name="reviewerAddress"
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <InputEvaluate
+                  placeholder={'Địa chỉ *'}
+                  onChangeText={onChange}
+                  value={value}
+                  onBlur={onBlur}
+                  placeholderTextColor={
+                    errors?.reviewerAddress
+                      ? APP_COLORS.errorDefault
+                      : APP_COLORS.placeholderText
+                  }
+                />
+              )}
+            />
+          </View>
+
           <Text type={'bold-16'} style={styles.titleTxt}>
             Nội dung góp ý, đánh giá
-            <Text type={'bold-16'} color={APP_COLORS.errorDefault}>
-              {' '}
-              *
-            </Text>
           </Text>
           <Controller
             name="title"
@@ -379,5 +458,12 @@ const styles = StyleSheet.create({
   },
   addressView: {
     backgroundColor: APP_COLORS.textInputDisable,
+  },
+  infoReviewerView: {
+    marginBottom: 12,
+  },
+  infoReviewerTitle: {lineHeight: 24},
+  infoSubTitle: {
+    lineHeight: 22,
   },
 });

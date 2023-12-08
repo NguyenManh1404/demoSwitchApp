@@ -136,7 +136,7 @@ const EvaluateAnotherSalonForm = ({
         <View style={styles.formCard}>
           <View style={styles.titleView}>
             <Text type="bold-16" style={styles.titleTxt}>
-              Thông tin người đánh giá
+              Thông tin người góp ý, đánh giá
             </Text>
             <Text type="regular-12" color={APP_COLORS.neutral2}>
               Thông tin người đánh giá sẽ được bảo mật.
@@ -152,7 +152,7 @@ const EvaluateAnotherSalonForm = ({
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <InputEvaluate
-                  placeholder={'Tên người đánh giá *'}
+                  placeholder={'Tên *'}
                   onChangeText={onChange}
                   value={value}
                   onBlur={onBlur}
@@ -197,7 +197,7 @@ const EvaluateAnotherSalonForm = ({
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <InputEvaluate
-                  placeholder={'Địa chỉ người đánh giá *'}
+                  placeholder={'Địa chỉ *'}
                   onChangeText={onChange}
                   value={value}
                   onBlur={onBlur}
@@ -212,7 +212,7 @@ const EvaluateAnotherSalonForm = ({
           </View>
           <View style={styles.titleView}>
             <Text type="bold-16" style={styles.titleTxt}>
-              Thông tin cơ sở
+              Nội dung góp ý, đánh giá
             </Text>
           </View>
           <View>
