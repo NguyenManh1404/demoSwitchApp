@@ -20,7 +20,7 @@ export const document = [
   {
     STT: '4',
     name: 'Luật số 12/VBHN-VPQH',
-    content: 'Luật Khám bệnh, chữa bệnh',
+    content: 'Văn bản hợp nhất số 12/VBHN-VPQH',
     Link: 'https://thuvienphapluat.vn/van-ban/The-thao-Y-te/Van-ban-hop-nhat-12-VBHN-VPQH-2017-Luat-Kham-benh-chua-benh-377166.aspx',
   },
   {
