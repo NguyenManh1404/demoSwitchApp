@@ -1,13 +1,6 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 
-project.ext.envConfigFiles = [
-    debug: "./.env.dev",
-    releaseuat: "./.env.uat",
-    release: "./.env.prod",
-]
-apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
-
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -90,40 +83,22 @@ android {
     }
     signingConfigs {
         debug {
-            if (project.env.get('ANDROID_STORE_FILE')) {
-                storeFile file(project.env.get("ANDROID_STORE_FILE"))
-                storePassword project.env.get("ANDROID_STORE_PASSWORD")
-                keyAlias project.env.get("ANDROID_KEY_ALIAS")
-                keyPassword project.env.get("ANDROID_KEY_PASSWORD")
-            }
-        }
-        uat {
-            if (project.env.get('ANDROID_STORE_FILE')) {
-                storeFile file(project.env.get("ANDROID_STORE_FILE"))
-                storePassword project.env.get("ANDROID_STORE_PASSWORD")
-                keyAlias project.env.get("ANDROID_KEY_ALIAS")
-                keyPassword project.env.get("ANDROID_KEY_PASSWORD")
-            }
+                storeFile file("debug.keystore")
+                storePassword "android"
+                keyAlias "androiddebugkey"
+                keyPassword "android"
         }
         release {
-            if (project.env.get('ANDROID_STORE_FILE')) {
-                storeFile file(project.env.get("ANDROID_STORE_FILE"))
-                storePassword project.env.get("ANDROID_STORE_PASSWORD")
-                keyAlias project.env.get("ANDROID_KEY_ALIAS")
-                keyPassword project.env.get("ANDROID_KEY_PASSWORD")
-            }
+                storeFile file("my-release-key.keystore")
+                storePassword "enouvo123"
+                keyAlias "enouvo123"
+                keyPassword "enouvo123"
         }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
             matchingFallbacks = ['debug']
-        }
-        releaseUAT {
-            matchingFallbacks = ['release']
-            minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.uat
         }
         release {
             // Caution! In production, you need to generate your own keystore file.

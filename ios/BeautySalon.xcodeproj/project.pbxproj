@@ -17,7 +17,6 @@
 		ACEDDB70AF26CD3FA7FB31A6 /* Pods_BeautySalon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335A66D0AA18EDDA5E748F2A /* Pods_BeautySalon.framework */; };
 		B7299272D41C48DCA986427F /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64CB1C120D704351B218CD37 /* Inter-Bold.ttf */; };
 		D1B6EBFA2B022405009AD957 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D1B6EBF92B022405009AD957 /* GoogleService-Info.plist */; };
-		D1BF01282B0202210008788F /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = D1BF01272B0202210008788F /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +48,6 @@
 		90831B930D1D45758543266E /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../src/assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; };
 		9DE6BC3EA2CA8E1410FC8637 /* Pods-BeautySalon.uat.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeautySalon.uat.xcconfig"; path = "Target Support Files/Pods-BeautySalon/Pods-BeautySalon.uat.xcconfig"; sourceTree = "<group>"; };
 		D1B6EBF92B022405009AD957 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		D1BF01272B0202210008788F /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -132,7 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				D1B6EBF92B022405009AD957 /* GoogleService-Info.plist */,
-				D1BF01272B0202210008788F /* Config.xcconfig */,
 				13B07FAE1A68108700A75B9A /* BeautySalon */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* BeautySalonTests */,
@@ -182,6 +179,7 @@
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
 			name = BeautySalonTests;
+			productName = BeautySalonTests;
 			productReference = 00E356EE1AD99517003FC87E /* BeautySalonTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
@@ -259,7 +257,6 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				D1B6EBFA2B022405009AD957 /* GoogleService-Info.plist in Resources */,
-				D1BF01282B0202210008788F /* Config.xcconfig in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				B7299272D41C48DCA986427F /* Inter-Bold.ttf in Resources */,
 				61FA64C4FB5A42E8AB6B4892 /* Inter-Regular.ttf in Resources */,
@@ -536,7 +533,6 @@
 		};
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1BF01272B0202210008788F /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -624,7 +620,6 @@
 		};
 		83CBBA211A601CBA00E9B192 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1BF01272B0202210008788F /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -708,7 +703,6 @@
 		};
 		D1BF01242B0201520008788F /* UAT */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1BF01272B0202210008788F /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;

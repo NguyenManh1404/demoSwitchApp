@@ -1,6 +1,5 @@
 #import "AppDelegate.h"
 #import <GoogleMaps/GoogleMaps.h>
-#import "RNCConfig.h"
 #import <Firebase.h>
 #import <React/RCTBundleURLProvider.h>
 
@@ -14,8 +13,7 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
   // Google Map
-  NSString *googleMapApiKey = [RNCConfig envFor:@"GOOGLE_API_KEY"];
-  [GMSServices provideAPIKey: googleMapApiKey];
+  [GMSServices provideAPIKey: @"AIzaSyDGZOhb6qWmy1PLYJrLmtBho18Vasw0C_U"];
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 

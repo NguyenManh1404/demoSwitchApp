@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>$(APP_NAME)</string>
+	<string>Quản lý cơ sở thẩm mỹ Hải Châu</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>$(APP_NAME)</string>
+	<string>Quản lý cơ sở thẩm mỹ Hải Châu</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -36,9 +36,9 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>$(APP_NAME) would like to use your location to show you all beautysalon in your area.</string>
+	<string>Quản lý cơ sở thẩm mỹ Hải Châu would like to use your location to show you all beautysalon in your area.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(APP_NAME) would like to access your photo library to upload images to review salons.</string>
+	<string>Quản lý cơ sở thẩm mỹ Hải Châu would like to access your photo library to upload images to review salons.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Inter-Bold.ttf</string>

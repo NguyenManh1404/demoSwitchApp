@@ -1,15 +1,15 @@
 import base64 from 'base-64';
-import Config from 'react-native-config';
+import APP_CONFIG from '../config/AppSetting';
 
 const basicAuth =
   'Basic ' +
   base64.encode(
-    `${Config.SYNC_REVIEW_USER_NAME}:${Config.SYNC_REVIEW_PASSWORD}`,
+    `${APP_CONFIG.SYNC_REVIEW_USER_NAME}:${APP_CONFIG.SYNC_REVIEW_PASSWORD}`,
   );
 
 const handleSyncReview = async ({postData}: {postData: ISyncReviewData}) => {
   try {
-    await fetch(Config.SYNC_REVIEW_END_POINT, {
+    await fetch(APP_CONFIG.SYNC_REVIEW_END_POINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
