@@ -93,7 +93,7 @@ interface IInputEvaluate {
   placeholder: string;
   onChangeText: (e: string) => void;
   onBlur: (e) => void;
-  value: string;
+  value: string | undefined;
   placeholderTextColor: string;
   keyboardType?: KeyboardTypeOptions;
   maxLength?: number;
@@ -140,6 +140,9 @@ interface IReviewSalon {
   images: string[];
   createdAt: firebase.firestore.Timestamp;
   formattedTime?: firebase.firestore.Timestamp;
+  reviewerName?: string;
+  reviewerPhone?: string;
+  reviewerAddress?: string;
 }
 
 interface IRatingItemProps {

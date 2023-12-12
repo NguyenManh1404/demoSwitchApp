@@ -14,12 +14,12 @@ export const document = [
   {
     STT: '3',
     name: 'Luật số 21/2017/QH14',
-    content: 'Luật Quy Hoạch',
+    content: 'Luật Quy hoạch',
     Link: 'https://thuvienphapluat.vn/van-ban/Xay-dung-Do-thi/Luat-quy-hoach-322935.aspx',
   },
   {
     STT: '4',
-    name: 'Luật số 12/VBHN-VPQH',
+    name: 'Văn bản hợp nhất số 12/VBHN-VPQH',
     content: 'Văn bản hợp nhất số 12/VBHN-VPQH',
     Link: 'https://thuvienphapluat.vn/van-ban/The-thao-Y-te/Van-ban-hop-nhat-12-VBHN-VPQH-2017-Luat-Kham-benh-chua-benh-377166.aspx',
   },

@@ -1,4 +1,5 @@
 import storage from '@react-native-firebase/storage';
+import {useState} from 'react';
 import {Linking} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 
@@ -7,14 +8,18 @@ const useMediaPicker = ({
   imageFolderStorage,
   imageState,
 }: IUseMediaPickerProps) => {
+  const [loading, setLoading] = useState(false);
+
   const pickImage = async () => {
     try {
+      setLoading(true);
       const image = await ImagePicker.openPicker({
         width: 300,
         height: 400,
+        // cropping: true,
       });
 
-      const imageRef = `${imageFolderStorage}/${new Date().getTime()}`;
+      const imageRef = await `${imageFolderStorage}/${new Date().getTime()}`;
 
       if (image.path) {
         const response = await storage().ref(imageRef).putFile(image.path);
@@ -33,10 +38,13 @@ const useMediaPicker = ({
         default:
           break;
       }
+    } finally {
+      setLoading(false);
     }
   };
   return {
     pickImage,
+    loading,
   };
 };
 

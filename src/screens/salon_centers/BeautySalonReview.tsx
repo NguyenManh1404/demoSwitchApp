@@ -3,6 +3,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
+  ActivityIndicator,
   Image,
   Modal,
   Platform,
@@ -62,12 +63,11 @@ const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
   const content = watch('content');
   const images = watch('images');
 
-  const {pickImage} = useMediaPicker({
+  const {pickImage, loading} = useMediaPicker({
     setValue: setValue,
     imageState: images,
     imageFolderStorage: 'reviews',
   });
-
   const isAddImage = images?.length >= 3;
 
   const onSubmit = async (data: IReviewSalon) => {
@@ -93,7 +93,7 @@ const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
       await commentRef.add(data);
       //syncReviewData with smart city
 
-      await handleSyncReview({postData: syncReviewData});
+      await handleSyncReview({postData: syncReviewData as any});
 
       setUploadSuccess(true);
       toggleModal();
@@ -291,13 +291,22 @@ const BeautySalonReview = ({route, navigation}: BeautySalonReviewProps) => {
             style={styles.uploadImageBtn}
             onPress={onPickImage}
             disabled={isAddImage}>
-            <Image
-              source={APP_IMAGES.icUpload}
-              style={styles.icUpload}
-              tintColor={
-                isAddImage ? APP_COLORS.borderInput : APP_COLORS.blackText
-              }
-            />
+            {loading ? (
+              <ActivityIndicator
+                size="small"
+                color={APP_COLORS.primary}
+                style={styles.icUpload}
+              />
+            ) : (
+              <Image
+                source={APP_IMAGES.icUpload}
+                style={styles.icUpload}
+                tintColor={
+                  isAddImage ? APP_COLORS.borderInput : APP_COLORS.blackText
+                }
+              />
+            )}
+
             <Text
               color={
                 isAddImage ? APP_COLORS.borderInput : APP_COLORS.blackText
