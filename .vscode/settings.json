@@ -5,8 +5,8 @@
   "workbench.iconTheme": "material-icon-theme",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "editor.codeActionsOnSave": {
-    "source.organizeImports": true,
-    "source.sortMembers": true
+    "source.organizeImports": "explicit",
+    "source.sortMembers": "explicit"
   },
   "editor.tabCompletion": "on",
   "typescript.tsdk": "node_modules/typescript/lib"
